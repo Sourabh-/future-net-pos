@@ -1,9 +1,10 @@
 {
   "name": "future-net-pos",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Sourabh Debnath",
+  "homepage": "",
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
+    "electron-winstaller": "^2.6.4",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project"
