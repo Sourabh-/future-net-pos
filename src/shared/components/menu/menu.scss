@@ -1,0 +1,41 @@
+menu {
+  .container {}
+
+  .content {
+    padding-top: 12px;
+  }
+
+  .header {
+    padding: 24px 20px 20px 32px;
+    border-bottom: 1px solid #e0e0e0e6;
+  }
+
+  .header-logo {
+    max-width: 125px;
+    max-height: 35px;
+  }
+
+  .menu-item {
+  	color: #0d0d0d;
+    opacity: 0.65;
+    border-left: 5px solid #FFFFFF !important;
+  }
+
+  .menu-icon {
+    margin-right: 15px;
+    padding-left: 15px;
+  }
+
+  .menu-item-name {
+    font-weight: 500; 
+  }
+
+  .active {
+  	color: #2bd7ce;
+  	border-left: 5px solid #2bd7ce !important;
+  }
+
+  .active .menu-item-name {
+  	font-weight: 400;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="csv-container">
+  <div class="csv-card" *ngFor="let csv of csvs" (click)="handleClick(csv)">
+    <div class="csv-icon">
+      <ion-icon name="copy"></ion-icon>
+    </div>
+    <div class="csv-content">
+      <div class="csv-name">{{csv.name}}</div>
+      <div class="csv-time">last updated at: {{csv.time}}</div>
+    </div>
+    <div class="csv-icon-right">
+      <ion-icon name="cloud-download"></ion-icon>
+    </div>
+  </div>
+</div>

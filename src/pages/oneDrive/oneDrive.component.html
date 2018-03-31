@@ -1,0 +1,33 @@
+<div showWhen="core" class="desktop-scroll-container">
+  <div class="box-container">
+    <menu class="menu"></menu>
+    <div class="content-container">
+    	<div class="desktop-header">
+    		<ion-label><h6>One Drive Data</h6></ion-label>
+    		<div class="profile-name">Scott Munro</div>
+    		<img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+    	</div>
+      <div class="desktop-body">
+        <folders [folders]="folders" (onClick)="handleClick($event)"></folders>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-header showWhen="android,ios,windows" class="all-header" no-border>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title text-center>
+      One Drive
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name=""></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content showWhen="android,ios,windows">
+  <folders [folders]="folders" (onClick)="handleClick($event)"></folders>
+</ion-content>

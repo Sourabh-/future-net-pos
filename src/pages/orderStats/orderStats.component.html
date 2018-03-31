@@ -1,0 +1,56 @@
+<div showWhen="core" class="desktop-scroll-container">>
+  <div class="box-container">
+    <menu class="menu"></menu>
+    <div class="content-container">
+      <div class="desktop-header">
+        <ion-label class="header-title">
+          <h6>Auto Order Statistics</h6></ion-label>
+        <ion-searchbar placeholder="Search by Order No., Item No."></ion-searchbar>
+        <div class="profile-name">Scott Munro</div>
+        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+      </div>
+      <div class="desktop-body">
+        <div class="autoorder-card" (click)="navigateToDetails()">
+          <div class="autoorder-content">
+            <div class="autoorder-name">Order No: 1833232</div>
+            <div class="autoorder-time">ITEM QTY: 17 &emsp; Date: 17th Jan, 2017</div>
+          </div>
+          <div class="autoorder-icon">
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-header showWhen="android,ios,windows" no-border class="all-header">
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title text-center>
+      Auto Order Stats
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content showWhen="android,ios,windows">
+  <ion-card *ngFor="let row of rows">
+    <ion-card-content>
+      <button ion-item class="no-padding-left" (click)="navigateToDetails(row)">
+        Order No: {{row[3].value}}
+        <br/>
+        <br/>
+        <span class="order-card-subtext">
+          ITEM QTY: 17  
+          &emsp;&emsp;&emsp;&emsp;&emsp;  
+          Date: {{row[1].value}}</span>
+        <ion-icon name="ios-arrow-forward" item-end></ion-icon>
+      </button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

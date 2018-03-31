@@ -1,0 +1,37 @@
+store-items {
+  .desktop-header {
+    border-bottom: 1px solid #e0e0e0e6;
+    padding: 5.5px 5px 6px 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-title {
+    overflow: visible;
+    margin-right: 110px;
+  }
+
+  .desktop-body {
+    background: rgba(158, 158, 158, 0.1);
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .store-card-subtext {
+    color: #999;
+    font-size: 12px;
+  }
+
+  .no-padding-det {
+    padding: 0 !important;
+  }
+
+  .store-col-one {
+    border-right: 1px solid #ddd9d9;
+  }
+
+  .store-details-col {
+    padding: 13px;
+  }
+}

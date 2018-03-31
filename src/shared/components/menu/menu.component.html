@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="header">
+    <img src="../../../assets/imgs/header-logo.jpeg" class="header-logo" />
+  </div>
+  <div class="content">
+    <ion-list no-lines>
+      <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
+      	<ion-icon name="analytics" class="menu-icon"></ion-icon>
+        <span class="menu-item-name">Dashboard</span>
+      </button>
+      <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'onedrive'}" (click)="navigate('onedrive')">
+      	<ion-icon name="cloud-outline" class="menu-icon"></ion-icon>
+        <span class="menu-item-name">One Drive</span>
+      </button>
+      <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'orderstats'}" (click)="navigate('orderstats')">
+      	<ion-icon name="list-box" class="menu-icon"></ion-icon>
+        <span class="menu-item-name">Auto Order Stats</span>
+      </button>
+      <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'storeitems'}" (click)="navigate('storeitems')">
+      	<ion-icon name="cart" class="menu-icon"></ion-icon>
+        <span class="menu-item-name">Store Items</span>
+      </button>
+    </ion-list>
+  </div>
+</div>

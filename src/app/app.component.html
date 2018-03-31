@@ -1,0 +1,27 @@
+<ion-menu [content]="content">
+  <ion-content>
+    <div class="profile-box">
+      <div class="email-box">scottmunro@hotmail.com</div>
+      <img src="../assets/imgs/profile.jpg" class="profile-pic" />
+    </div>
+    <ion-list no-lines>
+      <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
+        <ion-icon name="analytics" class="root-menu-icon"></ion-icon>
+        <span class="root-menu-item-name">Dashboard</span>
+      </button>
+      <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'onedrive'}" (click)="navigate('onedrive')">
+        <ion-icon name="cloud-outline" class="root-menu-icon"></ion-icon>
+        <span class="root-menu-item-name">One Drive</span>
+      </button>
+      <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'orderstats'}" (click)="navigate('orderstats')">
+        <ion-icon name="list-box" class="root-menu-icon"></ion-icon>
+        <span class="root-menu-item-name">Auto Order Stats</span>
+      </button>
+      <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'storeitems'}" (click)="navigate('storeitems')">
+        <ion-icon name="cart" class="root-menu-icon"></ion-icon>
+        <span class="root-menu-item-name">Store Items</span>
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav #content [root]="rootPage"></ion-nav>

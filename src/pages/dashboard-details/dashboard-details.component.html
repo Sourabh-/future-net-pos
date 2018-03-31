@@ -1,0 +1,351 @@
+<div showWhen="core" class="desktop-scroll-container">
+  <div class="box-container">
+    <menu class="menu"></menu>
+    <div class="content-container">
+      <div class="desktop-header">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3>
+              <ion-select placeholder="Burliegh"></ion-select>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <div class="profile-name">Scott Munro</div>
+        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+      </div>
+      <div class="desktop-body">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-12>
+              <div class="sales-card">
+                <div class="sales-card-header">
+                  Current Week Dept Sales
+                </div>
+                <div class="sales-card-sub-header">
+                  <span>Day</span>&nbsp;&nbsp;
+                  <span>Week</span>&nbsp;&nbsp;
+                  <span>Month</span>&nbsp;&nbsp;
+                  <span>Year</span>
+                </div>
+                <div class="sales-card-chart">
+                  <fusioncharts width="100%" height="400" type="mscombi2D" dataFormat="json" [dataSource]="dataSource"></fusioncharts>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div class="app-card">
+                <div class="time-card-header">
+                  Current Day
+                </div>
+                <div class="time-card-body">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col col-6 text-center>
+                        <div class="time-card-div-border">
+                          <div class="time-card-dollar">
+                            <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                          </div>
+                          <div class="dark-grey">Total Sales</div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-6 text-center>
+                        <div>
+                          <div class="time-card-dollar">
+                            <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                          </div>
+                          <div class="dark-grey">Total Cost</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="app-card">
+                <div class="time-card-header">
+                  Weekly Sales
+                </div>
+                <div class="time-card-body">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col col-6 text-center>
+                        <div class="time-card-div-border">
+                          <div class="time-card-dollar">
+                            <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                          </div>
+                          <div class="dark-grey">Total Sales</div>
+                        </div>
+                      </ion-col>
+                      <ion-col col-6 text-center>
+                        <div>
+                          <div class="time-card-dollar">
+                            <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                          </div>
+                          <div class="dark-grey">Total Cost</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <div class="app-card">
+                <div class="footer-card-header">
+                  <div class="footer-card-header-text">
+                    Burliegh
+                  </div>
+                  <ion-select placeholder="3 Years"></ion-select>
+                </div>
+                <div class="footer-card-body">
+                  <div class="footer-card-chart">
+                    <fusioncharts width="70%" height="250" type="doughnut2D" dataFormat="json" [dataSource]="dataSource2"></fusioncharts>
+                  </div>
+                  <div class="footer-card-info">
+                    <div class="footer-card-div-border footer-info-div" text-center>
+                      <div class="footer-card-dollar">
+                        <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $1,111
+                      </div>
+                      <div class="dark-grey footer-card-sub-text">Year 2016</div>
+                    </div>
+                    <div class="footer-card-div-border footer-info-div" text-center>
+                      <div class="footer-card-dollar">
+                        <span class="dot purple-bg"></span>&nbsp;&nbsp; $1,111
+                      </div>
+                      <div class="dark-grey footer-card-sub-text">Year 2017</div>
+                    </div>
+                    <div class="footer-info-div" text-center>
+                      <div class="footer-card-dollar">
+                        <span class="dot red-bg"></span>&nbsp;&nbsp; $1,111
+                      </div>
+                      <div class="dark-grey footer-card-sub-text">Year 2018</div>
+                    </div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col col-8>
+              <div class="app-card">
+                <div class="footer-card-header">
+                  <div class="footer-card-header-text">
+                    Total Sales
+                  </div>
+                  <ion-select placeholder="3 Years"></ion-select>
+                </div>
+                <div class="footer-card-body-table">
+                  <app-table [header]="header" [rows]="rows" isFullWidth="true" reverseBg="true" isHideFooter="true"></app-table>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-header showWhen="android,ios,windows" no-border class="all-header">
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title text-center>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content showWhen="android,ios,windows">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <div class="sales-card">
+          <div class="sales-card-header">
+            Current Week Dept Sales
+          </div>
+          <div class="sales-card-sub-header">
+            <span>Day</span>&nbsp;&nbsp;
+            <span>Week</span>&nbsp;&nbsp;
+            <span>Month</span>&nbsp;&nbsp;
+            <span>Year</span>
+          </div>
+          <div class="sales-card-chart">
+            <fusioncharts width="100%" height="400" type="mscombi2D" dataFormat="json" [dataSource]="dataSource"></fusioncharts>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <div class="app-card">
+          <div class="time-card-header">
+            Current Day
+          </div>
+          <div class="time-card-body">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6 text-center>
+                  <div class="time-card-div-border">
+                    <div class="time-card-dollar">
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                    </div>
+                    <div class="dark-grey">Total Sales</div>
+                  </div>
+                </ion-col>
+                <ion-col col-6 text-center>
+                  <div>
+                    <div class="time-card-dollar">
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                    </div>
+                    <div class="dark-grey">Total Cost</div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div class="app-card">
+          <div class="time-card-header">
+            Weekly Sales
+          </div>
+          <div class="time-card-body">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6 text-center>
+                  <div class="time-card-div-border">
+                    <div class="time-card-dollar">
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                    </div>
+                    <div class="dark-grey">Total Sales</div>
+                  </div>
+                </ion-col>
+                <ion-col col-6 text-center>
+                  <div>
+                    <div class="time-card-dollar">
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                    </div>
+                    <div class="dark-grey">Total Cost</div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <div class="app-card">
+          <div class="footer-card-header">
+            <div class="footer-card-header-text">
+              Burliegh
+            </div>
+            <ion-select placeholder="3 Years"></ion-select>
+          </div>
+          <div class="footer-card-body">
+            <div class="footer-card-chart">
+              <fusioncharts width="70%" height="250" type="doughnut2D" dataFormat="json" [dataSource]="dataSource2"></fusioncharts>
+            </div>
+            <div class="footer-card-info">
+              <div class="footer-card-div-border footer-info-div" text-center>
+                <div class="footer-card-dollar">
+                  <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $1,111
+                </div>
+                <div class="dark-grey footer-card-sub-text">Year 2016</div>
+              </div>
+              <div class="footer-card-div-border footer-info-div" text-center>
+                <div class="footer-card-dollar">
+                  <span class="dot purple-bg"></span>&nbsp;&nbsp; $1,111
+                </div>
+                <div class="dark-grey footer-card-sub-text">Year 2017</div>
+              </div>
+              <div class="footer-info-div" text-center>
+                <div class="footer-card-dollar">
+                  <span class="dot red-bg"></span>&nbsp;&nbsp; $1,111
+                </div>
+                <div class="dark-grey footer-card-sub-text">Year 2018</div>
+              </div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col col-12>
+        <div class="app-card">
+          <div class="footer-card-header header-bottom">
+            <div class="footer-card-header-text">
+              Total Sales
+            </div>
+          </div>
+          <div class="footer-card-sub-header">
+            <ion-select placeholder="Grocery" class="ion-select-custom"></ion-select>
+          </div>
+          <div>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-6>
+                  <div class="footer-time-card app-card">
+                    <div class="dark-grey">Day</div>
+                    <div text-center>
+                      <span class="dot l-blue-bg"></span>
+                      <span><b>$5.4 M</b></span>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col col-6>
+                  <div class="footer-time-card app-card">
+                    <div class="dark-grey">Week</div>
+                    <div text-center>
+                      <span class="dot l-blue-bg"></span>
+                      <span><b>$5.4 M</b></span>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+               <ion-row>
+                <ion-col col-6>
+                  <div class="footer-time-card app-card">
+                    <div class="dark-grey">Month</div>
+                    <div text-center>
+                      <span class="dot l-blue-bg"></span>
+                      <span><b>$5.4 M</b></span>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col col-6>
+                  <div class="footer-time-card app-card">
+                    <div class="dark-grey">Year</div>
+                    <div text-center>
+                      <span class="dot l-blue-bg"></span>
+                      <span><b>$5.4 M</b></span>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

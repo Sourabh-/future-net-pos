@@ -1,0 +1,11 @@
+<div class="folder-container">
+  <div class="folder-card" *ngFor="let folder of folders" (click)="handleClick(folder)">
+    <div class="folder-icon">
+      <ion-icon name="folder"></ion-icon>
+    </div>
+    <div class="folder-content">
+      <div class="folder-name">{{folder.name}}</div>
+      <div class="folder-time">last updated at: {{folder.time}}</div>
+    </div>
+  </div>
+</div>

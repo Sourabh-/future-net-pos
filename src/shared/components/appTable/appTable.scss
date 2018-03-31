@@ -1,0 +1,49 @@
+app-table {
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+  }
+
+  .table th {
+    font-size: 12px;
+    color: #999;
+    padding: 15px;
+    text-align: left;
+  }
+
+  .table tr {
+    background: #FFFFFF;
+    color: #4d4c4c;
+  }
+
+  .table td {
+    padding: 18px 15px 18px 15px;
+  }
+
+  .pagination {
+    display: flex;
+    text-align: center;
+    max-width: 266px;
+    margin: 0 auto;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+
+  .pagination div {
+    background: #FFFFFF;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .page-disabled {
+    color: #4d4c4c !important;
+  }
+
+  .page-active {
+    border-radius: 2px;
+    color: #FFFFFF;
+    background: #2bd7ce !important;
+  }
+}

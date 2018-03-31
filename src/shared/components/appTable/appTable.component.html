@@ -1,0 +1,26 @@
+<table class="table" [style.width]="isFullWidth ? '100%' : 'auto'">
+  <thead>
+    <th *ngFor= "let head of header">{{head}}</th>
+    <th *ngIf="options.isEditable"> </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
+      <td *ngFor="let data of row">
+        <span [ngClass]="data.class">{{data.value}}</span>
+      </td>
+      <td *ngIf="options.isEditable">
+        <ion-icon name="create" color="primary"></ion-icon>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="pagination" *ngIf="!isHideFooter">
+  <div class="page-disabled">Prev</div>
+  <div>1</div>
+  <div>2</div>
+  <div class="page-active">3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>Next</div>
+</div>

@@ -1,0 +1,41 @@
+<div showWhen="core" class="desktop-scroll-container">
+  <div class="box-container">
+    <menu class="menu"></menu>
+    <div class="content-container">
+      <div class="desktop-header">
+        <ion-label>
+          <h6>
+            <span class="previous-header">One Drive Data&nbsp;</span> 
+            &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon>&nbsp;
+            <span class="previous-header">{{superParent?.name}}&nbsp;</span>
+            &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon>&nbsp;
+            {{parent?.name}}
+          </h6>
+        </ion-label>
+        <div class="profile-name">Scott Munro</div>
+        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+      </div>
+      <div class="desktop-body">
+        <csv-cards [csvs]="csvs" (onClick)="handleClick($event)"></csv-cards>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-header showWhen="android,ios,windows" class="all-header" no-border>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title text-center>
+      {{parent?.name}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content showWhen="android,ios,windows">
+  <csv-cards [csvs]="csvs" (onClick)="handleClick($event)"></csv-cards>
+</ion-content>
