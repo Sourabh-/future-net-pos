@@ -1,4 +1,4 @@
-<div showWhen="core" class="desktop-scroll-container">
+<div showWhen="android" class="desktop-scroll-container">
   <div class="box-container">
     <menu class="menu"></menu>
     <div class="content-container">
@@ -6,16 +6,15 @@
         <ion-label class="header-title">
           <h6>Store Items</h6></ion-label>
         <ion-searchbar placeholder="Search keyword OR by APN number..."></ion-searchbar>
-        <div class="profile-name">Scott Munro</div>
-        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+        <profile></profile>
       </div>
-      <div class="desktop-body">
-        <app-table [header]="header" [rows]="rows" [options]="options"></app-table>
+      <div class="desktop-body mar-bot-83">
+        <app-table isFullWidth="true" [header]="header" [rows]="rows" [options]="options" value="value"></app-table>
       </div>
     </div>
   </div>
 </div>
-<ion-header showWhen="android,ios,windows" no-border class="all-header">
+<ion-header showWhen="core" no-border class="all-header">
   <ion-navbar>
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
@@ -30,60 +29,65 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content showWhen="android,ios,windows">
-  <ion-card>
-    <ion-card-content>
-      <button ion-item class="no-padding-left">
-        WATTLE VALLEY WAFFLES 5PK 1
-        <br/>
-        <br/>
-        <span class="store-card-subtext">
-          ITEM ID: 000001
+<ion-content showWhen="core">
+  <div *ngFor="let row of scrollItems">
+    <ion-card>
+      <ion-card-content>
+        <button ion-item class="no-padding-left">
+          {{row[2].value}}
+          <br/>
+          <br/>
+          <span class="store-card-subtext">
+          ITEM ID: {{row[1].value}}
         </span>
-        <ion-icon [name]="isShown ? 'arrow-up' : 'arrow-down'" item-end (click)="isShown = !isShown"></ion-icon>
-      </button>
-    </ion-card-content>
-  </ion-card>
-  <ion-card *ngIf="isShown">
-    <ion-card-content class="no-padding-det">
-      <ion-grid class="no-padding-det">
-        <ion-row>
-          <ion-col class="store-details-col store-col-one">
-            <span class="dark-grey">Curr Sell:</span>
-            <br/> 
-            <span>2.99</span>
-          </ion-col>
-          <ion-col class="store-details-col">
-            <span class="dark-grey">Curr Cost:</span>
-            <br/>
-            <span>1.69</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="store-details-col store-col-one">
-            <span class="dark-grey">Dept Id:</span>
-            <br/>
-            <span>19</span>
-          </ion-col>
-          <ion-col class="store-details-col">
-            <span class="dark-grey">Subdept Id:</span>
-            <br/>
-            <span>404</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="store-details-col store-col-one">
-            <span class="dark-grey">Group Id:</span>
-            <br/>
-            <span class="text-red">NIL</span>
-          </ion-col>
-          <ion-col class="store-details-col">
-            <span class="dark-grey">Replicate:</span>
-            <br/>
-            <span class="text-green">03412</span>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+          <ion-icon [name]="rows[0].open ? 'ios-arrow-up' : 'ios-arrow-down'" item-end (click)="row[0].open = !row[0].open"></ion-icon>
+        </button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="row[0].open">
+      <ion-card-content class="no-padding-det">
+        <ion-grid class="no-padding-det">
+          <ion-row>
+            <ion-col class="store-details-col store-col-one">
+              <span class="dark-grey">Curr Sell:</span>
+              <br/>
+              <span>{{row[3].value}}</span>
+            </ion-col>
+            <ion-col class="store-details-col">
+              <span class="dark-grey">Curr Cost:</span>
+              <br/>
+              <span>{{row[4].value}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="store-details-col store-col-one">
+              <span class="dark-grey">Dept Id:</span>
+              <br/>
+              <span>{{row[5].value}}</span>
+            </ion-col>
+            <ion-col class="store-details-col">
+              <span class="dark-grey">Subdept Id:</span>
+              <br/>
+              <span>{{row[6].value}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="store-details-col store-col-one">
+              <span class="dark-grey">Group Id:</span>
+              <br/>
+              <span class="text-red">{{row[7].value}}</span>
+            </ion-col>
+            <ion-col class="store-details-col">
+              <span [ngClass]="row[7].class || ''">Replicate:</span>
+              <br/>
+              <span [ngClass]="row[8].class || ''">{{row[8].value}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="addMore($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

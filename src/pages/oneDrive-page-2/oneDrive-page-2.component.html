@@ -6,15 +6,14 @@
         <ion-label>
           <h6>
             <span class="previous-header">One Drive Data&nbsp;</span> 
-            &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon>&nbsp;
+            &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
             {{parent.name}}
           </h6>
         </ion-label>
-        <div class="profile-name">Scott Munro</div>
-        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+        <profile></profile>
       </div>
-      <div class="desktop-body">
-        <folders [folders]="folders" (onClick)="handleClick($event)"></folders>
+      <div class="desktop-body mar-bot-83">
+        <folders name="name" time="lastModifiedDateTime" [folders]="folders" (onClick)="handleClick($event)"></folders>
       </div>
     </div>
   </div>
@@ -35,5 +34,5 @@
   </ion-navbar>
 </ion-header>
 <ion-content showWhen="android,ios,windows">
-  <folders [folders]="folders" (onClick)="handleClick($event)"></folders>
+  <folders name="name" time="lastModifiedDateTime" [folders]="folders" (onClick)="handleClick($event)"></folders>
 </ion-content>

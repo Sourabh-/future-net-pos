@@ -1,22 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { OneDrivePage3Component } from '../oneDrive-page-3/oneDrive-page-3.component';
+import { OneDriveService } from '../../shared/services/oneDrive.service';
+import { UtilityService } from '../../shared/services/utility.service';
 
 @Component({
   selector: 'one-drive-page-2',
   templateUrl: 'oneDrive-page-2.component.html'
 })
-export class OneDrivePage2Component {
+export class OneDrivePage2Component implements OnInit {
   
-  public folders = [
-  	{ name: 'Burleigh', time: '2 days ago' },
-  	{ name: 'Helensvale', time: '2 days ago' },
-  	{ name: 'Yungaburra', time: '2 days ago' }
-  ];
+  public folders = [];
 
   public parent;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public utilityService: UtilityService,
+    private oneDriveService: OneDriveService
+  ) {
   	this.parent = navParams.data.folder;
+  }
+
+  ngOnInit() {
+    this.utilityService.showLoader();
+    this.oneDriveService.getFolders(this.parent.id).subscribe(
+      (folders) => {
+        if(folders.value) {
+          this.oneDriveService.folders[this.parent.id] = folders.value;
+        } else {
+          this.oneDriveService.folders[this.parent.id] = [];
+        }
+
+        this.utilityService.hideLoader();
+        this.folders = this.oneDriveService.folders[this.parent.id];
+      },
+      (err) => {
+        this.utilityService.showToast(err);
+        this.utilityService.hideLoader();
+      })
   }
 
   handleClick(folder) {

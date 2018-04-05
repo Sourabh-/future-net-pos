@@ -6,17 +6,16 @@
         <ion-label>
           <h6>
             <span class="previous-header">One Drive Data&nbsp;</span> 
-            &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon>&nbsp;
+            &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
             <span class="previous-header">{{superParent?.name}}&nbsp;</span>
-            &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon>&nbsp;
+            &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
             {{parent?.name}}
           </h6>
         </ion-label>
-        <div class="profile-name">Scott Munro</div>
-        <img src="../../assets/imgs/profile.jpg" class="profile-logo" />
+        <profile></profile>
       </div>
-      <div class="desktop-body">
-        <csv-cards [csvs]="csvs" (onClick)="handleClick($event)"></csv-cards>
+      <div class="desktop-body mar-bot-83">
+        <csv-cards [csvs]="csvs" name="name" time="lastModifiedDateTime" (onClick)="handleClick($event)"></csv-cards>
       </div>
     </div>
   </div>
@@ -37,5 +36,5 @@
   </ion-navbar>
 </ion-header>
 <ion-content showWhen="android,ios,windows">
-  <csv-cards [csvs]="csvs" (onClick)="handleClick($event)"></csv-cards>
+  <csv-cards [csvs]="csvs" name="name" time="lastModifiedDateTime" (onClick)="handleClick($event)"></csv-cards>
 </ion-content>

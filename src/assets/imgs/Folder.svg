@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="49px" height="40px" viewBox="0 0 49 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>folder (1)</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="DataVisualization_Light-Copy-6" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-764.000000, -130.000000)">
+        <g id="Folder1" transform="translate(744.000000, 117.000000)" fill="#4ED8DA" fill-rule="nonzero">
+            <g id="Group" transform="translate(20.000000, 13.000000)">
+                <g id="folder-(1)">
+                    <path d="M11.7246734,15 C11.5188488,15 11.3365238,15.1387097 11.2830418,15.3362903 L2.00067516,38.3870968 L2.00067516,39.1935484 C2.00067516,39.7854839 1.9625895,40 2.45851341,40 L38.7282165,40 C39.6649617,40 40.4898809,39.3717742 40.7135328,38.5379032 L49,15.8064516 C49,15.8064516 49,15.3024194 49,15 L11.7246734,15 Z" id="Shape"></path>
+                    <path d="M10.3734074,13.2950054 L43.1851852,13.2950054 L44,13.2950054 L44,8.08668703 C44,6.83446371 43.001037,5.81656486 41.7739259,5.81656486 L21.6048148,5.81656486 L17.5307407,0 L2.22607407,0 C0.998962963,0 0,1.01872979 0,2.27012217 L0,37 L8.37792593,14.7998338 C8.602,13.942306 9.43148148,13.2950054 10.3734074,13.2950054 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

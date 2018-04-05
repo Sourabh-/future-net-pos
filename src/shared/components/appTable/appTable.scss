@@ -46,4 +46,21 @@ app-table {
     color: #FFFFFF;
     background: #2bd7ce !important;
   }
+
+  .ngx-pagination {
+    max-width: 450px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    background: #FFFFFF;
+  }
+
+  .ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #2bd7ce;
+    color: #FFFFFF;
+    cursor: default;
+    border-radius: 2px;
+  }
 }

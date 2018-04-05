@@ -3,14 +3,13 @@ folders {
     padding: 20px;
     display: flex;
     flex-flow: row wrap;
-    align-content: space-between;
-    justify-content: space-between;
   }
 
   .folder-icon {
     color: #2bd7ce;
     font-size: 52px;
-    margin-right: 28px
+    margin-right: 28px;
+    margin-left: 5px;
   }
 
   .folder-card {
@@ -24,6 +23,7 @@ folders {
     background: #FFFFFF;
     margin-bottom: 24px;
     cursor: pointer;
+    margin-right: 50px;
   }
 
   .folder-content {}
@@ -39,6 +39,10 @@ folders {
     color: #999;
   }
 
+  .folder-img {
+
+  }
+  
   @media screen and (max-width: 768px) {
     .folder-card {
       width: 100%;

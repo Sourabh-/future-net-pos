@@ -1,9 +1,14 @@
 <div class="container">
   <div class="header">
-    <img src="../../../assets/imgs/header-logo.jpeg" class="header-logo" />
+    <img src="../../../assets/imgs/FutureNetLogo.svg" class="header-logo" />
   </div>
   <div class="content">
     <ion-list no-lines>
+      <ion-item>
+        <ion-select class="custom-select" [(ngModel)]="selectedCity" (ngModelChange)="changeCity()">
+          <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+        </ion-select>
+      </ion-item>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
       	<ion-icon name="analytics" class="menu-icon"></ion-icon>
         <span class="menu-item-name">Dashboard</span>

@@ -6,7 +6,7 @@ menu {
   }
 
   .header {
-    padding: 24px 20px 20px 32px;
+    padding: 24px 20px 24px 48px;
     border-bottom: 1px solid #e0e0e0e6;
   }
 
@@ -37,5 +37,14 @@ menu {
 
   .active .menu-item-name {
   	font-weight: 400;
+  }
+
+  .custom-select {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #dedede;
+    color: #999;
+    padding-left: 10px;
+    margin-bottom: 10px;
   }
 }
