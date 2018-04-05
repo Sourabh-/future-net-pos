@@ -1,4 +1,4 @@
-<div showWhen="android" class="desktop-scroll-container">
+<div showWhen="core" class="desktop-scroll-container">
   <div class="box-container">
     <menu class="menu"></menu>
     <div class="content-container">
@@ -14,7 +14,7 @@
     </div>
   </div>
 </div>
-<ion-header showWhen="core" no-border class="all-header">
+<ion-header showWhen="android,ios,windows" no-border class="all-header">
   <ion-navbar>
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
@@ -29,7 +29,7 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content showWhen="core">
+<ion-content showWhen="android,ios,windows">
   <div *ngFor="let row of scrollItems">
     <ion-card>
       <ion-card-content>
