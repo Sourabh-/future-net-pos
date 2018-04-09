@@ -1,6 +1,21 @@
 import { Injectable } from '@angular/core';
 import { ToastController, LoadingController } from 'ionic-angular'
 
+export const monthAbbr = {
+	"1": "Jan",
+	"2": "Feb",
+	"3": "Mar",
+	"4": "Apr",
+	"5": "May",
+	"6": "June",
+	"7": "July",
+	"8": "Aug",
+	"9": "Sept",
+	"10": "Oct",
+	"11": "Nov",
+	"12": "Dec"
+};
+
 @Injectable()
 export class UtilityService {
 	public activeView = 'dashboard';
@@ -54,5 +69,19 @@ export class UtilityService {
 
 	hideLoader() {
 		this.loader.dismiss();
+	}
+
+	getMonth(mon) {
+		return monthAbbr[mon];
+	}
+
+	getDateSub(dd) {
+	  if(dd > 3 && dd < 21) return 'th';
+	  switch (dd % 10) {
+	        case 1:  return "st";
+	        case 2:  return "nd";
+	        case 3:  return "rd";
+	        default: return "th";
+	    }
 	}
 }

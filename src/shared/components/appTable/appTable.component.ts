@@ -14,8 +14,6 @@ export class AppTableComponent implements OnInit, OnChanges {
   @Input() reverseBg = false;
   @Input() isHideFooter = false;
   @Input() value = 'value';
-  public totalCount = 0;
-  public pages = 0;
   public perPageCount = 20;
   public currentPage = 0;
 

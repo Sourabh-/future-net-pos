@@ -1,4 +1,4 @@
-<div showWhen="core" class="desktop-scroll-container">
+<div showWhen="android,ios,windows" class="desktop-scroll-container">
   <div class="box-container">
     <menu class="menu"></menu>
     <div class="content-container">
@@ -9,20 +9,25 @@
         <profile></profile>
       </div>
       <div class="desktop-body mar-bot-83">
-        <div class="autoorder-card" (click)="navigateToDetails()">
-          <div class="autoorder-content">
-            <div class="autoorder-name">Order No: 1833232</div>
-            <div class="autoorder-time">ITEM QTY: 17 &emsp; Date: 17th Jan, 2017</div>
+        <div class="autocard-container">
+          <div class="autoorder-card" (click)="navigateToDetails(order)" *ngFor="let order of orders | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }">
+            <div class="autoorder-content">
+              <div class="autoorder-name">Order No: {{order.orderNo}}</div>
+              <div class="autoorder-time">ITEM QTY: {{order.itemQty}} &emsp; Date: {{order.createdDate}}</div>
+            </div>
+            <div class="autoorder-icon">
+              <ion-icon name="ios-arrow-forward"></ion-icon>
+            </div>
           </div>
-          <div class="autoorder-icon">
-            <ion-icon name="ios-arrow-forward"></ion-icon>
-          </div>
+        </div>
+        <div text-center>
+          <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
         </div>
       </div>
     </div>
   </div>
 </div>
-<ion-header showWhen="android,ios,windows" no-border class="all-header">
+<ion-header showWhen="core" no-border class="all-header">
   <ion-navbar>
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
@@ -37,19 +42,22 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content showWhen="android,ios,windows">
-  <ion-card *ngFor="let row of rows">
+<ion-content showWhen="core">
+  <ion-card *ngFor="let order of scrollItems">
     <ion-card-content>
-      <button ion-item class="no-padding-left" (click)="navigateToDetails(row)">
-        Order No: {{row[3].value}}
+      <button ion-item class="no-padding-left" (click)="navigateToDetails(order)">
+        Order No: {{order.orderNo}}
         <br/>
         <br/>
         <span class="order-card-subtext">
-          ITEM QTY: 17  
+          ITEM QTY: {{order.itemQty}} 
           &emsp;&emsp;&emsp;&emsp;&emsp;  
-          Date: {{row[1].value}}</span>
+          Date: {{order.createdDate}}</span>
         <ion-icon name="ios-arrow-forward" item-end></ion-icon>
       </button>
     </ion-card-content>
   </ion-card>
+  <ion-infinite-scroll (ionInfinite)="addMore($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

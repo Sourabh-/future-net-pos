@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
@@ -39,7 +40,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
     BrowserModule,
     IonicModule.forRoot(RootComponent),
     SharedModule,
-    FusionChartsModule
+    FusionChartsModule,
+    NgxPaginationModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

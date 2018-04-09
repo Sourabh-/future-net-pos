@@ -75,7 +75,6 @@ export class StoreItemsComponent implements OnInit {
         (res) => {
           this.oneDriveService.worksheets[itemFileInfo.id] = res;
           let _formulas = [];
-          _formulas.splice(0, 1);
           for(let i=0; i<res.formulas.length; i++) {
             if(typeof res.formulas[i][0] == 'string')
               _formulas.push(res.formulas[i][0].split("^"));
