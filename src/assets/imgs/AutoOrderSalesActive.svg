@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>event - material</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="DataVisualization_Light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-28.000000, -201.000000)" opacity="0.5">
+        <g id="Navigation" transform="translate(0.000000, 2.000000)" fill="#2bd7ce">
+            <g id="Events" transform="translate(24.000000, 197.000000)">
+                <g id="Icon_event">
+                    <path d="M17.82,17.82 L17.82,8.68 L6.18,8.68 L6.18,17.82 L17.82,17.82 Z M15.32,2.82 L17,2.82 L17,4.5 L17.82,4.5 C18.2733356,4.5 18.666665,4.666665 19,5 C19.333335,5.333335 19.5,5.7266644 19.5,6.18 L19.5,17.82 C19.5,18.2733356 19.333335,18.666665 19,19 C18.666665,19.333335 18.2733356,19.5 17.82,19.5 L6.18,19.5 C5.713331,19.5 5.3166683,19.333335 4.99,19 C4.6633317,18.666665 4.5,18.2733356 4.5,17.82 L4.5,6.18 C4.5,5.7266644 4.6633317,5.333335 4.99,5 C5.3166683,4.666665 5.713331,4.5 6.18,4.5 L7,4.5 L7,2.82 L8.68,2.82 L8.68,4.5 L15.32,4.5 L15.32,2.82 Z M16.18,12 L16.18,16.18 L12,16.18 L12,12 L16.18,12 Z" id="event---material"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

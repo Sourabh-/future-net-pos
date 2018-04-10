@@ -22,7 +22,7 @@ export class AuthService {
     );
   }
 
-  async login() {
+  async login(noDisplay) {
     return await hello('msft').login({ scope: Configs.scope });
   }
 

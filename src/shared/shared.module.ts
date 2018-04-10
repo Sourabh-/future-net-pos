@@ -9,11 +9,13 @@ import { FoldersComponent } from './components/folders/folders.component';
 import { CsvCardsComponent } from './components/csvCards/csvCards.component';
 import { AppTableComponent } from './components/appTable/appTable.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BlockerComponent } from './components/blocker/blocker.component';
 
 import { UtilityService } from './services/utility.service';
 import { AuthService } from './services/auth.service';
 import { OneDriveService } from './services/oneDrive.service';
 import { ProfileService } from './services/profile.service';
+import { BlockerService } from './services/blocker.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { ProfileService } from './services/profile.service';
     FoldersComponent,
     CsvCardsComponent,
     AppTableComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlockerComponent
   ],
   imports: [
     BrowserModule,
@@ -34,13 +37,15 @@ import { ProfileService } from './services/profile.service';
     FoldersComponent,
     CsvCardsComponent,
     AppTableComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlockerComponent
   ],
   providers: [
     UtilityService,
     AuthService,
     OneDriveService,
-    ProfileService
+    ProfileService,
+    BlockerService
   ]
 })
 export class SharedModule {

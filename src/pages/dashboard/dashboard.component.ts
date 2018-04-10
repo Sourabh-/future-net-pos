@@ -59,7 +59,9 @@ export class DashboardComponent {
 	        "divLineAlpha": "10",
 	        "alignCaptionWithCanvas": "0",
 	        "showValues": 0,
-	        "plotSpacePercent": "60"
+	        "plotSpacePercent": "60",
+	        "showXAxisLine": "0",
+	        "showYAxisLine": "0"
 	    },
 	    "data": [
 	        {

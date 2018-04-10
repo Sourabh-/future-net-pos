@@ -11,11 +11,12 @@ dashboard {
   .desktop-body {
     width: 100%;
     height: 100%;
-    padding: 20px;
   }
 
   .doughnut-container {
-    height: 348px;
+    height: 385px;
+    background: #fbfbfb;
+    padding: 20px 10px 10px 40px;
   }
 
   .doughnut-header {
@@ -29,10 +30,15 @@ dashboard {
     width: 100%;
   }
 
+  .doughnut-card-chart {
+    padding-left: 1px;
+  }
+
   .doughnut-icons {
     display: flex;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
+    font-weight: bold;
   }
 
   .doughnut-body {
@@ -44,9 +50,9 @@ dashboard {
   .scroll-cover {
     width: 100%;
     height: 20px;
-    bottom: 20px;
+    bottom: 19px;
     position: relative;
-    background-color: #f5f4f4;
+    background-color: #fbfbfb;
     z-index: 1;
   }
 
@@ -58,6 +64,7 @@ dashboard {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     background: #FFFFFF;
     margin-right: 20px;
+    margin-bottom: 10px;
   }
 
   .doughnut-card-header {
@@ -85,10 +92,11 @@ dashboard {
 
   .bar-container {
     margin-top: 20px;
+    padding: 16px;
   }
 
   .bar-card {
-    width: 480px;
+    width: 47%;
     height: auto;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
@@ -102,6 +110,10 @@ dashboard {
   .bar-card-header {
     padding: 20px;
     margin-bottom: 20px;
+  }
+
+  .bar-card-body {
+    padding-left: 1px;
   }
 
   .bar-card-header-label {

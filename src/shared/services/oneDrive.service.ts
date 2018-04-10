@@ -16,8 +16,11 @@ function extractData(res: Response): any {
   return body || {};
 }
 
-function handleError(res: Response) {
+function handleError(res: Response, cb) {
   const error = res.json();
+  /*if(res.status == 401) {
+  	cb();
+  }*/
 
   const errorMessage = error.message ? error.message :
     res.status ? `${res.status} - ${res.statusText}` : 'Server error';
@@ -34,6 +37,7 @@ export class OneDriveService {
 	selectedCityId: string = "";
 	selectedCityUpdated: EventEmitter<any> = new EventEmitter();
 	cities = [];
+	reauth: EventEmitter<void> = new EventEmitter();
 
 	constructor(
 		private http: Http,
@@ -52,7 +56,11 @@ export class OneDriveService {
 		return this.http
 	      .get(`${this.URL}/me`, this.authService.getAuthRequestOptions())
 	      .map(extractData)
-	      .catch(handleError);
+	      .catch((res: Response) => {
+	      	return handleError(res, () => {
+	      		this.reauth.emit();
+	      	});
+	      });
 	}
 
 	getFolders(id?): Observable<any> {
@@ -64,7 +72,11 @@ export class OneDriveService {
 			return this.http
 		      .get(this.URL + (!id ? '/me/drive/root/children' : `/me/drive/items/${id}/children`), this.authService.getAuthRequestOptions())
 		      .map(extractData)
-		      .catch(handleError);	
+		      .catch((res: Response) => {
+		      	return handleError(res, () => {
+		      		this.reauth.emit();
+		      	});
+		      });
 		}
 	}
 
@@ -75,7 +87,11 @@ export class OneDriveService {
 			return this.http
 		      .get(`${this.URL}/me/drive/items/${id}/workbook/worksheets('${sheet}')/usedRange`, this.authService.getAuthRequestOptions())
 		      .map(extractData)
-		      .catch(handleError);
+		      .catch((res: Response) => {
+		      	return handleError(res, () => {
+		      		this.reauth.emit();
+		      	});
+		      });
 	}
 
 	updateWorkbook() {

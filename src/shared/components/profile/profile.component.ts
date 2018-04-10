@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController } from 'ionic-angular';
 import { ProfileService } from '../../services/profile.service';
+import { BlockerService } from '../../services/blocker.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'profile',
@@ -12,7 +15,10 @@ export class ProfileComponent implements OnInit {
     displayName: 'Fetching...'
   };
   constructor(
-    public profileService: ProfileService
+    public profileService: ProfileService,
+    public actionSheetCtrl: ActionSheetController,
+    public blockerService: BlockerService,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -22,5 +28,21 @@ export class ProfileComponent implements OnInit {
     this.profileService.profileUpdated.subscribe((profile) => {
       this.profile = profile;
     });
+  }
+
+  showDropdown() {
+   let actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Sign Out',
+          handler: () => {
+            this.authService.logout();
+            window.localStorage.clear();
+            this.blockerService.show(); 
+          }
+        }
+      ]
+   });
+   actionSheet.present();
   }
 }
