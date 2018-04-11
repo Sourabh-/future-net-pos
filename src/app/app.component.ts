@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -125,6 +125,7 @@ export class RootComponent implements OnInit {
           this.oneDriveService.folders[fo.id] = folders.value;
           this.oneDriveService.setCity(folders.value[0].name, folders.value[0].id);
           this.oneDriveService.cities = folders.value;
+          this.authService.tokenReceived.emit(fo.id);
         } else {
           this.oneDriveService.folders[fo.id] = [];
         }

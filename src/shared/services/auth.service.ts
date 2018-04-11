@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Headers } from '@angular/http';
 import * as hello from 'hellojs/dist/hello.all.js';
 import { Configs } from '../configs/config';
 
 @Injectable()
 export class AuthService {
+
+  public tokenReceived: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   initAuth() {
@@ -38,7 +40,10 @@ export class AuthService {
   getAuthRequestOptions() {
     const msft = hello('msft').getAuthResponse();
     const authHeaders = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + msft.access_token });
-
     return { headers: authHeaders };
+  }
+
+  emitToken() {
+    this.tokenReceived.emit();
   }
 }

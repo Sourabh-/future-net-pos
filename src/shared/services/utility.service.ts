@@ -16,6 +16,55 @@ export const monthAbbr = {
 	"12": "Dec"
 };
 
+export const doughnutObj = {
+	"chart": {
+	        "showBorder": 0,
+	        "use3DLighting": 0,
+	        "enableSmartLabels": 0,
+	        "startingAngle": "270",
+	        "showLabels": 0,
+	        "showValues": 0,
+	        "showPercentValues": 0,
+	        "showLegend": 0,
+	        "defaultCenterLabel": "15.4 %",
+	        "centerLabelBold": "1",
+	        "showTooltip": 0,
+	        "decimals": 0,
+	        "useDataPlotColorForLabels": "1",
+	        "theme": "fint",
+	        "doughnutRadius": "60",
+	        "paletteColors": "#EEEEEE",
+	        "enableSlicing": 0
+        },
+        "data": [
+        	{ value: 20 },
+        	{ value: 30 },
+        	{ value: 50 }
+        ]
+};
+
+export const barChartObj = {
+	"chart": {
+    		"bgColor": "#ffffff",
+	        "showBorder": "0",
+	        "showCanvasBorder": "0",
+	        "usePlotGradientColor": "0",
+	        "plotBorderAlpha": "10",
+	        "showAlternateVGridColor": "0",
+	        "placeValuesInside": "1",
+	        "valueFontColor": "#ffffff",
+	        "showAxisLines": "1",
+	        "axisLineAlpha": "25",
+	        "divLineAlpha": "10",
+	        "alignCaptionWithCanvas": "0",
+	        "showValues": 0,
+	        "plotSpacePercent": "30",
+	        "showXAxisLine": "0",
+	        "showYAxisLine": "0"
+	    },
+	    "data": []
+};
+
 @Injectable()
 export class UtilityService {
 	public activeView = 'dashboard';
@@ -83,5 +132,17 @@ export class UtilityService {
 	        case 3:  return "rd";
 	        default: return "th";
 	    }
+	}
+
+	getDChart() {
+		return JSON.parse(JSON.stringify(doughnutObj));
+	}
+
+	getBarChart() {
+		return JSON.parse(JSON.stringify(barChartObj));
+	}
+
+	getTitleCase(str) {
+		return str.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
 	}
 }

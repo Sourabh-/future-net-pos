@@ -16,19 +16,19 @@
             </div>
           </div>
           <div class="doughnut-body" id="doughnut-body">
-            <div class="doughnut-card" *ngFor="let chart of charts" (click)="navigateToDetails(chart)">
-              <div class="doughnut-card-header">Burleigh</div>
+            <div class="doughnut-card" *ngFor="let chart of dCharts" (click)="navigateToDetails(chart)">
+              <div class="doughnut-card-header">{{chart.name}}</div>
               <div class="doughnut-card-body">
                 <div class="doughnut-card-body-header">
                   <span class="pull-left">PREVIOUS</span>
-                  <span class="pull-right">$ 1.8 M</span>
+                  <span class="pull-right">$ {{chart.previous}} M</span>
                 </div>
                 <div class="doughnut-card-chart">
-                  <fusioncharts width="240" height="200" type="doughnut2d" dataFormat="json" [dataSource]="dataSource"></fusioncharts>
+                  <fusioncharts width="240" height="180" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
                 </div>
                 <div class="doughnut-card-body-footer">
                   <span class="pull-left">TODAY</span>
-                  <span class="pull-right">$ 1.8 M</span>
+                  <span class="pull-right">$ {{chart.today}} M</span>
                 </div>
               </div>
             </div>
@@ -37,10 +37,10 @@
             &nbsp;
           </div>
         </div>
-        <div class="bar-container" text-center>
-          <div class="bar-card" *ngFor="let chart of charts">
+        <div class="bar-container">
+          <div class="bar-card" *ngFor="let chart of barCharts">
             <div class="bar-card-header">
-              <span class="bar-card-header-label pull-left">BURLEIGH</span>
+              <span class="bar-card-header-label pull-left">{{chart.name}}</span>
               <span class="bar-card-header-right pull-right">
                 Week
                 <ion-icon class="bar-card-arrow" name="ios-arrow-down"></ion-icon>&nbsp;&nbsp;&nbsp;
@@ -48,7 +48,7 @@
               </span>
             </div>
             <div class="bar-card-body">
-              <fusioncharts width="100%" height="250" type="bar2d" dataFormat="json" [dataSource]="dataSource2"></fusioncharts>
+              <fusioncharts width="100%" height="550" type="bar2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
             </div>
             <div class="bar-card-footer">
               <div class="info-div card-info-border" text-center>
@@ -91,38 +91,20 @@
 <ion-content showWhen="android,ios,windows">
   <ion-grid>
     <ion-row>
-      <ion-col col-6>
+      <ion-col col-6 *ngFor="let chart of dCharts">
         <div class="doughnut-card-mob">
-          <div class="doughnut-card-header-mob">Burleigh</div>
+          <div class="doughnut-card-header-mob">{{chart.name}}</div>
           <div class="doughnut-card-body-mob">
             <div class="doughnut-card-body-header-mob">
               <span class="pull-left">PREVIOUS</span>
-              <span class="pull-right">$ 1.8 M</span>
+              <span class="pull-right">$ {{chart.previous}} M</span>
             </div>
             <div class="doughnut-card-chart-mob">
-              <fusioncharts width="100%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="dataSource"></fusioncharts>
+              <fusioncharts width="100%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
             </div>
             <div class="doughnut-card-body-footer-mob">
               <span class="pull-left">TODAY</span>
-              <span class="pull-right">$ 1.8 M</span>
-            </div>
-          </div>
-        </div>
-      </ion-col>
-      <ion-col col-6>
-        <div class="doughnut-card-mob">
-          <div class="doughnut-card-header-mob">Burleigh</div>
-          <div class="doughnut-card-body-mob">
-            <div class="doughnut-card-body-header-mob">
-              <span class="pull-left">PREVIOUS</span>
-              <span class="pull-right">$ 1.8 M</span>
-            </div>
-            <div class="doughnut-card-chart-mob">
-              <fusioncharts width="100%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="dataSource"></fusioncharts>
-            </div>
-            <div class="doughnut-card-body-footer-mob">
-              <span class="pull-left">TODAY</span>
-              <span class="pull-right">$ 1.8 M</span>
+              <span class="pull-right">$ {{chart.today}} M</span>
             </div>
           </div>
         </div>

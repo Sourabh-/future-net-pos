@@ -58,13 +58,13 @@ dashboard {
 
   .doughnut-card {
     width: 240px;
-    height: 290px;
+    height: 270px;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     background: #FFFFFF;
     margin-right: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .doughnut-card-header {
@@ -114,6 +114,7 @@ dashboard {
 
   .bar-card-body {
     padding-left: 1px;
+    padding-right: 10px;
   }
 
   .bar-card-header-label {
