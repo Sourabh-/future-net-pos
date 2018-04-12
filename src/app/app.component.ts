@@ -20,6 +20,8 @@ import { BlockerService } from '../shared/services/blocker.service';
 export class RootComponent implements OnInit {
   rootPage:any = DashboardComponent;
   public isBusy = false;
+  public defaultProfileIcon = '../assets/imgs/user.png';
+  public userPrincipalName = '';
 
   constructor(
     platform: Platform, 
@@ -89,6 +91,7 @@ export class RootComponent implements OnInit {
     let _profile = this.utilityService.getLocalStorage('profile', true); 
     if(_profile) {
       this.profileService.setProfile(_profile);
+      this.userPrincipalName = _profile.userPrincipalName;
     } else {
       this.oneDriveService.getProfile().subscribe(
         (profile) => {
