@@ -34,7 +34,8 @@ export const doughnutObj = {
 	        "theme": "fint",
 	        "doughnutRadius": "60",
 	        "paletteColors": "#EEEEEE",
-	        "enableSlicing": 0
+	        "enableSlicing": 0,
+	        "animateClockwise": "1"
         },
         "data": [
         	{ value: 20 },
@@ -63,6 +64,60 @@ export const barChartObj = {
 	        "showYAxisLine": "0"
 	    },
 	    "data": []
+};
+
+export const msCombiObj = {
+	"chart": {
+        "showBorder": "0",
+        "showValues": "0",
+        "paletteColors": "#2bd7ce,#1aaf5d,#f2c500",
+        "bgColor": "#ffffff",
+        "showPlotBorder": "0",
+        "showCanvasBorder": "0",
+        "canvasBgColor": "#ffffff",
+        "captionFontSize": "14",
+        "subcaptionFontSize": "14",
+        "subcaptionFontBold": "0",
+        "divlineColor": "#999999",
+        "divLineIsDashed": "1",
+        "divLineDashLen": "1",
+        "divLineGapLen": "1",
+        "showAlternateHGridColor": "0",
+        "usePlotGradientColor": "0",
+        "toolTipColor": "#ffffff",
+        "toolTipBorderThickness": "0",
+        "toolTipBgColor": "#000000",
+        "toolTipBgAlpha": "80",
+        "toolTipBorderRadius": "2",
+        "toolTipPadding": "5",
+        "legendBgColor": "#ffffff",
+        "legendBorderAlpha": "0",
+        "legendShadow": "0",
+        "legendItemFontSize": "10",
+        "legendItemFontColor": "#666666"
+    },
+    "categories": [
+        {
+            "category": []
+        }
+    ],
+    "dataset": [
+        {
+            "seriesName": "Sales ",
+            "showValues": "1",
+            "data": [] 
+        },
+        {
+            "seriesName": "GP % ",
+            "renderAs": "line",
+            "data": []
+        },
+        {
+            "seriesName": "Cost ",
+            "renderAs": "line",
+            "data": []
+        }
+    ]
 };
 
 @Injectable()
@@ -140,6 +195,10 @@ export class UtilityService {
 
 	getBarChart() {
 		return JSON.parse(JSON.stringify(barChartObj));
+	}
+
+	getmsCombiChart() {
+		return JSON.parse(JSON.stringify(msCombiObj));
 	}
 
 	getTitleCase(str) {

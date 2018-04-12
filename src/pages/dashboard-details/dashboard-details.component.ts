@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { UtilityService } from '../../shared/services/utility.service';
+import { BlockerService } from '../../shared/services/blocker.service';
+import { OneDriveService } from '../../shared/services/oneDrive.service';
 
 @Component({
   selector: 'dashboard-details',
@@ -7,7 +10,7 @@ import { NavController } from 'ionic-angular';
 })
 export class DashboardDetailsComponent {
 
-  dataSource;
+  combiChart:any;
   dataSource2;
 
   public header = [
@@ -49,210 +52,20 @@ export class DashboardDetailsComponent {
   		],
   ];
 
-  constructor(public navCtrl: NavController) {
-	this.dataSource = {
-		"chart": {
-	        "showBorder": "0",
-	        "showValues": "0",
-	        "paletteColors": "#2bd7ce,#1aaf5d,#f2c500",
-	        "bgColor": "#ffffff",
-	        "showPlotBorder": "0",
-	        "showCanvasBorder": "0",
-	        "canvasBgColor": "#ffffff",
-	        "captionFontSize": "14",
-	        "subcaptionFontSize": "14",
-	        "subcaptionFontBold": "0",
-	        "divlineColor": "#999999",
-	        "divLineIsDashed": "1",
-	        "divLineDashLen": "1",
-	        "divLineGapLen": "1",
-	        "showAlternateHGridColor": "0",
-	        "usePlotGradientColor": "0",
-	        "toolTipColor": "#ffffff",
-	        "toolTipBorderThickness": "0",
-	        "toolTipBgColor": "#000000",
-	        "toolTipBgAlpha": "80",
-	        "toolTipBorderRadius": "2",
-	        "toolTipPadding": "5",
-	        "legendBgColor": "#ffffff",
-	        "legendBorderAlpha": "0",
-	        "legendShadow": "0",
-	        "legendItemFontSize": "10",
-	        "legendItemFontColor": "#666666"
-	    },
-	    "categories": [
-	        {
-	            "category": [
-	                {
-	                    "label": "Jan"
-	                },
-	                {
-	                    "label": "Feb"
-	                },
-	                {
-	                    "label": "Mar"
-	                },
-	                {
-	                    "label": "Apr"
-	                },
-	                {
-	                    "label": "May"
-	                },
-	                {
-	                    "label": "Jun"
-	                },
-	                {
-	                    "label": "Jul"
-	                },
-	                {
-	                    "label": "Aug"
-	                },
-	                {
-	                    "label": "Sep"
-	                },
-	                {
-	                    "label": "Oct"
-	                },
-	                {
-	                    "label": "Nov"
-	                },
-	                {
-	                    "label": "Dec"
-	                }
-	            ]
-	        }
-	    ],
-	    "dataset": [
-	        {
-	            "seriesName": "Actual Revenue",
-	            "showValues": "1",
-	            "data": [
-	                {
-	                    "value": "16000"
-	                },
-	                {
-	                    "value": "20000"
-	                },
-	                {
-	                    "value": "18000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "15000"
-	                },
-	                {
-	                    "value": "21000"
-	                },
-	                {
-	                    "value": "16000"
-	                },
-	                {
-	                    "value": "20000"
-	                },
-	                {
-	                    "value": "17000"
-	                },
-	                {
-	                    "value": "25000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "23000"
-	                }
-	            ]
-	        },
-	        {
-	            "seriesName": "Projected Revenue",
-	            "renderAs": "line",
-	            "data": [
-	                {
-	                    "value": "15000"
-	                },
-	                {
-	                    "value": "16000"
-	                },
-	                {
-	                    "value": "17000"
-	                },
-	                {
-	                    "value": "18000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "19000"
-	                },
-	                {
-	                    "value": "20000"
-	                },
-	                {
-	                    "value": "21000"
-	                },
-	                {
-	                    "value": "22000"
-	                },
-	                {
-	                    "value": "23000"
-	                }
-	            ]
-	        },
-	        {
-	            "seriesName": "Profit",
-	            "renderAs": "line",
-	            "data": [
-	                {
-	                    "value": "4000"
-	                },
-	                {
-	                    "value": "5000"
-	                },
-	                {
-	                    "value": "3000"
-	                },
-	                {
-	                    "value": "4000"
-	                },
-	                {
-	                    "value": "1000"
-	                },
-	                {
-	                    "value": "7000"
-	                },
-	                {
-	                    "value": "1000"
-	                },
-	                {
-	                    "value": "4000"
-	                },
-	                {
-	                    "value": "1000"
-	                },
-	                {
-	                    "value": "8000"
-	                },
-	                {
-	                    "value": "2000"
-	                },
-	                {
-	                    "value": "7000"
-	                }
-	            ]
-	        }
-	    ]
-	};
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public oneDriveService: OneDriveService,
+    public utilityService: UtilityService,
+    private blockerService: BlockerService
+  ) {	
+    this.showDetailBarChart(navParams.data.chart);
 
-	this.dataSource2 = {
+    this.oneDriveService.selectedCityUpdated.subscribe(() => {
+      this.showDetailBarChart({ cityId: this.oneDriveService.selectedCityId })
+    })
+
+  	this.dataSource2 = {
         "chart": {
 	        "showBorder": 0,
 	        "use3DLighting": 0,
@@ -279,5 +92,54 @@ export class DashboardDetailsComponent {
             }
         ]
     };
+  }
+
+  showDetailBarChart(parent) {
+    this.utilityService.showLoader();
+    this.oneDriveService.getFolders(parent.cityId).subscribe(
+      (res) => {
+        if(res.value) {
+          this.oneDriveService.folders[parent.cityId] = res.value;
+          for(let i=0; i < res.value.length; i++) {
+            if(res.value[i].name.toLowerCase().indexOf("ddept") > -1) {
+              this.getDDeptFile(res.value[i].id);
+              break;
+            }
+          }
+        } else {
+          this.utilityService.hideLoader();
+        }
+      },
+      (msg) => {
+        this.utilityService.hideLoader();
+        this.utilityService.showToast(msg);
+      }
+    )
+  }
+
+  getDDeptFile(id) {
+    this.oneDriveService.getWorkbook(id, 'DDept').subscribe(
+      (res) => {
+        this.oneDriveService.worksheets[id] = res;
+        this.utilityService.hideLoader();
+        this.computeMSCombiGraph(res.formulas);
+      },
+      (msg) => {
+        this.utilityService.hideLoader();
+        this.utilityService.showToast(msg);
+      }
+    )
+  }
+
+  computeMSCombiGraph(graphData) {
+    let chart = this.utilityService.getmsCombiChart();
+    for(let i=1; i < graphData.length; i++) {
+      chart.categories[0].category.push({ value:  graphData[i][1] });
+      chart.dataset[0].data.push({ value: graphData[i][2] });
+      chart.dataset[1].data.push({ value: graphData[i][4] });
+      chart.dataset[2].data.push({ value: graphData[i][3] });
+    }
+
+    this.combiChart = chart;
   }
 }

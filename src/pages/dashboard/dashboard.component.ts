@@ -24,6 +24,10 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if(this.oneDriveService.selectedCityId) {
+      this.getSecondFolders(this.oneDriveService.selectedCityId);
+    }
+    
   	this.authService.tokenReceived.subscribe((id) => {
   		this.getSecondFolders(id);
   	});
@@ -52,8 +56,8 @@ export class DashboardComponent implements OnInit {
   	db.scrollLeft = db.scrollLeft + 90;
   }
 
-  navigateToDetails(item) {
-  	this.navCtrl.push(DashboardDetailsComponent);
+  navigateToDetails(chart) {
+  	this.navCtrl.push(DashboardDetailsComponent, { chart });
   }
 
   getDayTotalNDeptFiles(filesInfo) {
@@ -71,12 +75,14 @@ export class DashboardComponent implements OnInit {
 	  						if(res.value[j].name.toLowerCase().indexOf("daytotalsfile") > -1)
 	  							dayTotalFiles.push({
 	  								id: res.value[j].id,
-	  								name: filesInfo[i].name
+	  								name: filesInfo[i].name,
+                    cityId: filesInfo[i].id
 	  							});
                 else if(res.value[j].name.toLowerCase().indexOf("ddept") > -1) {
                   dDeptFiles.push({
                     id: res.value[j].id,
-                    name: filesInfo[i].name
+                    name: filesInfo[i].name,
+                    cityId: filesInfo[i].id
                   });
                 }
 	  					}
@@ -110,7 +116,8 @@ export class DashboardComponent implements OnInit {
   					this.oneDriveService.worksheets[dIds[i].id] = res;
   					files.push({
   						name: dIds[i].name,
-  						formulas: res.formulas
+  						formulas: res.formulas,
+              cityId: dIds[i].cityId
   					})
   					count--;
   					if(count == 0 && breakout == 0) {
@@ -143,7 +150,8 @@ export class DashboardComponent implements OnInit {
     for(let i=0; i < graphData.length; i++) {
       let obj:any = {
         name: this.utilityService.getTitleCase(graphData[i].name),
-        chart: this.utilityService.getDChart()
+        chart: this.utilityService.getDChart(),
+        cityId: graphData[i].cityId
       };
 
       let count = 0;
@@ -193,7 +201,8 @@ export class DashboardComponent implements OnInit {
             this.oneDriveService.worksheets[depts[i].id] = res;
             files.push({
               name: depts[i].name,
-              formulas: res.formulas
+              formulas: res.formulas,
+              cityId: depts[i].cityId
             })
             count--;
             if(count == 0 && breakout == 0) {
@@ -216,7 +225,8 @@ export class DashboardComponent implements OnInit {
     for(let i=0; i < graphData.length; i++) {
       let obj:any = {
         name: graphData[i].name.toUpperCase(),
-        chart: this.utilityService.getBarChart()
+        chart: this.utilityService.getBarChart(),
+        cityId: graphData[i].cityId
       };
 
       for(let j=1; j < graphData[i].formulas.length; j++) {
