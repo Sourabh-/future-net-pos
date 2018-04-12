@@ -3,6 +3,7 @@ import { ActionSheetController } from 'ionic-angular';
 import { ProfileService } from '../../services/profile.service';
 import { BlockerService } from '../../services/blocker.service';
 import { AuthService } from '../../services/auth.service';
+import { OneDriveService } from '../../services/oneDrive.service';
 
 @Component({
   selector: 'profile',
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit {
     public profileService: ProfileService,
     public actionSheetCtrl: ActionSheetController,
     public blockerService: BlockerService,
-    public authService: AuthService
+    public authService: AuthService,
+    public oneDriveService: OneDriveService
   ) {}
 
   ngOnInit() {

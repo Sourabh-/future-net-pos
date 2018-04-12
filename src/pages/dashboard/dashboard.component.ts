@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(this.oneDriveService.selectedCityId) {
-      this.getSecondFolders(this.oneDriveService.selectedCityId);
+    if(this.oneDriveService.convId) {
+      this.getSecondFolders(this.oneDriveService.convId);
     }
     
   	this.authService.tokenReceived.subscribe((id) => {

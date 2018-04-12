@@ -54,4 +54,11 @@ export class MenuComponent {
       }
     }
   }
+
+  takeMeHome() {
+    if(this.utilityService.activeView !== 'dashboard') {
+      this.utilityService.activeView = 'dashboard';
+      this.navCtrl.push(DashboardComponent, {}, { 'animate': false });
+    }
+  }
 }

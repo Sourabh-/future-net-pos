@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import * as hello from 'hellojs/dist/hello.all.js';
-import { Response } from '@angular/http';
+import { Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 
@@ -31,6 +31,8 @@ function handleError(res: Response, cb) {
 @Injectable()
 export class OneDriveService {
 	URL = 'https://graph.microsoft.com/v1.0';
+	URLBeta = 'https://graph.microsoft.com/beta';
+
 	folders: any = {};
 	worksheets: any = {};
 	selectedCity: string = "";
@@ -38,6 +40,8 @@ export class OneDriveService {
 	selectedCityUpdated: EventEmitter<any> = new EventEmitter();
 	cities = [];
 	reauth: EventEmitter<void> = new EventEmitter();
+	photo:any;
+	convId: string = "";
 
 	constructor(
 		private http: Http,
@@ -56,6 +60,30 @@ export class OneDriveService {
 		return this.http
 	      .get(`${this.URL}/me`, this.authService.getAuthRequestOptions())
 	      .map(extractData)
+	      .catch((res: Response) => {
+	      	return handleError(res, () => {
+	      		this.reauth.emit();
+	      	});
+	      });
+	}
+
+	getPhoto() {
+		let headers = this.authService.getAuthRequestOptions();
+		headers['responseType'] = ResponseContentType.Blob;
+
+		return this.http
+	      .get(`${this.URLBeta}/me/photo/$value`, headers)
+	      .map((res) => {
+	      	let image:Blob = res.blob();
+	      	let reader = new FileReader();
+		    reader.addEventListener("load", () => {
+		      this.photo = reader.result;
+		    }, false);
+
+		    if (image) {
+		      reader.readAsDataURL(image);
+		    }
+	      })
 	      .catch((res: Response) => {
 	      	return handleError(res, () => {
 	      		this.reauth.emit();

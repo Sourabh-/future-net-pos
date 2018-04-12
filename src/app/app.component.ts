@@ -71,9 +71,17 @@ export class RootComponent implements OnInit {
       } else {
         this.isBusy = false;
         this.getMyProfile();
+        this.getMyPhoto();
         this.getOneDriveFolders();
       }
     }
+  }
+
+  getMyPhoto() {
+    this.oneDriveService.getPhoto().subscribe(
+      (res) => {},
+      (msg) => {}
+    )
   }
 
   getMyProfile() {
@@ -102,6 +110,7 @@ export class RootComponent implements OnInit {
           this.oneDriveService.folders['all'] = folders.value;
           for(let i=0; i<folders.value.length; i++) {
             if(folders.value[i].name.toLowerCase().indexOf('convany') > -1) {
+              this.oneDriveService.convId = folders.value[i].id;
               this.getSecondFolders(folders.value[i]);
               return;
             }
