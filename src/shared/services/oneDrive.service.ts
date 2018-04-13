@@ -40,8 +40,9 @@ export class OneDriveService {
 	selectedCityUpdated: EventEmitter<any> = new EventEmitter();
 	cities = [];
 	reauth: EventEmitter<void> = new EventEmitter();
-	photo:any;
+	photo: any;
 	convId: string = "";
+	totals: any;
 
 	constructor(
 		private http: Http,

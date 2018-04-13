@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController } from 'ionic-angular';
 import { DashboardDetailsComponent } from '../dashboard-details/dashboard-details.component';
 import { OneDriveService } from '../../shared/services/oneDrive.service';
 import { UtilityService } from '../../shared/services/utility.service';
@@ -16,13 +16,15 @@ export class DashboardComponent implements OnInit {
   barCharts = [];
   public query: string = '';
   public isSearchShow: boolean = false;
+  public totals:any = {};
 
   constructor(
   	public navCtrl: NavController,
   	public oneDriveService: OneDriveService,
   	public utilityService: UtilityService,
     private blockerService: BlockerService,
-    private authService: AuthService
+    private authService: AuthService,
+    public actionSheetCtrl: ActionSheetController
   ) {}
 
   ngOnInit() {
@@ -60,6 +62,7 @@ export class DashboardComponent implements OnInit {
 
   navigateToDetails(chart) {
   	this.navCtrl.push(DashboardDetailsComponent, { chart });
+    this.oneDriveService.setCity(chart.all, chart.cityId);
   }
 
   getDayTotalNDeptFiles(filesInfo) {
@@ -67,6 +70,7 @@ export class DashboardComponent implements OnInit {
   	let breakout = 0;
   	let dayTotalFiles = [];
     let dDeptFiles = [];
+    let wDeptFiles = [];
   	for(let i=0; i<filesInfo.length; i++) {
   		((i) => {
   			this.oneDriveService.getFolders(filesInfo[i].id)
@@ -86,6 +90,12 @@ export class DashboardComponent implements OnInit {
                     name: filesInfo[i].name,
                     cityId: filesInfo[i].id
                   });
+                } else if(res.value[j].name.toLowerCase().indexOf("wdept") > -1) {
+                  wDeptFiles.push({
+                    id: res.value[j].id,
+                    name: filesInfo[i].name,
+                    cityId: filesInfo[i].id
+                  });
                 }
 	  					}
 	  				}
@@ -94,7 +104,7 @@ export class DashboardComponent implements OnInit {
 	  				count--;
 	  				if(count == 0 && breakout == 0) {
 	  					this.getDayTotalFilesInfo(dayTotalFiles);
-              this.getDDeptFilesInfo(dDeptFiles);
+              this.getDDeptFilesInfo(dDeptFiles, wDeptFiles);
 	  				} 
 	  			},
 	  			(msg) => {
@@ -134,6 +144,15 @@ export class DashboardComponent implements OnInit {
   	}
   }
 
+  setTotal(totalObj, formula, thisYr, prevYr, yrMinTwo) {
+    if(formula[0].indexOf(thisYr + '') > -1)
+      totalObj.yearTotal += Number(formula[1]);
+    else if(formula[0].indexOf(prevYr + '') > -1)
+      totalObj.previousYearTotal += Number(formula[1]);
+    else if(formula[0].indexOf(yrMinTwo + '') > -1)
+      totalObj.yearMinusTwoTotal += Number(formula[1]);
+  }
+
   computeDGraphs(graphData) {
   	/*
     Object ==> name, previous, today, percent, type:P/L, chart
@@ -158,7 +177,23 @@ export class DashboardComponent implements OnInit {
       };
 
       let count = 0;
+      let thisYear = new Date().getFullYear();
+      let previousYear = thisYear - 1;
+      let yearMinusTwo = thisYear - 2;
+
+      if(!this.totals[obj.cityId])
+        this.totals[obj.cityId] = {
+          dayTotal: 0,
+          weekTotal: 0,
+          dayTotalCost: 0,
+          weekTotalCost: 0,
+          yearTotal: 0,
+          previousYearTotal: 0,
+          yearMinusTwoTotal: 0
+        };
+
       for(let j=0; j<graphData[i].formulas.length; j++) {
+        this.setTotal(this.totals[obj.cityId], graphData[i].formulas[j], thisYear, previousYear, yearMinusTwo);
         switch(graphData[i].formulas[j][0]) {
           case today:
             obj.today = graphData[i].formulas[j][1];
@@ -181,6 +216,8 @@ export class DashboardComponent implements OnInit {
         obj.percent = ((t > p) ? ((t-p)*100/t).toFixed(2) : ((p-t)*100/t).toFixed(2)) + '%';
       } else {
         obj.percent = '0%';
+        obj.today = 0;
+        obj.previous = 0;
       }
 
       obj.chart.chart.defaultCenterLabel = obj.percent;
@@ -190,26 +227,44 @@ export class DashboardComponent implements OnInit {
     }
 
     this.dCharts = ch;
+    this.oneDriveService.totals = this.totals;
   }
 
-  getDDeptFilesInfo(depts) {
-    let count = depts.length;
+  getDDeptFilesInfo(ddepts, wdepts) {
+    let count = ddepts.length + wdepts.length;
     let breakout = 0;
-    let files = [];
-    for(let i=0; i<depts.length; i++) {
+    let _fileObj = {};
+    for(let i=0; i<ddepts.length; i++) {
       ((i) => {
-        this.oneDriveService.getWorkbook(depts[i].id, 'DDept')
+
+        _fileObj[ddepts[i].cityId] = {
+          name: ddepts[i].name,
+          cityId: ddepts[i].cityId
+        };
+
+        this.oneDriveService.getWorkbook(ddepts[i].id, 'DDept')
         .subscribe(
           (res) => {
-            this.oneDriveService.worksheets[depts[i].id] = res;
-            files.push({
-              name: depts[i].name,
-              formulas: res.formulas,
-              cityId: depts[i].cityId
-            })
+            this.oneDriveService.worksheets[ddepts[i].id] = res;
+            _fileObj[ddepts[i].cityId].dformulas = res.formulas;
             count--;
             if(count == 0 && breakout == 0) {
-              this.computeBarGraphs(files);
+              this.computeBarGraphs(_fileObj);
+            }
+          },
+          (msg) => {
+            breakout = 1;
+            this.utilityService.showToast(msg);
+          })
+
+        this.oneDriveService.getWorkbook(wdepts[i].id, 'WDept')
+        .subscribe(
+          (res) => {
+            this.oneDriveService.worksheets[wdepts[i].id] = res;
+            _fileObj[ddepts[i].cityId].wformulas = res.formulas;
+            count--;
+            if(count == 0 && breakout == 0) {
+              this.computeBarGraphs(_fileObj);
             }
           },
           (msg) => {
@@ -225,23 +280,84 @@ export class DashboardComponent implements OnInit {
     Object ==> name, chart
     */
     let ch = [];
-    for(let i=0; i < graphData.length; i++) {
+    for(let key in graphData) {
       let obj:any = {
-        name: graphData[i].name.toUpperCase(),
-        chart: this.utilityService.getBarChart(),
-        cityId: graphData[i].cityId,
-        all: graphData[i].name
+        name: graphData[key].name.toUpperCase(),
+        chartD: this.utilityService.getBarChart(),
+        chartW: this.utilityService.getBarChart(),
+        cityId: graphData[key].cityId,
+        all: graphData[key].name,
+        period: 'Day'
       };
 
-      for(let j=1; j < graphData[i].formulas.length; j++) {
-        obj.chart.data.push({
-          label: graphData[i].formulas[j][1],
-          value: Number(graphData[i].formulas[j][2])
-        })
+      if(!this.totals[obj.cityId])
+        this.totals[obj.cityId] = {
+          dayTotal: 0,
+          weekTotal: 0,
+          yearTotal: 0,
+          previousYearTotal: 0,
+          yearMinusTwoTotal: 0,
+          dayTotalCost: 0,
+          weekTotalCost: 0
+        };
+
+      for(let j=1; j < graphData[key].dformulas.length; j++) {
+        obj.chartD.data.push({
+          label: graphData[key].dformulas[j][1],
+          value: Number(graphData[key].dformulas[j][2])
+        });
+
+        this.totals[obj.cityId].dayTotal += Number(graphData[key].dformulas[j][2]);
+        this.totals[obj.cityId].dayTotalCost += Number(graphData[key].dformulas[j][3]);
       }
+
+      for(let j=1; j < graphData[key].wformulas.length; j++) {
+        obj.chartW.data.push({
+          label: graphData[key].wformulas[j][1],
+          value: Number(graphData[key].wformulas[j][2])
+        });
+
+        this.totals[obj.cityId].weekTotal += Number(graphData[key].wformulas[j][2]);
+        this.totals[obj.cityId].weekTotalCost += Number(graphData[key].wformulas[j][3]);
+      }
+
       ch.push(obj);
     }
 
+    this.oneDriveService.totals = this.totals;
     this.barCharts = ch;
+  }
+
+  changePeriod(chart) {
+    let period = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Week',
+          handler: () => {
+            chart.period = 'Week';
+
+          }
+        },{
+          text: 'Day',
+          handler: () => {
+            chart.period = 'Day';
+          }
+        }
+      ]
+    });
+    period.present();
+  }
+
+  getTotal(cityId, type) {
+    if(!this.totals[cityId]) return '0.00';
+
+    switch(type) {
+      case 'day':
+        return this.utilityService.convertToMillion(this.totals[cityId].dayTotal);
+      case 'week':
+        return this.utilityService.convertToMillion(this.totals[cityId].weekTotal);
+      default:
+        return this.utilityService.convertToMillion(this.totals[cityId].yearTotal);
+    }
   }
 }

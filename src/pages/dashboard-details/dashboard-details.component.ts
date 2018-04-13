@@ -10,47 +10,20 @@ import { OneDriveService } from '../../shared/services/oneDrive.service';
 })
 export class DashboardDetailsComponent {
 
-  combiChart:any;
-  dataSource2;
+  combiChart: any;
+  dChart: any;
+  totals: any = {};
+  period: string = 'Day'; 
+  selectedRowVal: any;
+  selectedRow: any;
 
   public header = [
   	'SOURCE', 
   	'DAY', 
-  	'WEEK', 
-  	'MONTH', 
-  	'YEAR' 
+  	'WEEK'
   ];
 
-  public rows = [
-  		[ 
-  			{value: 'Grocery', class: ''},
-  			{value: '100 (24.7%)', class: ''},
-  			{value: '3.4', class: ''},
-  			{value: '100', class: ''},
-  			{value: '71 (36.5%)', class: ''}
-  		],
-  		[ 
-  			{value: 'Grocery', class: ''},
-  			{value: '100 (24.7%)', class: ''},
-  			{value: '3.4', class: ''},
-  			{value: '100', class: ''},
-  			{value: '71 (36.5%)', class: ''}
-  		],
-  		[ 
-  			{value: 'Grocery', class: ''},
-  			{value: '100 (24.7%)', class: ''},
-  			{value: '3.4', class: ''},
-  			{value: '100', class: ''},
-  			{value: '71 (36.5%)', class: ''}
-  		],
-  		[ 
-  			{value: 'Grocery', class: ''},
-  			{value: '100 (24.7%)', class: ''},
-  			{value: '3.4', class: ''},
-  			{value: '100', class: ''},
-  			{value: '71 (36.5%)', class: ''}
-  		],
-  ];
+  public rows = [];
 
   constructor(
     public navCtrl: NavController, 
@@ -59,50 +32,135 @@ export class DashboardDetailsComponent {
     public utilityService: UtilityService,
     private blockerService: BlockerService
   ) {	
-    this.showDetailBarChart(navParams.data.chart);
 
+    this.init();
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
-      this.showDetailBarChart({ cityId: this.oneDriveService.selectedCityId })
+      this.init();
     })
+  }
 
-  	this.dataSource2 = {
+  init() {
+    this.showDetailBarChart({ cityId: this.oneDriveService.selectedCityId }, 'DDept');
+    this.totals = this.oneDriveService.totals || {};
+    this.computeDChart();
+    this.getTableData();
+  }
+
+  computeDChart() {
+    let yr = new Date().getFullYear();
+    let total = this.utilityService.convertToMillion(this.totals[this.oneDriveService.selectedCityId].yearTotal + this.totals[this.oneDriveService.selectedCityId].previousYearTotal + this.totals[this.oneDriveService.selectedCityId].yearMinusTwoTotal);
+    this.dChart = {
         "chart": {
-	        "showBorder": 0,
-	        "use3DLighting": 0,
-	        "startingAngle": "310",
-	        "showLabels": 0,
-	        "showValues": 0,
-	        "showPercentValues": 0,
-	        "showLegend": 0,
-	        "centerLabelBold": "1",
-	        "showTooltip": 0,
-	        "decimals": 0,
-	        "useDataPlotColorForLabels": "1",
-	        "theme": "fint",
-	        "doughnutRadius": "32"
+          "showBorder": 0,
+          "use3DLighting": 0,
+          "startingAngle": "310",
+          "showLabels": "1",
+          "showValues": 0,
+          "showPercentValues": 0,
+          "showLegend": 0,
+          "centerLabelBold": "1",
+          "showTooltip": 0,
+          "decimals": 0,
+          "useDataPlotColorForLabels": "1",
+          "theme": "fint",
+          "doughnutRadius": "40",
+          "paletteColors": "#22F0F1,#551A8B,#FF0000",
+          "enableSlicing": 0,
+          "animateClockwise": "1",
+          "defaultCenterLabel": total + ' M'
         },
         "data": [
             {
-                "label": "Bakersfield Central",
-                "value": "50"
+                "label": yr,
+                "value": this.totals[this.oneDriveService.selectedCityId].yearTotal
             },
             {
-                "label": "Garden Groove harbour",
-                "value": "50"
+                "label": yr-1,
+                "value": this.totals[this.oneDriveService.selectedCityId].previousYearTotal
+            },
+            {
+                "label": yr-2,
+                "value": this.totals[this.oneDriveService.selectedCityId].yearMinusTwoTotal
             }
         ]
     };
   }
 
-  showDetailBarChart(parent) {
+  getTableData() {
+    this.oneDriveService.getFolders(this.oneDriveService.selectedCityId).subscribe(
+      (res) => {
+        if(res.value) {
+          let count = 2;
+          let breakout = 0;
+          let iDs:any = {};
+          for(let i=0; i < res.value.length; i++) {
+            if(res.value[i].name.toLowerCase().indexOf('ddept') > -1) {
+              this.oneDriveService.getWorkbook(res.value[i].id, 'DDept').subscribe(
+                (res1) => {
+                  iDs.day = res1.formulas;
+                  count--;
+                  if(count == 0 && breakout == 0) {
+                    this.computeTable(iDs);
+                  }
+                },
+                (msg) => {
+                  breakout = 1;
+                  this.utilityService.showToast(msg);
+                }
+              )
+            } else if(res.value[i].name.toLowerCase().indexOf('wdept') > -1) {
+              this.oneDriveService.getWorkbook(res.value[i].id, 'WDept').subscribe(
+                (res1) => {
+                  iDs.week = res1.formulas;
+                  count--;
+                  if(count == 0 && breakout == 0) {
+                    this.computeTable(iDs);
+                  }
+                },
+                (msg) => {
+                  breakout = 1;
+                  this.utilityService.showToast(msg);
+                }
+              )
+            }
+
+            if(count == 0) {
+
+              break;
+            }
+          }
+        }
+      },
+      (msg) => {
+        this.utilityService.showToast(msg);
+      }
+    )
+  }
+
+  computeTable(tableData) {
+    let rows = [];
+    for(let i=1; i < tableData.day.length; i++) {
+      rows.push([
+        { value: tableData.day[i][1] },
+        { value: tableData.day[i][2], percent: tableData.day[i][4] },
+        { value: tableData.week[i][2] }
+      ]);
+    }
+
+    this.rows = rows;
+    this.selectedRow = rows[0];
+    this.selectedRowVal = rows[0][0].value;
+  }
+
+  showDetailBarChart(parent, fname) {
     this.utilityService.showLoader();
     this.oneDriveService.getFolders(parent.cityId).subscribe(
       (res) => {
         if(res.value) {
           this.oneDriveService.folders[parent.cityId] = res.value;
           for(let i=0; i < res.value.length; i++) {
-            if(res.value[i].name.toLowerCase().indexOf("ddept") > -1) {
-              this.getDDeptFile(res.value[i].id);
+            if(res.value[i].name.toLowerCase().indexOf(fname.toLowerCase()) > -1) {
+              this.getDDeptFile(res.value[i].id, fname);
               break;
             }
           }
@@ -117,8 +175,8 @@ export class DashboardDetailsComponent {
     )
   }
 
-  getDDeptFile(id) {
-    this.oneDriveService.getWorkbook(id, 'DDept').subscribe(
+  getDDeptFile(id, fname) {
+    this.oneDriveService.getWorkbook(id, fname).subscribe(
       (res) => {
         this.oneDriveService.worksheets[id] = res;
         this.utilityService.hideLoader();
@@ -141,5 +199,51 @@ export class DashboardDetailsComponent {
     }
 
     this.combiChart = chart;
+  }
+
+  getTotal(type) {
+    if(this.oneDriveService.selectedCityId && this.totals[this.oneDriveService.selectedCityId]) {
+      return this.utilityService.numWithCommas(Number(this.totals[this.oneDriveService.selectedCityId][type]).toFixed(2));
+    }
+  }
+
+  getSalesFigure(type) {
+    if(this.oneDriveService.selectedCityId && this.totals[this.oneDriveService.selectedCityId]) {
+      switch(type) {
+        case 'current':
+          return this.utilityService.convertToMillion(this.totals[this.oneDriveService.selectedCityId].yearTotal);
+        case 'prev':
+          return this.utilityService.convertToMillion(this.totals[this.oneDriveService.selectedCityId].previousYearTotal);
+        default: 
+          return this.utilityService.convertToMillion(this.totals[this.oneDriveService.selectedCityId].yearMinusTwoTotal);
+      }
+    } else {
+      return '0.00';
+    }
+  }
+
+  getYear(type) {
+    switch(type) {
+      case 'current':
+        return new Date().getFullYear();
+      case 'prev':
+        return new Date().getFullYear() - 1;
+      default: 
+        return new Date().getFullYear() - 2;
+    }
+  }
+
+  changePeriod(type) {
+    this.period = type;
+    this.showDetailBarChart({ cityId: this.oneDriveService.selectedCityId }, type == 'Day' ? 'DDept' : 'WDept');
+  }
+
+  rowChanged(ev) {
+    for(let i=0; i < this.rows.length; i++) {
+      if(this.rows[i][0].value == ev) {
+        this.selectedRow = this.rows[i];
+        break;
+      }
+    }
   }
 }

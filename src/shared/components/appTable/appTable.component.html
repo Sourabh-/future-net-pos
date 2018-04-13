@@ -3,8 +3,18 @@
     <th *ngFor= "let head of header">{{head}}</th>
     <th *ngIf="options.isEditable"> </th>
   </thead>
-  <tbody>
+  <tbody *ngIf="!isHideFooter">
     <tr *ngFor="let row of rows | search: searchFilter | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
+      <td *ngFor="let data of row">
+        <span [ngClass]="data.class || ''">{{data[value]}}</span>
+      </td>
+      <td *ngIf="options.isEditable">
+        <ion-icon name="create" color="primary"></ion-icon>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="isHideFooter">
+    <tr *ngFor="let row of rows" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
       <td *ngFor="let data of row">
         <span [ngClass]="data.class || ''">{{data[value]}}</span>
       </td>
@@ -15,6 +25,6 @@
   </tbody>
 </table>
 
-<div text-center>
+<div text-center *ngIf="!isHideFooter">
   <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
 </div>

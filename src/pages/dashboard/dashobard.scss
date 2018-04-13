@@ -126,6 +126,8 @@ dashboard {
   .bar-card-header-right {
     color: #999;
     cursor: pointer;
+    display: flex;
+    align-items: center;
   }
 
   .bard-card-arrow {

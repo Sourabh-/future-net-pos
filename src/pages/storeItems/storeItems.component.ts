@@ -97,7 +97,7 @@ export class StoreItemsComponent implements OnInit {
     let _rows = [];
     for(let i=0; i<sheetDataArr.length; i++) {
       _rows.push([
-        { value: i+1 },
+        { value: i+1, all: sheetDataArr[i].join(",")},
         { value: sheetDataArr[i][0].split("=")[1] },
         { value: sheetDataArr[i][1].replace(/\"/g, '') },
         { value: sheetDataArr[i][3].replace(/^0+/, '') },

@@ -41,30 +41,30 @@
           <div class="bar-card" *ngFor="let chart of barCharts | search: query">
             <div class="bar-card-header">
               <span class="bar-card-header-label pull-left">{{chart.name}}</span>
-              <span class="bar-card-header-right pull-right">
-                Week
-                <ion-icon class="bar-card-arrow" name="ios-arrow-down"></ion-icon>&nbsp;&nbsp;&nbsp;
-                <span class="bard-card-details">View Detail</span>
+              <span class="bar-card-header-right pull-right cursor" (click)="changePeriod(chart)">
+                <div>{{chart.period}}</div>&nbsp;&nbsp;
+                <ion-icon class="bar-card-arrow" name="ios-arrow-down"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="bard-card-details pointer" (click)="navigateToDetails(chart)">View Detail</span>
               </span>
             </div>
             <div class="bar-card-body">
-              <fusioncharts width="100%" height="550" type="bar2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
+              <fusioncharts width="100%" height="550" type="bar2d" dataFormat="json" [dataSource]="chart.period == 'Week' ? chart.chartW : chart.chartD"></fusioncharts>
             </div>
             <div class="bar-card-footer">
               <div class="info-div card-info-border" text-center>
                 <span>Day Sales</span>
                 <br/>
-                <span> <div class="dot l-blue-bg"></div>&nbsp;$ 3.4 M</span>
+                <span> <div class="dot l-blue-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'day')}} M</span>
               </div>
               <div class="info-div card-info-border" text-center>
                 <span>Weekly Sales</span>
                 <br/>
-                <span> <div class="dot purple-bg"></div>&nbsp;$ 3.4 M</span>
+                <span> <div class="dot purple-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'week')}} M</span>
               </div>
               <div class="info-div" text-center>
                 <span>Yearly Sales</span>
                 <br/>
-                <span> <div class="dot red-bg"></div>&nbsp;$ 3.4 M</span>
+                <span> <div class="dot red-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'year')}} M</span>
               </div>
             </div>
           </div>

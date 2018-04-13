@@ -24,9 +24,17 @@ dashboard-details {
   }
 
   .sales-card-sub-header {
-    font-size: 14px;
+    font-size: 12px;
     color: #999;
-    margin-top: 10px; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    display: flex;
+  }
+
+  .active {
+    color: #2bd7ce;
+    border-bottom: 3px solid #2bd7ce;
+    padding-bottom: 5px;
   }
 
   .sales-card-chart {}
@@ -46,13 +54,14 @@ dashboard-details {
   }
 
   .time-card-dollar {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .footer-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
   }
 
   .footer-card-header-text {
@@ -103,5 +112,35 @@ dashboard-details {
   .header-bottom {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
+  }
+
+  .table {
+    width: 100%;
+    font-size: smaller;
+  }
+
+  .table thead {
+    border-bottom: 1px solid #bdbdbd;
+  }
+
+  .table th {
+    font-size: 12px;
+    color: #999;
+    padding: 5px 5px 10px 5px;
+    text-align: left;
+  }
+
+  .table tr {
+    background: #FFFFFF;
+    color: #4d4c4c;
+    border-bottom: 1px solid #BDBDBD;
+  }
+
+  .table tr:last-child {
+    border-bottom: none;
+  }
+
+  .table td {
+    padding: 5px 5px 10px 5px;
   }
 }

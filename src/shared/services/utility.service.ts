@@ -94,7 +94,8 @@ export const msCombiObj = {
         "legendBorderAlpha": "0",
         "legendShadow": "0",
         "legendItemFontSize": "10",
-        "legendItemFontColor": "#666666"
+        "legendItemFontColor": "#666666",
+        "sNumberSuffix": "%"
     },
     "categories": [
         {
@@ -109,6 +110,8 @@ export const msCombiObj = {
         },
         {
             "seriesName": "GP % ",
+            "parentYAxis": "S",
+            "showValues": "0",
             "renderAs": "line",
             "data": []
         },
@@ -203,5 +206,13 @@ export class UtilityService {
 
 	getTitleCase(str) {
 		return str.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+	}
+
+	convertToMillion(number) {
+		return (Number(number)/1000000).toFixed(2);
+	}
+
+	numWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 }

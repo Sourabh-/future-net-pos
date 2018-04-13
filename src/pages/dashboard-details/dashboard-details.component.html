@@ -18,16 +18,14 @@
             <ion-col col-12>
               <div class="sales-card">
                 <div class="sales-card-header">
-                  Current Week Dept Sales
+                  Current {{period}} Dept Sales
                 </div>
                 <div class="sales-card-sub-header">
-                  <span>Day</span>&nbsp;&nbsp;
-                  <span>Week</span>&nbsp;&nbsp;
-                  <span>Month</span>&nbsp;&nbsp;
-                  <span>Year</span>
+                  <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
                 </div>
                 <div class="sales-card-chart">
-                  <fusioncharts width="100%" height="400" type="mscombi2D" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
+                  <fusioncharts width="100%" height="400" type="mscombidy2d" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
                 </div>
               </div>
             </ion-col>
@@ -46,7 +44,7 @@
                       <ion-col col-6 text-center>
                         <div class="time-card-div-border">
                           <div class="time-card-dollar">
-                            <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                            <span class="dot l-blue-bg"></span>&nbsp; ${{getTotal('dayTotal')}}
                           </div>
                           <div class="dark-grey">Total Sales</div>
                         </div>
@@ -54,7 +52,7 @@
                       <ion-col col-6 text-center>
                         <div>
                           <div class="time-card-dollar">
-                            <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                            <span class="dot purple-bg"></span>&nbsp; ${{getTotal('dayTotalCost')}}
                           </div>
                           <div class="dark-grey">Total Cost</div>
                         </div>
@@ -75,7 +73,7 @@
                       <ion-col col-6 text-center>
                         <div class="time-card-div-border">
                           <div class="time-card-dollar">
-                            <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                            <span class="dot l-blue-bg"></span>&nbsp; ${{getTotal('weekTotal')}}
                           </div>
                           <div class="dark-grey">Total Sales</div>
                         </div>
@@ -83,7 +81,7 @@
                       <ion-col col-6 text-center>
                         <div>
                           <div class="time-card-dollar">
-                            <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                            <span class="dot purple-bg"></span>&nbsp; ${{getTotal('weekTotalCost')}}
                           </div>
                           <div class="dark-grey">Total Cost</div>
                         </div>
@@ -101,32 +99,31 @@
               <div class="app-card">
                 <div class="footer-card-header">
                   <div class="footer-card-header-text">
-                    Burliegh
+                    {{oneDriveService.selectedCity ? (oneDriveService.selectedCity | titlecase) : ''}}
                   </div>
-                  <ion-select placeholder="3 Years"></ion-select>
                 </div>
                 <div class="footer-card-body">
                   <div class="footer-card-chart">
-                    <fusioncharts width="70%" height="250" type="doughnut2D" dataFormat="json" [dataSource]="dataSource2"></fusioncharts>
+                    <fusioncharts width="60%" height="180" type="doughnut2D" dataFormat="json" [dataSource]="dChart"></fusioncharts>
                   </div>
                   <div class="footer-card-info">
                     <div class="footer-card-div-border footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $1,111
+                        <span class="dot l-blue-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('current')}} M</span>
                       </div>
-                      <div class="dark-grey footer-card-sub-text">Year 2016</div>
+                      <div class="dark-grey footer-card-sub-text">Year {{getYear('current')}}</div>
                     </div>
                     <div class="footer-card-div-border footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot purple-bg"></span>&nbsp;&nbsp; $1,111
+                        <span class="dot purple-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('prev')}} M</span>
                       </div>
-                      <div class="dark-grey footer-card-sub-text">Year 2017</div>
+                      <div class="dark-grey footer-card-sub-text">Year {{getYear('prev')}}</div>
                     </div>
                     <div class="footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot red-bg"></span>&nbsp;&nbsp; $1,111
+                        <span class="dot red-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('minTwo')}} M</span>
                       </div>
-                      <div class="dark-grey footer-card-sub-text">Year 2018</div>
+                      <div class="dark-grey footer-card-sub-text">Year {{getYear('minTwo')}}</div>
                     </div>
                     <div></div>
                     <div></div>
@@ -140,10 +137,20 @@
                   <div class="footer-card-header-text">
                     Total Sales
                   </div>
-                  <ion-select placeholder="3 Years"></ion-select>
                 </div>
                 <div class="footer-card-body-table">
-                  <app-table [header]="header" [rows]="rows" isFullWidth="true" reverseBg="true" isHideFooter="true"></app-table>
+                  <table class="table">
+                    <thead>
+                      <th *ngFor="let head of header">{{head}}</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of rows">
+                        <td *ngFor="let data of row">
+                          <span>{{data.value}} &nbsp;<span *ngIf="data.percent" class="dark-grey">({{data.percent}}%)</span></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </ion-col>
@@ -173,16 +180,14 @@
       <ion-col col-12>
         <div class="sales-card">
           <div class="sales-card-header">
-            Current Week Dept Sales
+            Current {{period}} Dept Sales
           </div>
           <div class="sales-card-sub-header">
-            <span>Day</span>&nbsp;&nbsp;
-            <span>Week</span>&nbsp;&nbsp;
-            <span>Month</span>&nbsp;&nbsp;
-            <span>Year</span>
+            <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
           </div>
           <div class="sales-card-chart">
-            <fusioncharts width="100%" height="400" type="mscombi2D" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
+            <fusioncharts width="100%" height="400" type="mscombidy2d" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
           </div>
         </div>
       </ion-col>
@@ -201,7 +206,7 @@
                 <ion-col col-6 text-center>
                   <div class="time-card-div-border">
                     <div class="time-card-dollar">
-                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getTotal('dayTotal')}}
                     </div>
                     <div class="dark-grey">Total Sales</div>
                   </div>
@@ -209,7 +214,7 @@
                 <ion-col col-6 text-center>
                   <div>
                     <div class="time-card-dollar">
-                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getTotal('dayTotalCost')}}
                     </div>
                     <div class="dark-grey">Total Cost</div>
                   </div>
@@ -230,7 +235,7 @@
                 <ion-col col-6 text-center>
                   <div class="time-card-div-border">
                     <div class="time-card-dollar">
-                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $11, 110
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getTotal('weekTotal')}}
                     </div>
                     <div class="dark-grey">Total Sales</div>
                   </div>
@@ -238,7 +243,7 @@
                 <ion-col col-6 text-center>
                   <div>
                     <div class="time-card-dollar">
-                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $8,043
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getTotal('weekTotalCost')}}
                     </div>
                     <div class="dark-grey">Total Cost</div>
                   </div>
@@ -256,32 +261,32 @@
         <div class="app-card">
           <div class="footer-card-header">
             <div class="footer-card-header-text">
-              Burliegh
+              {{oneDriveService.selectedCity ? (oneDriveService.selectedCity | titlecase) : ''}}
             </div>
             <ion-select placeholder="3 Years"></ion-select>
           </div>
           <div class="footer-card-body">
             <div class="footer-card-chart">
-              <fusioncharts width="70%" height="250" type="doughnut2D" dataFormat="json" [dataSource]="dataSource2"></fusioncharts>
+              <fusioncharts width="60%" height="180" type="doughnut2D" dataFormat="json" [dataSource]="dChart"></fusioncharts>
             </div>
             <div class="footer-card-info">
               <div class="footer-card-div-border footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $1,111
+                  <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('current')}} M
                 </div>
-                <div class="dark-grey footer-card-sub-text">Year 2016</div>
+                <div class="dark-grey footer-card-sub-text">Year {{getYear('current')}}</div>
               </div>
               <div class="footer-card-div-border footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot purple-bg"></span>&nbsp;&nbsp; $1,111
+                  <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('prev')}} M
                 </div>
-                <div class="dark-grey footer-card-sub-text">Year 2017</div>
+                <div class="dark-grey footer-card-sub-text">Year {{getYear('prev')}}</div>
               </div>
               <div class="footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot red-bg"></span>&nbsp;&nbsp; $1,111
+                  <span class="dot red-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('minTwo')}} M
                 </div>
-                <div class="dark-grey footer-card-sub-text">Year 2018</div>
+                <div class="dark-grey footer-card-sub-text">Year {{getYear('minTwo')}}</div>
               </div>
               <div></div>
               <div></div>
@@ -297,9 +302,11 @@
             </div>
           </div>
           <div class="footer-card-sub-header">
-            <ion-select placeholder="Grocery" class="ion-select-custom"></ion-select>
+            <ion-select [(ngModel)]="selectedRowVal" (ngModelChange)="rowChanged($event)" class="ion-select-custom">
+              <ion-option *ngFor="let row of rows" [value]="row[0].value">{{row[0].value}}</ion-option>
+            </ion-select>
           </div>
-          <div>
+          <div *ngIf="selectedRow">
             <ion-grid>
               <ion-row>
                 <ion-col col-6>
@@ -307,7 +314,7 @@
                     <div class="dark-grey">Day</div>
                     <div text-center>
                       <span class="dot l-blue-bg"></span>
-                      <span><b>$5.4 M</b></span>
+                      <span><b>${{selectedRow[1].value}}</b></span>
                     </div>
                   </div>
                 </ion-col>
@@ -315,28 +322,8 @@
                   <div class="footer-time-card app-card">
                     <div class="dark-grey">Week</div>
                     <div text-center>
-                      <span class="dot l-blue-bg"></span>
-                      <span><b>$5.4 M</b></span>
-                    </div>
-                  </div>
-                </ion-col>
-              </ion-row>
-               <ion-row>
-                <ion-col col-6>
-                  <div class="footer-time-card app-card">
-                    <div class="dark-grey">Month</div>
-                    <div text-center>
-                      <span class="dot l-blue-bg"></span>
-                      <span><b>$5.4 M</b></span>
-                    </div>
-                  </div>
-                </ion-col>
-                <ion-col col-6>
-                  <div class="footer-time-card app-card">
-                    <div class="dark-grey">Year</div>
-                    <div text-center>
-                      <span class="dot l-blue-bg"></span>
-                      <span><b>$5.4 M</b></span>
+                      <span class="dot purple-bg"></span>
+                      <span><b>${{selectedRow[2].value}}</b></span>
                     </div>
                   </div>
                 </ion-col>
