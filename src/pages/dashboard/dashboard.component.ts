@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
   
   dCharts = [];
   barCharts = [];
+  public query: string = '';
+  public isSearchShow: boolean = false;
 
   constructor(
   	public navCtrl: NavController,
@@ -151,7 +153,8 @@ export class DashboardComponent implements OnInit {
       let obj:any = {
         name: this.utilityService.getTitleCase(graphData[i].name),
         chart: this.utilityService.getDChart(),
-        cityId: graphData[i].cityId
+        cityId: graphData[i].cityId,
+        all: graphData[i].name
       };
 
       let count = 0;
@@ -226,7 +229,8 @@ export class DashboardComponent implements OnInit {
       let obj:any = {
         name: graphData[i].name.toUpperCase(),
         chart: this.utilityService.getBarChart(),
-        cityId: graphData[i].cityId
+        cityId: graphData[i].cityId,
+        all: graphData[i].name
       };
 
       for(let j=1; j < graphData[i].formulas.length; j++) {

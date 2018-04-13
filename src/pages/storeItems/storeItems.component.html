@@ -5,7 +5,7 @@
       <div class="desktop-header">
         <ion-label class="header-title">
           <h6>Store Items</h6></ion-label>
-        <ion-searchbar placeholder="Search keyword OR by APN number..."></ion-searchbar>
+        <ion-searchbar placeholder="Search keyword OR by APN number..." [(ngModel)]="query"></ion-searchbar>
         <profile></profile>
       </div>
       <div class="desktop-body mar-bot-83">
@@ -23,14 +23,16 @@
       Store Items
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
+      <button ion-button icon-only (click)="isSearchShow = !isSearchShow; query = ''">
+        <ion-icon *ngIf="!isSearchShow" name="search"></ion-icon>
+        <ion-icon *ngIf="isSearchShow" name="close"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content showWhen="android,ios,windows">
-  <div *ngFor="let row of scrollItems">
+  <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
+  <div *ngFor="let row of scrollItems | search: query">
     <ion-card>
       <ion-card-content>
         <button ion-item class="no-padding-left">

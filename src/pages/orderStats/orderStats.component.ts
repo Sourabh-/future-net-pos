@@ -14,6 +14,8 @@ export class OrderStatsComponent implements OnInit {
   public perPageCount = 20;
   public currentPage = 0;
   public scrollItems = [];
+  public query: string = '';
+  public isSearchShow: boolean = false;
 
   constructor(
   	public navCtrl: NavController,
@@ -80,11 +82,13 @@ export class OrderStatsComponent implements OnInit {
 	          			orderNo: res.formulas[i][2],
 	          			createdDate: _date.getDate() + this.utilityService.getDateSub(Number(_date.getDate())) + " " + this.utilityService.getMonth(_date.getMonth() + 1) + ", " + _date.getFullYear(),
 	          			itemQty: 1,
-                  items: [res.formulas[i][4] + '']
+                  items: [res.formulas[i][4] + ''],
+                  all: res.formulas[i][2] + " " + res.formulas[i][4]
 	          		}
           		} else {
           			_formulas[res.formulas[i][2]].itemQty += 1;
                 _formulas[res.formulas[i][2]].items.push(res.formulas[i][4] + '');   		
+                _formulas[res.formulas[i][2]]['all'] += ' ' + res.formulas[i][4];
               }
           	}
           }

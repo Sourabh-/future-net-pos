@@ -17,6 +17,8 @@ import { OneDriveService } from './services/oneDrive.service';
 import { ProfileService } from './services/profile.service';
 import { BlockerService } from './services/blocker.service';
 
+import { SearchPipe } from './pipes/search.pipe';
+
 @NgModule({
   declarations: [
     MenuComponent,
@@ -24,7 +26,8 @@ import { BlockerService } from './services/blocker.service';
     CsvCardsComponent,
     AppTableComponent,
     ProfileComponent,
-    BlockerComponent
+    BlockerComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { BlockerService } from './services/blocker.service';
     CsvCardsComponent,
     AppTableComponent,
     ProfileComponent,
-    BlockerComponent
+    BlockerComponent,
+    SearchPipe
   ],
   providers: [
     UtilityService,

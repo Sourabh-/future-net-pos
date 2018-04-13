@@ -32,6 +32,8 @@ export class OrderStatsDetailsComponent implements OnInit {
   public scrollItems = [];
   public isShown:boolean = false;
   public openRow = {};
+  public query: string = '';
+  public isSearchShow: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -102,12 +104,12 @@ export class OrderStatsDetailsComponent implements OnInit {
     for(let i=0; i<sheetDataArr.length; i++) {
       if(this.parent.items.indexOf(sheetDataArr[i][0].split("=")[1]) > -1) {
         _rows.push([
-          { value: ++count },
+          { value: ++count, all: sheetDataArr[i][0].split("=")[1] },
           { value: '-' },
           { value: '-' },
+          { value:  this.parent.orderNo },
           { value: sheetDataArr[i][0].split("=")[1] },
           { value: sheetDataArr[i][1].replace(/\"/g, '') },
-          { value: '-' },
           { value: '-' },
           { value: '-' },
           { value: '-' },

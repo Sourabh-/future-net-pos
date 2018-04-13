@@ -28,6 +28,8 @@ export class StoreItemsComponent implements OnInit {
   public rows = [];
   public scrollItems = [];
   public openRow = {};
+  public query:string = '';
+  public isSearchShow: boolean = false;
 
   constructor(
     public navCtrl: NavController,

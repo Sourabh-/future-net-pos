@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-table',
   templateUrl: 'appTable.component.html'
 })
-export class AppTableComponent implements OnInit, OnChanges {
+export class AppTableComponent implements OnInit {
 
   @Input() header = [];
   @Input() rows = [];
@@ -14,6 +14,8 @@ export class AppTableComponent implements OnInit, OnChanges {
   @Input() reverseBg = false;
   @Input() isHideFooter = false;
   @Input() value = 'value';
+  @Input() searchFilter = '';
+
   public perPageCount = 20;
   public currentPage = 0;
 
@@ -22,16 +24,6 @@ export class AppTableComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.computePagination();
-  }
-
-  ngOnChanges(changes) {
-    if(!_.isEqual(changes.rows.previousValue, changes.currentValue)) {
-      this.computePagination();
-    }
-  }
-
-  computePagination() {
     
   }
 }

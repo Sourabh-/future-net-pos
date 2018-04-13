@@ -3,7 +3,7 @@
     <menu class="menu"></menu>
     <div class="content-container">
       <div class="desktop-header desktop-header-pad">
-        <ion-searchbar placeholder="Search Stores"></ion-searchbar>
+        <ion-searchbar class="custom-searchbar" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
         <profile></profile>
       </div>
       <div class="desktop-body mar-bot-83">
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="doughnut-body" id="doughnut-body">
-            <div class="doughnut-card" *ngFor="let chart of dCharts" (click)="navigateToDetails(chart)">
+            <div class="doughnut-card" *ngFor="let chart of dCharts | search: query" (click)="navigateToDetails(chart)">
               <div class="doughnut-card-header">{{chart.name}}</div>
               <div class="doughnut-card-body">
                 <div class="doughnut-card-body-header">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="bar-container">
-          <div class="bar-card" *ngFor="let chart of barCharts">
+          <div class="bar-card" *ngFor="let chart of barCharts | search: query">
             <div class="bar-card-header">
               <span class="bar-card-header-label pull-left">{{chart.name}}</span>
               <span class="bar-card-header-right pull-right">
@@ -82,16 +82,18 @@
       All Stores
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
+      <button ion-button icon-only (click)="isSearchShow = !isSearchShow; query = ''">
+        <ion-icon *ngIf="!isSearchShow" name="search"></ion-icon>
+        <ion-icon *ngIf="isSearchShow" name="close"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content showWhen="android,ios,windows">
+  <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
   <ion-grid>
     <ion-row>
-      <ion-col col-6 *ngFor="let chart of dCharts">
+      <ion-col col-6 *ngFor="let chart of dCharts | search: query">
         <div class="doughnut-card-mob">
           <div class="doughnut-card-header-mob">{{chart.name}}</div>
           <div class="doughnut-card-body-mob">

@@ -4,7 +4,7 @@
     <th *ngIf="options.isEditable"> </th>
   </thead>
   <tbody>
-    <tr *ngFor="let row of rows | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
+    <tr *ngFor="let row of rows | search: searchFilter | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
       <td *ngFor="let data of row">
         <span [ngClass]="data.class || ''">{{data[value]}}</span>
       </td>
