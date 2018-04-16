@@ -76,6 +76,8 @@ export class OrderStatsComponent implements OnInit {
           for(let i=1; i<res.formulas.length; i++) {
           	if(res.formulas[i][0] && res.formulas[i][0].trim() && res.formulas[i][0] != 'HEADER') {
           		let _dateArr = res.formulas[i][1].split(" ")[0].split("/");
+              let _timeArr = res.formulas[i][1].split(" ")[1].split(":");
+              let time = this.utilityService.tConvert(_timeArr[0] + ":" + _timeArr[1]);
           		let _date = new Date(_dateArr[2], Number(_dateArr[1])-1, _dateArr[0]);
           		if(!_formulas[res.formulas[i][2]]){
 	          		 _formulas[res.formulas[i][2]] = {
@@ -83,7 +85,8 @@ export class OrderStatsComponent implements OnInit {
 	          			createdDate: _date.getDate() + this.utilityService.getDateSub(Number(_date.getDate())) + " " + this.utilityService.getMonth(_date.getMonth() + 1) + ", " + _date.getFullYear(),
 	          			itemQty: 1,
                   items: [res.formulas[i][4] + ''],
-                  all: res.formulas[i][2] + " " + res.formulas[i][4]
+                  all: res.formulas[i][2] + " " + res.formulas[i][4],
+                  createdTime: time
 	          		}
           		} else {
           			_formulas[res.formulas[i][2]].itemQty += 1;

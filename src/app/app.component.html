@@ -5,6 +5,11 @@
       <img [src]="oneDriveService.photo || defaultProfileIcon" class="profile-pic" />
     </div>
     <ion-list no-lines>
+      <ion-item>
+        <ion-select class="custom-select" [(ngModel)]="selectedCity" (ngModelChange)="changeCity()">
+          <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+        </ion-select>
+      </ion-item>
       <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
         <img class="root-menu-icon" src="../assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
         <img class="root-menu-icon"  src="../assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>

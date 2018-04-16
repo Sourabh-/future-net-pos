@@ -22,6 +22,7 @@ export class RootComponent implements OnInit {
   public isBusy = false;
   public defaultProfileIcon = '../assets/imgs/user.png';
   public userPrincipalName = '';
+  public selectedCity: string;
 
   constructor(
     platform: Platform, 
@@ -41,6 +42,10 @@ export class RootComponent implements OnInit {
       splashScreen.hide();
       this.blockerService.show();
       this.callOneDrive();
+
+      this.oneDriveService.selectedCityUpdated.subscribe(() => {
+        this.selectedCity = this.oneDriveService.selectedCity;
+      })
     });
   }
 
@@ -167,6 +172,14 @@ export class RootComponent implements OnInit {
     }
   }
 
+  changeCity() {
+    for(let i=0; i<this.oneDriveService.cities.length; i++) {
+      if(this.selectedCity === this.oneDriveService.cities[i].name) {
+        this.oneDriveService.setCity(this.oneDriveService.cities[i].name, this.oneDriveService.cities[i].id);
+      }
+    }
+  }
+  
   signOut() {
     this.authService.logout();
     window.localStorage.clear();

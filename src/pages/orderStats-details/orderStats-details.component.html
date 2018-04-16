@@ -62,67 +62,67 @@
             <ion-col class="order-details-col">
               <span class="dark-grey">Date & Time:</span>
               <br/>
-              <span>-</span>
+              <span>{{parent.createdDate}} {{parent.createdTime}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">CTN ord:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[6].value}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Units Ord:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[7].value}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">Core RNG?</span>
               <br/>
-              <span class="text-red">-</span>
+              <span class="text-red">{{row[9].value}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Slow?</span>
               <br/>
-              <span class="text-red">-</span>
+              <span class="text-red">{{row[10].value}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">Variety?</span>
               <br/>
-              <span class="text-green">-</span>
+              <span class="text-green">{{row[11].value}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Promo CTN Cost:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[0].promoCtnCost}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">Promo Save $:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[0].promoSave}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Promo Save %:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[0].promoSavePercent}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">CTN Cost:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[0].ctnCost}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Ctn Qty:</span>
               <br/>
-              <span>-</span>
+              <span>{{row[0].ctnQty}}</span>
             </ion-col>
           </ion-row>
         </ion-grid>

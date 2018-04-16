@@ -87,6 +87,7 @@ export class OrderStatsDetailsComponent implements OnInit {
               _formulas.push(res.formulas[i][0].split("^"));
           }
 
+          console.log(_formulas);
           this.computeTableData(_formulas);
         },
         (err) => {
@@ -104,17 +105,25 @@ export class OrderStatsDetailsComponent implements OnInit {
     for(let i=0; i<sheetDataArr.length; i++) {
       if(this.parent.items.indexOf(sheetDataArr[i][0].split("=")[1]) > -1) {
         _rows.push([
-          { value: ++count, all: sheetDataArr[i][0].split("=")[1] },
-          { value: '-' },
-          { value: '-' },
+          { 
+            value: ++count, 
+            all: sheetDataArr[i][0].split("=")[1],
+            promoCtnCost: sheetDataArr[i][47].replace(/^0+/, ''),
+            promoSave: sheetDataArr[i][62].replace(/^0+/, ''),
+            promoSavePercent: '0.00',
+            ctnCost: sheetDataArr[i][13].replace(/^0+/, ''),
+            ctnQty: '0'
+          },
+          { value: this.parent.createdDate, width: '130px' },
+          { value: this.parent.createdTime, width: '90px' },
           { value:  this.parent.orderNo },
           { value: sheetDataArr[i][0].split("=")[1] },
           { value: sheetDataArr[i][1].replace(/\"/g, '') },
-          { value: '-' },
-          { value: '-' },
-          { value: '-' },
-          { value: '-' },
-          { value: '-' }
+          { value: sheetDataArr[i][14] },
+          { value: sheetDataArr[i][22] },
+          { value: sheetDataArr[i][16], class: (sheetDataArr[i][16] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: sheetDataArr[i][23], class: (sheetDataArr[i][23] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: sheetDataArr[i][24], class: (sheetDataArr[i][24] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' }
         ]);
       }
     }
