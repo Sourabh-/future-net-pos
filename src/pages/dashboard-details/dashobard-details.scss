@@ -1,7 +1,7 @@
 dashboard-details {
 
   .desktop-header-pad {
-    padding: 3px 5px 3px 15px !important; 
+    padding: 3px 5px 3px 15px !important;
   }
 
   .desktop-body {
@@ -26,9 +26,10 @@ dashboard-details {
   .sales-card-sub-header {
     font-size: 12px;
     color: #999;
-    margin-top: 20px; 
+    margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
+    justify-content: space-between;
   }
 
   .active {
@@ -54,7 +55,11 @@ dashboard-details {
   }
 
   .time-card-dollar {
-    font-size: 28px;
+    font-size: 24px;
+  }
+
+  .time-card-dollar-m {
+    font-size: 20px;
   }
 
   .footer-card-header {
@@ -142,5 +147,13 @@ dashboard-details {
 
   .table td {
     padding: 5px 5px 10px 5px;
+  }
+
+  .legends-right {
+    font-size: 14px;
+  }
+
+  .sales-period-header {
+    display: flex;
   }
 }

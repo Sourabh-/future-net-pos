@@ -28,6 +28,8 @@ export const doughnutObj = {
 	        "showLegend": 0,
 	        "defaultCenterLabel": "15.4 %",
 	        "centerLabelBold": "1",
+	        "centerLabelFontSize": "16",
+	        "centerLabelColor": "#929090",
 	        "showTooltip": 0,
 	        "decimals": 0,
 	        "useDataPlotColorForLabels": "1",
@@ -61,16 +63,19 @@ export const barChartObj = {
 	        "showValues": 0,
 	        "plotSpacePercent": "30",
 	        "showXAxisLine": "0",
-	        "showYAxisLine": "0"
+	        "showYAxisLine": "0",
+	        "paletteColors": "#259D9E,#FF6060,#FFBE3C,#375BAF"
 	    },
 	    "data": []
 };
 
 export const msCombiObj = {
 	"chart": {
+		"showLabels": "1",
+		"labelDisplay": "rotate",
         "showBorder": "0",
         "showValues": "0",
-        "paletteColors": "#2bd7ce,#1aaf5d,#f2c500",
+        "paletteColors": "#50E3C2,#F5A623,#C04DD8",
         "bgColor": "#ffffff",
         "showPlotBorder": "0",
         "showCanvasBorder": "0",
@@ -89,12 +94,8 @@ export const msCombiObj = {
         "toolTipBgColor": "#000000",
         "toolTipBgAlpha": "80",
         "toolTipBorderRadius": "2",
-        "toolTipPadding": "5",
-        "legendBgColor": "#ffffff",
-        "legendBorderAlpha": "0",
-        "legendShadow": "0",
-        "legendItemFontSize": "10",
-        "legendItemFontColor": "#666666",
+        "toolTipPadding": "10",
+        "showLegend": "0",
         "sNumberSuffix": "%"
     },
     "categories": [
@@ -105,7 +106,7 @@ export const msCombiObj = {
     "dataset": [
         {
             "seriesName": "Sales ",
-            "showValues": "1",
+            "showValues": "0",
             "data": [] 
         },
         {

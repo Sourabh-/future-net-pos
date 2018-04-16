@@ -17,14 +17,20 @@
           </div>
           <div class="doughnut-body" id="doughnut-body">
             <div class="doughnut-card" *ngFor="let chart of dCharts | search: query" (click)="navigateToDetails(chart)">
-              <div class="doughnut-card-header">{{chart.name}}</div>
+              <div class="doughnut-card-header">
+                <span>{{chart.name}}</span>
+                <span>
+                  <ion-icon [style.fontSize]="'18px'" class="text-light-green" *ngIf="chart.type == 'P'" name="arrow-round-up"></ion-icon>
+                  <ion-icon [style.fontSize]="'18px'" class="text-light-red" *ngIf="chart.type == 'L'" name="arrow-round-down"></ion-icon>
+                </span>
+              </div>
               <div class="doughnut-card-body">
                 <div class="doughnut-card-body-header">
                   <span class="pull-left">PREVIOUS</span>
                   <span class="pull-right">$ {{chart.previous}} M</span>
                 </div>
                 <div class="doughnut-card-chart">
-                  <fusioncharts width="240" height="180" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
+                  <fusioncharts width="239" height="180" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
                 </div>
                 <div class="doughnut-card-body-footer">
                   <span class="pull-left">TODAY</span>
@@ -95,14 +101,20 @@
     <ion-row>
       <ion-col col-6 *ngFor="let chart of dCharts | search: query">
         <div class="doughnut-card-mob">
-          <div class="doughnut-card-header-mob">{{chart.name}}</div>
+          <div class="doughnut-card-header-mob">
+            <span>{{chart.name}}</span>
+            <span>
+              <ion-icon [style.fontSize]="'18px'" class="text-light-green" *ngIf="chart.type == 'P'" name="arrow-round-up"></ion-icon>
+              <ion-icon [style.fontSize]="'18px'" class="text-light-red" *ngIf="chart.type == 'L'" name="arrow-round-down"></ion-icon>
+            </span>
+          </div>
           <div class="doughnut-card-body-mob">
             <div class="doughnut-card-body-header-mob">
               <span class="pull-left">PREVIOUS</span>
               <span class="pull-right">$ {{chart.previous}} M</span>
             </div>
             <div class="doughnut-card-chart-mob">
-              <fusioncharts width="100%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
+              <fusioncharts width="99%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
             </div>
             <div class="doughnut-card-body-footer-mob">
               <span class="pull-left">TODAY</span>

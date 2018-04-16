@@ -61,13 +61,20 @@ export class DashboardDetailsComponent {
           "centerLabelBold": "1",
           "showTooltip": 0,
           "decimals": 0,
-          "useDataPlotColorForLabels": "1",
+          "useDataPlotColorForLabels": "0",
           "theme": "fint",
           "doughnutRadius": "40",
-          "paletteColors": "#22F0F1,#551A8B,#FF0000",
+          "paletteColors": "#E06950,#4ED8DA,#C04DD8",
           "enableSlicing": 0,
           "animateClockwise": "1",
-          "defaultCenterLabel": total + ' M'
+          "defaultCenterLabel": "$ " + total + ' M',
+          "centerLabelFontSize": 12,
+          "enableSmartLabels": "0",
+          "labelBgColor": "#605f5f",
+          "labelFontColor": "#FFFFFF",
+          "labelBorderRadius": "2",
+          "labelFontSize": "8",
+          "labelBorderPadding": "5"
         },
         "data": [
             {
@@ -192,7 +199,7 @@ export class DashboardDetailsComponent {
   computeMSCombiGraph(graphData) {
     let chart = this.utilityService.getmsCombiChart();
     for(let i=1; i < graphData.length; i++) {
-      chart.categories[0].category.push({ value:  graphData[i][1] });
+      chart.categories[0].category.push({ label:  graphData[i][1] });
       chart.dataset[0].data.push({ value: graphData[i][2] });
       chart.dataset[1].data.push({ value: graphData[i][4] });
       chart.dataset[2].data.push({ value: graphData[i][3] });

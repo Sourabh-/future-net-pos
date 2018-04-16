@@ -72,6 +72,8 @@ dashboard {
     font-weight: bold;
     color: #534f4f;
     padding: 7px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .doughnut-card-body {
@@ -171,6 +173,8 @@ dashboard {
     font-weight: bold;
     color: #534f4f;
     padding: 7px;
+    display: flex;
+    justify-content: space-between;
   }
 
   .doughnut-card-body-mob {

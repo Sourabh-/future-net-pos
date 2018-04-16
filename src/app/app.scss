@@ -101,6 +101,14 @@
   color: #d25151;
 }
 
+.text-light-red {
+  color: #FF3333;
+}
+
+.text-light-green {
+  color: #30D496;
+}
+
 .text-green {
   color: #7cd998;
 }
@@ -129,15 +137,15 @@
 }
 
 .l-blue-bg {
-  background: #22f0f1;
+  background: #4ED8DA;
 }
 
 .purple-bg {
-  background: purple;
+  background: #C04DD8;
 }
 
 .red-bg {
-  background: #FF0000;
+  background: #E06950;
 }
 
 .desktop-scroll-container {
@@ -215,4 +223,47 @@
   color: #999;
   padding-left: 10px;
   margin-bottom: 10px;
+}
+
+.light-blue {
+  color: #50E3C2;
+}
+
+.dark-yellow {
+  color: #F5A623;
+}
+
+.dark-blue {
+  color: #C04DD8;
+}
+
+.light-blue-bg {
+  background: #50E3C2;
+}
+
+.dark-yellow-bg {
+  background: #F5A623;
+}
+
+.dark-blue-bg {
+  background: #C04DD8;
+}
+
+.progress-bar {
+  background: #EEEEEE;
+  width: 135px;
+  margin-left: 40px;
+  margin-top: 14px;
+}
+
+.progress-bar-m {
+  background: #EEEEEE;
+  width: 135px;
+  margin: 0 auto;
+  margin-top: 14px;
+}
+
+.progress {
+  height: 3px;
+  width: 70%;
 }

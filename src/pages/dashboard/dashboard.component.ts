@@ -212,7 +212,8 @@ export class DashboardComponent implements OnInit {
         let t = Number(obj.today);
         let p = Number(obj.previous);
         obj.type = (t > p) ? 'P' : 'L';
-        obj.chart.chart.paletteColors = t > p ? "#fbfbf7,#EEEEEE,#7CD998" : "#fbfbf7,#EEEEEE,#FF0000";
+        obj.chart.chart.paletteColors = t > p ? "#fbfbf7,#EEEEEE,#30D496" : "#fbfbf7,#EEEEEE,#FF3333";
+        obj.chart.chart.centerLabelColor = t > p ? "#30D496" : "#FF3333";
         obj.percent = ((t > p) ? ((t-p)*100/t).toFixed(2) : ((p-t)*100/t).toFixed(2)) + '%';
       } else {
         obj.percent = '0%';

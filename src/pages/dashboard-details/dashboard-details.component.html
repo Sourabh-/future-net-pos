@@ -21,8 +21,21 @@
                   Current {{period}} Dept Sales
                 </div>
                 <div class="sales-card-sub-header">
-                  <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
+                  <div class="sales-period-header">
+                    <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
+                  </div>
+                  <div class="legends-right">
+                    <span class="light-blue"> 
+                      <span class="dot light-blue-bg"></span>&nbsp;&nbsp;&nbsp; Sales&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span class="dark-yellow"> 
+                      <span class="dot dark-yellow-bg"></span>&nbsp;&nbsp;&nbsp; GP%&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span class="dark-blue"> 
+                      <span class="dot dark-blue-bg"></span>&nbsp;&nbsp;&nbsp; Cost&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                  </div>
                 </div>
                 <div class="sales-card-chart">
                   <fusioncharts width="100%" height="400" type="mscombidy2d" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
@@ -44,17 +57,23 @@
                       <ion-col col-6 text-center>
                         <div class="time-card-div-border">
                           <div class="time-card-dollar">
-                            <span class="dot l-blue-bg"></span>&nbsp; ${{getTotal('dayTotal')}}
+                            <span class="dot l-blue-bg"></span>&nbsp; $ {{getTotal('dayTotal')}}
                           </div>
                           <div class="dark-grey">Total Sales</div>
+                          <div class="progress-bar">
+                            <div class="progress light-blue-bg"></div>
+                          </div>
                         </div>
                       </ion-col>
                       <ion-col col-6 text-center>
                         <div>
                           <div class="time-card-dollar">
-                            <span class="dot purple-bg"></span>&nbsp; ${{getTotal('dayTotalCost')}}
+                            <span class="dot purple-bg"></span>&nbsp; $ {{getTotal('dayTotalCost')}}
                           </div>
                           <div class="dark-grey">Total Cost</div>
+                          <div class="progress-bar">
+                            <div class="progress dark-blue-bg"></div>
+                          </div>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -73,17 +92,23 @@
                       <ion-col col-6 text-center>
                         <div class="time-card-div-border">
                           <div class="time-card-dollar">
-                            <span class="dot l-blue-bg"></span>&nbsp; ${{getTotal('weekTotal')}}
+                            <span class="dot l-blue-bg"></span>&nbsp; $ {{getTotal('weekTotal')}}
                           </div>
                           <div class="dark-grey">Total Sales</div>
+                          <div class="progress-bar">
+                            <div class="progress light-blue-bg"></div>
+                          </div>
                         </div>
                       </ion-col>
                       <ion-col col-6 text-center>
                         <div>
                           <div class="time-card-dollar">
-                            <span class="dot purple-bg"></span>&nbsp; ${{getTotal('weekTotalCost')}}
+                            <span class="dot purple-bg"></span>&nbsp; $ {{getTotal('weekTotalCost')}}
                           </div>
                           <div class="dark-grey">Total Cost</div>
+                          <div class="progress-bar">
+                            <div class="progress dark-blue-bg"></div>
+                          </div>
                         </div>
                       </ion-col>
                     </ion-row>
@@ -109,19 +134,19 @@
                   <div class="footer-card-info">
                     <div class="footer-card-div-border footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot l-blue-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('current')}} M</span>
+                        <span class="dot red-bg"></span> <span>&nbsp;&nbsp;$ {{getSalesFigure('current')}} M</span>
                       </div>
                       <div class="dark-grey footer-card-sub-text">Year {{getYear('current')}}</div>
                     </div>
                     <div class="footer-card-div-border footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot purple-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('prev')}} M</span>
+                        <span class="dot l-blue-bg"></span> <span>&nbsp;&nbsp;$ {{getSalesFigure('prev')}} M</span>
                       </div>
                       <div class="dark-grey footer-card-sub-text">Year {{getYear('prev')}}</div>
                     </div>
                     <div class="footer-info-div" text-center>
                       <div class="footer-card-dollar">
-                        <span class="dot red-bg"></span> <span>&nbsp;&nbsp;${{getSalesFigure('minTwo')}} M</span>
+                        <span class="dot purple-bg"></span> <span>&nbsp;&nbsp;$ {{getSalesFigure('minTwo')}} M</span>
                       </div>
                       <div class="dark-grey footer-card-sub-text">Year {{getYear('minTwo')}}</div>
                     </div>
@@ -183,8 +208,21 @@
             Current {{period}} Dept Sales
           </div>
           <div class="sales-card-sub-header">
-            <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;
-            <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
+            <div class="sales-period-header">
+              <div [ngClass]="{'active': period == 'Day'}" (click)="changePeriod('Day')">Day</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div [ngClass]="{'active': period == 'Week'}" (click)="changePeriod('Week')">Week</div>
+            </div>
+            <div class="legends-right">
+              <span class="light-blue"> 
+                      <span class="dot light-blue-bg"></span>&nbsp;&nbsp;&nbsp; Sales&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="dark-yellow"> 
+                      <span class="dot dark-yellow-bg"></span>&nbsp;&nbsp;&nbsp; GP%&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+              <span class="dark-blue"> 
+                      <span class="dot dark-blue-bg"></span>&nbsp;&nbsp;&nbsp; Cost&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+            </div>
           </div>
           <div class="sales-card-chart">
             <fusioncharts width="100%" height="400" type="mscombidy2d" dataFormat="json" [dataSource]="combiChart"></fusioncharts>
@@ -205,18 +243,28 @@
               <ion-row>
                 <ion-col col-6 text-center>
                   <div class="time-card-div-border">
-                    <div class="time-card-dollar">
-                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getTotal('dayTotal')}}
+                    <div class="time-card-dollar-m">
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $ {{getTotal('dayTotal')}}
                     </div>
                     <div class="dark-grey">Total Sales</div>
+                    <div text-center>
+                      <div class="progress-bar-m">
+                        <div class="progress light-blue-bg"></div>
+                      </div>
+                    </div>
                   </div>
                 </ion-col>
                 <ion-col col-6 text-center>
                   <div>
-                    <div class="time-card-dollar">
-                      <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getTotal('dayTotalCost')}}
+                    <div class="time-card-dollar-m">
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $ {{getTotal('dayTotalCost')}}
                     </div>
                     <div class="dark-grey">Total Cost</div>
+                    <div text-center>
+                      <div class="progress-bar-m">
+                        <div class="progress light-blue-bg"></div>
+                      </div>
+                    </div>
                   </div>
                 </ion-col>
               </ion-row>
@@ -234,18 +282,28 @@
               <ion-row>
                 <ion-col col-6 text-center>
                   <div class="time-card-div-border">
-                    <div class="time-card-dollar">
-                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getTotal('weekTotal')}}
+                    <div class="time-card-dollar-m">
+                      <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $ {{getTotal('weekTotal')}}
                     </div>
                     <div class="dark-grey">Total Sales</div>
+                    <div text-center>
+                      <div class="progress-bar-m">
+                        <div class="progress light-blue-bg"></div>
+                      </div>
+                    </div>
                   </div>
                 </ion-col>
                 <ion-col col-6 text-center>
                   <div>
-                    <div class="time-card-dollar">
-                      <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getTotal('weekTotalCost')}}
+                    <div class="time-card-dollar-m">
+                      <span class="dot purple-bg"></span>&nbsp;&nbsp; $ {{getTotal('weekTotalCost')}}
                     </div>
                     <div class="dark-grey">Total Cost</div>
+                    <div text-center>
+                      <div class="progress-bar-m">
+                        <div class="progress light-blue-bg"></div>
+                      </div>
+                    </div>
                   </div>
                 </ion-col>
               </ion-row>
@@ -272,19 +330,19 @@
             <div class="footer-card-info">
               <div class="footer-card-div-border footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot l-blue-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('current')}} M
+                  <span class="dot l-blue-bg"></span>&nbsp;&nbsp; $ {{getSalesFigure('current')}} M
                 </div>
                 <div class="dark-grey footer-card-sub-text">Year {{getYear('current')}}</div>
               </div>
               <div class="footer-card-div-border footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot purple-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('prev')}} M
+                  <span class="dot purple-bg"></span>&nbsp;&nbsp; $ {{getSalesFigure('prev')}} M
                 </div>
                 <div class="dark-grey footer-card-sub-text">Year {{getYear('prev')}}</div>
               </div>
               <div class="footer-info-div" text-center>
                 <div class="footer-card-dollar">
-                  <span class="dot red-bg"></span>&nbsp;&nbsp; ${{getSalesFigure('minTwo')}} M
+                  <span class="dot red-bg"></span>&nbsp;&nbsp; $ {{getSalesFigure('minTwo')}} M
                 </div>
                 <div class="dark-grey footer-card-sub-text">Year {{getYear('minTwo')}}</div>
               </div>
@@ -314,7 +372,7 @@
                     <div class="dark-grey">Day</div>
                     <div text-center>
                       <span class="dot l-blue-bg"></span>
-                      <span><b>${{selectedRow[1].value}}</b></span>
+                      <span><b>$ {{selectedRow[1].value}}</b></span>
                     </div>
                   </div>
                 </ion-col>
@@ -323,7 +381,7 @@
                     <div class="dark-grey">Week</div>
                     <div text-center>
                       <span class="dot purple-bg"></span>
-                      <span><b>${{selectedRow[2].value}}</b></span>
+                      <span><b>$ {{selectedRow[2].value}}</b></span>
                     </div>
                   </div>
                 </ion-col>
