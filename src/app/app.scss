@@ -258,7 +258,7 @@
 
 .progress-bar-m {
   background: #EEEEEE;
-  width: 135px;
+  width: 50%;
   margin: 0 auto;
   margin-top: 14px;
 }
@@ -266,4 +266,8 @@
 .progress {
   height: 3px;
   width: 70%;
+}
+
+.menu-btn {
+  margin-left: -2px !important;
 }

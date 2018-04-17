@@ -46,7 +46,7 @@ dashboard-details {
   }
 
   .time-card-body {
-    padding: 10px 20px 10px 20px;
+    padding: 10px 0px 10px 0px;
     display: flex;
   }
 
@@ -155,5 +155,9 @@ dashboard-details {
 
   .sales-period-header {
     display: flex;
+  }
+
+  .footer-time-card-value {
+    padding: 5px 0 10px 0;
   }
 }

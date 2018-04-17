@@ -81,7 +81,7 @@
 </div>
 <ion-header showWhen="android,ios,windows" no-border class="all-header">
   <ion-navbar>
-    <button ion-button menuToggle icon-only>
+    <button class="menu-btn" ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title text-center>
@@ -99,7 +99,7 @@
   <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
   <ion-grid>
     <ion-row>
-      <ion-col col-6 *ngFor="let chart of dCharts | search: query">
+      <ion-col col-6 *ngFor="let chart of dCharts | search: query" (click)="navigateToDetails(chart)">
         <div class="doughnut-card-mob">
           <div class="doughnut-card-header-mob">
             <span>{{chart.name}}</span>
@@ -114,7 +114,7 @@
               <span class="pull-right">$ {{chart.previous}} M</span>
             </div>
             <div class="doughnut-card-chart-mob">
-              <fusioncharts width="99%" height="200px" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
+              <fusioncharts width="99%" height="160px" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
             </div>
             <div class="doughnut-card-body-footer-mob">
               <span class="pull-left">TODAY</span>

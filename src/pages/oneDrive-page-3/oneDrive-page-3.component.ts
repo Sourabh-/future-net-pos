@@ -23,7 +23,7 @@ export class OneDrivePage3Component implements OnInit {
   	this.superParent = navParams.data.parent;
   }
 
-  ngOnInit() {
+  init() {
     this.oneDriveService.getFolders(this.parent.id).subscribe(
       (folders) => {
         if(folders.value) {
@@ -42,6 +42,11 @@ export class OneDrivePage3Component implements OnInit {
         this.utilityService.showToast(err);
         this.utilityService.hideLoader();
       })
+  }
+
+  ngOnInit() {
+    this.init();
+    this.oneDriveService.reauthsuccess.subscribe(() => { this.init() });
   }
 
   handleClick(ev) {

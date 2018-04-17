@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" [swipeEnabled]="utilityService.isMenuEnabled">
   <ion-content>
     <div class="profile-box">
       <div class="email-box">{{userPrincipalName}}</div>
@@ -11,23 +11,23 @@
         </ion-select>
       </ion-item>
       <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
-        <img class="root-menu-icon" src="../assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
-        <img class="root-menu-icon"  src="../assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>
+        <img class="root-menu-icon" src="assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
+        <img class="root-menu-icon"  src="assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>
         <span class="root-menu-item-name">Dashboard</span>
       </button>
       <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'onedrive'}" (click)="navigate('onedrive')">
-        <img class="root-menu-icon"  src="../assets/imgs/OneDrive.svg" *ngIf="utilityService.activeView !== 'onedrive'"/>
-        <img class="root-menu-icon"  src="../assets/imgs/OneDriveActive.svg" *ngIf="utilityService.activeView === 'onedrive'"/>
+        <img class="root-menu-icon"  src="assets/imgs/OneDrive.svg" *ngIf="utilityService.activeView !== 'onedrive'"/>
+        <img class="root-menu-icon"  src="assets/imgs/OneDriveActive.svg" *ngIf="utilityService.activeView === 'onedrive'"/>
         <span class="root-menu-item-name">One Drive</span>
       </button>
       <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'orderstats'}" (click)="navigate('orderstats')">
-        <img class="root-menu-icon"  src="../assets/imgs/AutoOrderSales.svg"*ngIf="utilityService.activeView !== 'orderstats'"/>
-        <img class="root-menu-icon"  src="../assets/imgs/AutoOrderSalesActive.svg" *ngIf="utilityService.activeView === 'orderstats'"/>
+        <img class="root-menu-icon"  src="assets/imgs/AutoOrderSales.svg"*ngIf="utilityService.activeView !== 'orderstats'"/>
+        <img class="root-menu-icon"  src="assets/imgs/AutoOrderSalesActive.svg" *ngIf="utilityService.activeView === 'orderstats'"/>
         <span class="root-menu-item-name">Auto Order Stats</span>
       </button>
       <button menuClose ion-item icon-start class="root-menu-item" [ngClass]="{'root-active': utilityService.activeView === 'storeitems'}" (click)="navigate('storeitems')">
-        <img class="root-menu-icon"  src="../assets/imgs/StoreItems.svg" *ngIf="utilityService.activeView !== 'storeitems'"/>
-        <img class="root-menu-icon"  src="../assets/imgs/StoreItemsActive.svg" *ngIf="utilityService.activeView === 'storeitems'"/>
+        <img class="root-menu-icon"  src="assets/imgs/StoreItems.svg" *ngIf="utilityService.activeView !== 'storeitems'"/>
+        <img class="root-menu-icon"  src="assets/imgs/StoreItemsActive.svg" *ngIf="utilityService.activeView === 'storeitems'"/>
         <span class="root-menu-item-name">Store Items</span>
       </button>
       <button menuClose ion-item icon-start class="root-menu-item" (click)="signOut()">

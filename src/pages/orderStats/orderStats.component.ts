@@ -39,6 +39,10 @@ export class OrderStatsComponent implements OnInit {
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.getFolderContents();
     })
+
+    this.oneDriveService.reauthsuccess.subscribe(() => {
+      this.getFolderContents();
+    })
   }
 
   getFolderContents() {

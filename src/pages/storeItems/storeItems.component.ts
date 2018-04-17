@@ -47,6 +47,10 @@ export class StoreItemsComponent implements OnInit {
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.getFolderContents();
     })
+
+    this.oneDriveService.reauthsuccess.subscribe(() => {
+      this.getFolderContents();
+    })
   }
 
   getFolderContents() {

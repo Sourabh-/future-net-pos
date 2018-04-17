@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 import * as FusionCharts from 'fusioncharts';
@@ -21,6 +22,7 @@ import { OneDrivePage3Component } from '../pages/oneDrive-page-3/oneDrive-page-3
 import { DashboardDetailsComponent } from '../pages/dashboard-details/dashboard-details.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { OauthSuccessModule } from '../pages/oauthSuccess/oauth-success.module';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
 
@@ -41,7 +43,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
     IonicModule.forRoot(RootComponent),
     SharedModule,
     FusionChartsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    OauthSuccessModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +61,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FintTheme);
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

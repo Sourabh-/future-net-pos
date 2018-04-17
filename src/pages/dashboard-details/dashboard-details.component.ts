@@ -37,6 +37,10 @@ export class DashboardDetailsComponent {
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.init();
     })
+
+    this.oneDriveService.reauthsuccess.subscribe(() => {
+      this.init();
+    })
   }
 
   init() {

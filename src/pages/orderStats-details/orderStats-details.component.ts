@@ -52,6 +52,10 @@ export class OrderStatsDetailsComponent implements OnInit {
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.getFolderContents();
     })
+
+    this.oneDriveService.reauthsuccess.subscribe(() => {
+      this.getFolderContents();
+    })
   }
 
   getFolderContents() {
@@ -87,7 +91,6 @@ export class OrderStatsDetailsComponent implements OnInit {
               _formulas.push(res.formulas[i][0].split("^"));
           }
 
-          console.log(_formulas);
           this.computeTableData(_formulas);
         },
         (err) => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ActionSheetController } from 'ionic-angular';
+import { NavController, ActionSheetController, Platform } from 'ionic-angular';
 import { DashboardDetailsComponent } from '../dashboard-details/dashboard-details.component';
 import { OneDriveService } from '../../shared/services/oneDrive.service';
 import { UtilityService } from '../../shared/services/utility.service';
@@ -24,7 +24,8 @@ export class DashboardComponent implements OnInit {
   	public utilityService: UtilityService,
     private blockerService: BlockerService,
     private authService: AuthService,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
@@ -35,6 +36,10 @@ export class DashboardComponent implements OnInit {
   	this.authService.tokenReceived.subscribe((id) => {
   		this.getSecondFolders(id);
   	});
+
+    this.oneDriveService.reauthsuccess.subscribe(() => {
+      if(this.oneDriveService.convId) this.getSecondFolders(this.oneDriveService.convId);
+    })
   }
 
   getSecondFolders(id) {
@@ -175,6 +180,10 @@ export class DashboardComponent implements OnInit {
         cityId: graphData[i].cityId,
         all: graphData[i].name
       };
+
+      if(!this.platform.is('core')) {
+        obj.chart.chart.doughnutRadius = "54";
+      }
 
       let count = 0;
       let thisYear = new Date().getFullYear();

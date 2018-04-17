@@ -15,17 +15,23 @@ export class AuthService {
           id: Configs.appId,
           oauth: {
             version: 2,
-            auth: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
+            auth: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+            grant: 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
           },
           scope_delim: ' ',
           form: false
         }
+      }, {
+        redirect_uri : 'http://localhost:8100/',
+        oauth_proxy: 'https://auth-server.herokuapp.com/proxy'
       }
     );
   }
 
   async login(noDisplay) {
-    return await hello('msft').login({ scope: Configs.scope });
+    let json:any = { scope: Configs.scope, response_type: 'code', force: true };
+    if(noDisplay) json.display = 'none';
+    return await hello('msft').login(json);
   }
 
   logout() {

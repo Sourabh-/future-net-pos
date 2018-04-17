@@ -17,23 +17,28 @@ export class OneDriveComponent implements OnInit {
   	public utilityService: UtilityService
   ) {}
 
-  ngOnInit() {
+  init() {
     this.utilityService.showLoader();
-  	this.oneDriveService.getFolders().subscribe(
-  		(folders) => {
-  			if(folders.value) {
-  				this.oneDriveService.folders['all'] = folders.value;
-  			} else {
-  				this.oneDriveService.folders['all'] = [];
-  			}
+    this.oneDriveService.getFolders().subscribe(
+      (folders) => {
+        if(folders.value) {
+          this.oneDriveService.folders['all'] = folders.value;
+        } else {
+          this.oneDriveService.folders['all'] = [];
+        }
 
-  			this.folders = this.oneDriveService.folders['all'];
+        this.folders = this.oneDriveService.folders['all'];
         this.utilityService.hideLoader();
-  		},
-  		(err) => {
-  			this.utilityService.showToast(err);
+      },
+      (err) => {
+        this.utilityService.showToast(err);
         this.utilityService.hideLoader();
-  		})
+      })
+  }
+
+  ngOnInit() {
+    this.init();
+    this.oneDriveService.reauthsuccess.subscribe(() => { this.init() });
   }
 
   handleClick(folder) {

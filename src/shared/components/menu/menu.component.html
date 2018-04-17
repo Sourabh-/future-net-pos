@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-    <img src="../../../assets/imgs/FutureNetLogo.svg" class="header-logo pointer" (click)="takeMeHome()" />
+    <img src="assets/imgs/FutureNetLogo.svg" class="header-logo pointer" (click)="takeMeHome()" />
   </div>
   <div class="content">
     <ion-list no-lines>
@@ -10,23 +10,23 @@
         </ion-select>
       </ion-item>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
-      	<img class="menu-icon" src="../../../assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
-        <img class="menu-icon"  src="../../../assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>
+      	<img class="menu-icon" src="assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
+        <img class="menu-icon"  src="assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>
         <span class="menu-item-name">Dashboard</span>
       </button>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'onedrive'}" (click)="navigate('onedrive')">
-      	<img class="menu-icon"  src="../../../assets/imgs/OneDrive.svg" *ngIf="utilityService.activeView !== 'onedrive'"/>
-        <img class="menu-icon"  src="../../../assets/imgs/OneDriveActive.svg" *ngIf="utilityService.activeView === 'onedrive'"/>
+      	<img class="menu-icon"  src="assets/imgs/OneDrive.svg" *ngIf="utilityService.activeView !== 'onedrive'"/>
+        <img class="menu-icon"  src="assets/imgs/OneDriveActive.svg" *ngIf="utilityService.activeView === 'onedrive'"/>
         <span class="menu-item-name">One Drive</span>
       </button>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'orderstats'}" (click)="navigate('orderstats')">
-      	<img class="menu-icon"  src="../../../assets/imgs/AutoOrderSales.svg"*ngIf="utilityService.activeView !== 'orderstats'"/>
-        <img class="menu-icon"  src="../../../assets/imgs/AutoOrderSalesActive.svg" *ngIf="utilityService.activeView === 'orderstats'"/>
+      	<img class="menu-icon"  src="assets/imgs/AutoOrderSales.svg"*ngIf="utilityService.activeView !== 'orderstats'"/>
+        <img class="menu-icon"  src="assets/imgs/AutoOrderSalesActive.svg" *ngIf="utilityService.activeView === 'orderstats'"/>
         <span class="menu-item-name">Auto Order Stats</span>
       </button>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'storeitems'}" (click)="navigate('storeitems')">
-      	<img class="menu-icon"  src="../../../assets/imgs/StoreItems.svg" *ngIf="utilityService.activeView !== 'storeitems'"/>
-        <img class="menu-icon"  src="../../../assets/imgs/StoreItemsActive.svg" *ngIf="utilityService.activeView === 'storeitems'"/>
+      	<img class="menu-icon"  src="assets/imgs/StoreItems.svg" *ngIf="utilityService.activeView !== 'storeitems'"/>
+        <img class="menu-icon"  src="assets/imgs/StoreItemsActive.svg" *ngIf="utilityService.activeView === 'storeitems'"/>
         <span class="menu-item-name">Store Items</span>
       </button>
     </ion-list>

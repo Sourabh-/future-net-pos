@@ -128,6 +128,8 @@ export const msCombiObj = {
 export class UtilityService {
 	public activeView = 'dashboard';
 	public loader: any;
+	public isMenuEnabled: boolean = false;
+	private loaderShown: boolean = false;
 
 	constructor(
 		private toastCtrl: ToastController,
@@ -148,12 +150,14 @@ export class UtilityService {
 	}
 
 	showToast(msg) {
-		let toast = this.toastCtrl.create({
-	      message: msg.toUpperCase(),
-	      duration: 3000
-	    });
-	    
-	    toast.present(); 
+		if(msg) {
+			let toast = this.toastCtrl.create({
+		      message: msg.toUpperCase(),
+		      duration: 3000
+		    });
+		    
+		    toast.present(); 
+		}
 	}
 
 	getDate(date) {
@@ -169,14 +173,20 @@ export class UtilityService {
 	}
 
 	showLoader() {
-		this.loader = this.loadingCtrl.create({
-	      content: "Please wait..."
-	    });
-		this.loader.present();
+		if(!this.loaderShown) {
+			this.loader = this.loadingCtrl.create({
+		      content: "Please wait..."
+		    });
+		    this.loaderShown = true;
+			this.loader.present();
+		}
 	}
 
 	hideLoader() {
-		this.loader.dismiss();
+		if(this.loaderShown) {
+			this.loaderShown = false;
+			this.loader.dismiss();
+		} 
 	}
 
 	getMonth(mon) {

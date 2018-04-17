@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from 'ionic-angular';
+import { ActionSheetController, NavController } from 'ionic-angular';
 import { ProfileService } from '../../services/profile.service';
 import { BlockerService } from '../../services/blocker.service';
 import { AuthService } from '../../services/auth.service';
 import { OneDriveService } from '../../services/oneDrive.service';
+import { UtilityService } from '../../services/utility.service';
+import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
 
 @Component({
   selector: 'profile',
@@ -11,7 +13,7 @@ import { OneDriveService } from '../../services/oneDrive.service';
 })
 export class ProfileComponent implements OnInit {
 
-  defaultProfileIcon = '../../assets/imgs/user.png';
+  defaultProfileIcon = 'assets/imgs/user.png';
   profile:any = {
     displayName: 'Fetching...'
   };
@@ -20,7 +22,9 @@ export class ProfileComponent implements OnInit {
     public actionSheetCtrl: ActionSheetController,
     public blockerService: BlockerService,
     public authService: AuthService,
-    public oneDriveService: OneDriveService
+    public oneDriveService: OneDriveService,
+    public utilityService: UtilityService,
+    public navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -38,6 +42,8 @@ export class ProfileComponent implements OnInit {
         {
           text: 'Sign Out',
           handler: () => {
+            this.utilityService.isMenuEnabled = false;
+            this.oneDriveService.resetAll();
             this.authService.logout();
             window.localStorage.clear();
             this.blockerService.show(); 

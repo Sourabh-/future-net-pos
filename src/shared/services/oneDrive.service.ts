@@ -18,14 +18,14 @@ function extractData(res: Response): any {
 
 function handleError(res: Response, cb) {
   const error = res.json();
-  /*if(res.status == 401) {
+  if(res.status == 401) {
   	cb();
-  }*/
+  }
 
   const errorMessage = error.message ? error.message :
     res.status ? `${res.status} - ${res.statusText}` : 'Server error';
 
-  return Observable.throw(errorMessage);
+  return Observable.throw(res.status == 401 ? '' : errorMessage);
 }
 
 @Injectable()
@@ -43,6 +43,7 @@ export class OneDriveService {
 	photo: any;
 	convId: string = "";
 	totals: any;
+	reauthsuccess: EventEmitter<void> = new EventEmitter();
 
 	constructor(
 		private http: Http,
@@ -125,5 +126,20 @@ export class OneDriveService {
 
 	updateWorkbook() {
 		
+	}
+
+	resetAll() {
+		this.folders = {};
+		this.worksheets = {};
+		this.selectedCity = "";
+		this.selectedCityId = "";
+		this.cities = [];
+		this.photo = null;
+		this.convId = "";
+		this.totals = null;
+	}
+
+	reauthDone() {
+		this.reauthsuccess.emit();
 	}
 }

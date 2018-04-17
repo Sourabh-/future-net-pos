@@ -187,7 +187,7 @@
 </div>
 <ion-header showWhen="android,ios,windows" no-border class="all-header">
   <ion-navbar>
-    <button ion-button menuToggle icon-only>
+    <button class="menu-btn" ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title text-center>
@@ -262,7 +262,7 @@
                     <div class="dark-grey">Total Cost</div>
                     <div text-center>
                       <div class="progress-bar-m">
-                        <div class="progress light-blue-bg"></div>
+                        <div class="progress dark-blue-bg"></div>
                       </div>
                     </div>
                   </div>
@@ -301,7 +301,7 @@
                     <div class="dark-grey">Total Cost</div>
                     <div text-center>
                       <div class="progress-bar-m">
-                        <div class="progress light-blue-bg"></div>
+                        <div class="progress dark-blue-bg"></div>
                       </div>
                     </div>
                   </div>
@@ -321,7 +321,6 @@
             <div class="footer-card-header-text">
               {{oneDriveService.selectedCity ? (oneDriveService.selectedCity | titlecase) : ''}}
             </div>
-            <ion-select placeholder="3 Years"></ion-select>
           </div>
           <div class="footer-card-body">
             <div class="footer-card-chart">
@@ -370,7 +369,7 @@
                 <ion-col col-6>
                   <div class="footer-time-card app-card">
                     <div class="dark-grey">Day</div>
-                    <div text-center>
+                    <div text-center class="footer-time-card-value">
                       <span class="dot l-blue-bg"></span>
                       <span><b>$ {{selectedRow[1].value}}</b></span>
                     </div>
@@ -379,7 +378,7 @@
                 <ion-col col-6>
                   <div class="footer-time-card app-card">
                     <div class="dark-grey">Week</div>
-                    <div text-center>
+                    <div text-center class="footer-time-card-value">
                       <span class="dot purple-bg"></span>
                       <span><b>$ {{selectedRow[2].value}}</b></span>
                     </div>

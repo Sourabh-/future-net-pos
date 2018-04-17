@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
-import { Platform, ToastController } from 'ionic-angular';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import { Platform, ToastController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
+import { OauthSuccessPage } from '../pages/oauthSuccess/oauth-success';
 import { OneDriveComponent } from '../pages/oneDrive/oneDrive.component';
 import { OrderStatsComponent } from '../pages/orderStats/orderStats.component';
 import { StoreItemsComponent } from '../pages/storeItems/storeItems.component';
@@ -18,9 +19,11 @@ import { BlockerService } from '../shared/services/blocker.service';
   templateUrl: 'app.component.html'
 })
 export class RootComponent implements OnInit {
-  rootPage:any = DashboardComponent;
+
+  @ViewChild(Nav) nav: Nav;
+  rootPage:any;
   public isBusy = false;
-  public defaultProfileIcon = '../assets/imgs/user.png';
+  public defaultProfileIcon = 'assets/imgs/user.png';
   public userPrincipalName = '';
   public selectedCity: string;
 
@@ -35,6 +38,13 @@ export class RootComponent implements OnInit {
     private profileService: ProfileService,
     private blockerService: BlockerService
   ) {
+
+    if(window.location.hash || window.location.search) {
+      this.rootPage = OauthSuccessPage;
+    } else {
+      this.rootPage = DashboardComponent;
+    }
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -65,6 +75,13 @@ export class RootComponent implements OnInit {
         this.authService.login(force)
         .then((res) => {
           this.isBusy = false;
+          if(!force) {
+            this.nav.popToRoot();
+            this.utilityService.activeView = 'dashboard';
+          } else {
+            this.oneDriveService.reauthDone();
+          }
+
           //GET PROFILE
           this.getMyProfile();
           this.getOneDriveFolders();
@@ -74,6 +91,7 @@ export class RootComponent implements OnInit {
           this.isBusy = false;
           this.utilityService.showToast(e.error.message);
           this.utilityService.hideLoader();
+          this.utilityService.isMenuEnabled = false;
         })
       } else {
         this.isBusy = false;
@@ -93,6 +111,7 @@ export class RootComponent implements OnInit {
 
   getMyProfile() {
     this.blockerService.hide();
+    this.utilityService.isMenuEnabled = true;
     let _profile = this.utilityService.getLocalStorage('profile', true); 
     if(_profile) {
       this.profileService.setProfile(_profile);
@@ -182,6 +201,8 @@ export class RootComponent implements OnInit {
   
   signOut() {
     this.authService.logout();
+    this.oneDriveService.resetAll();
+    this.utilityService.isMenuEnabled = false;
     window.localStorage.clear();
     this.blockerService.show(); 
   }
