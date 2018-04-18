@@ -77,10 +77,10 @@
             <ion-col class="store-details-col store-col-one">
               <span class="dark-grey">Group Id:</span>
               <br/>
-              <span class="text-red">{{row[7].value}}</span>
+              <span [ngClass]="row[7].class || ''">{{row[7].value}}</span>
             </ion-col>
             <ion-col class="store-details-col">
-              <span [ngClass]="row[7].class || ''">Replicate:</span>
+              <span>Replicate:</span>
               <br/>
               <span [ngClass]="row[8].class || ''">{{row[8].value}}</span>
             </ion-col>

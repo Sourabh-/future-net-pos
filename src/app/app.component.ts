@@ -26,6 +26,7 @@ export class RootComponent implements OnInit {
   public defaultProfileIcon = 'assets/imgs/user.png';
   public userPrincipalName = '';
   public selectedCity: string;
+  public whicCm:string;
 
   constructor(
     platform: Platform, 
@@ -41,8 +42,10 @@ export class RootComponent implements OnInit {
 
     if(window.location.hash || window.location.search) {
       this.rootPage = OauthSuccessPage;
+      this.whicCm = 'OA';
     } else {
       this.rootPage = DashboardComponent;
+      this.whicCm = 'DC';
     }
 
     platform.ready().then(() => {
@@ -50,8 +53,10 @@ export class RootComponent implements OnInit {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.blockerService.show();
-      this.callOneDrive();
+      if(this.whicCm == 'DC') {
+        this.blockerService.show();
+        this.callOneDrive();
+      }
 
       this.oneDriveService.selectedCityUpdated.subscribe(() => {
         this.selectedCity = this.oneDriveService.selectedCity;
