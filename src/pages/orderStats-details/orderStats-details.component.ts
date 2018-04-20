@@ -9,10 +9,7 @@ import { UtilityService } from '../../shared/services/utility.service';
 })
 export class OrderStatsDetailsComponent implements OnInit {
 
-  public parent;
-  public items = [
-    ['1833166', '14th Jan, 2017 10:54 AM']
-  ];
+  public parent:any;
 
   public header = [
   	'#', 
@@ -28,8 +25,8 @@ export class OrderStatsDetailsComponent implements OnInit {
   	'VARIETY'
   ];
 
-  public rows = [];
-  public scrollItems = [];
+  public rows:any = [];
+  public scrollItems:any = [];
   public isShown:boolean = false;
   public openRow = {};
   public query: string = '';
@@ -55,6 +52,15 @@ export class OrderStatsDetailsComponent implements OnInit {
 
     this.oneDriveService.reauthsuccess.subscribe(() => {
       this.getFolderContents();
+    })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.rows = [];
+      this.scrollItems = [];
+      this.isShown = false;
+      this.openRow = {};
+      this.query = '';
+      this.isSearchShow = false;
     })
   }
 

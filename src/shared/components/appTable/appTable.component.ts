@@ -15,6 +15,7 @@ export class AppTableComponent implements OnInit {
   @Input() isHideFooter = false;
   @Input() value = 'value';
   @Input() searchFilter = '';
+  @Output() onClick: EventEmitter<any> = new EventEmitter();
 
   public perPageCount = 20;
   public currentPage = 0;
@@ -25,5 +26,9 @@ export class AppTableComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  clicked(item) {
+    this.onClick.emit(item);
   }
 }

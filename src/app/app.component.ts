@@ -26,7 +26,7 @@ export class RootComponent implements OnInit {
   public defaultProfileIcon = 'assets/imgs/user.png';
   public userPrincipalName = '';
   public selectedCity: string;
-  public whicCm:string;
+  public whicCm:string; //Determine if oauth success page
 
   constructor(
     platform: Platform, 
@@ -77,6 +77,7 @@ export class RootComponent implements OnInit {
       this.authService.initAuth();
       //LOGIN
       if(!localStorage.hello || force) {
+        if(!force) window.localStorage.removeItem('hello');
         this.authService.login(force)
         .then((res) => {
           this.isBusy = false;
@@ -92,11 +93,19 @@ export class RootComponent implements OnInit {
           this.getOneDriveFolders();
         })
         .catch((e) => {
-          console.error(e.error.message);
-          this.isBusy = false;
-          this.utilityService.showToast(e.error.message);
-          this.utilityService.hideLoader();
-          this.utilityService.isMenuEnabled = false;
+          //Needed for electron to work!
+          if(!force && localStorage.hello) {
+            this.nav.popToRoot();
+            this.utilityService.activeView = 'dashboard';
+            this.getMyProfile();
+            this.getOneDriveFolders();
+          } else {
+            console.error(e.error.message);
+            this.isBusy = false;
+            this.utilityService.showToast(e.error.message);
+            this.utilityService.hideLoader();
+            this.utilityService.isMenuEnabled = false;
+          }
         })
       } else {
         this.isBusy = false;

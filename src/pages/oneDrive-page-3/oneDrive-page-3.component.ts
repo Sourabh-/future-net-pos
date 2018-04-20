@@ -9,9 +9,9 @@ import { UtilityService } from '../../shared/services/utility.service';
 })
 export class OneDrivePage3Component implements OnInit {
   
-  public superParent;
-  public parent;
-  public csvs = [];
+  public superParent:any;
+  public parent:any;
+  public csvs:any = [];
 
   constructor(
     public navCtrl: NavController, 
@@ -42,6 +42,12 @@ export class OneDrivePage3Component implements OnInit {
         this.utilityService.showToast(err);
         this.utilityService.hideLoader();
       })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.parent = null;
+      this.superParent = null;
+      this.csvs = [];
+    })
   }
 
   ngOnInit() {

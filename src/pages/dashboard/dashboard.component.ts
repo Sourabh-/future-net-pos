@@ -40,6 +40,14 @@ export class DashboardComponent implements OnInit {
     this.oneDriveService.reauthsuccess.subscribe(() => {
       if(this.oneDriveService.convId) this.getSecondFolders(this.oneDriveService.convId);
     })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.dCharts = [];
+      this.barCharts = [];
+      this.query = '';
+      this.isSearchShow = false;
+      this.totals = {};
+    });
   }
 
   getSecondFolders(id) {
@@ -76,6 +84,7 @@ export class DashboardComponent implements OnInit {
   	let dayTotalFiles = [];
     let dDeptFiles = [];
     let wDeptFiles = [];
+    let pluLiveFiles = [];
   	for(let i=0; i<filesInfo.length; i++) {
   		((i) => {
   			this.oneDriveService.getFolders(filesInfo[i].id)
@@ -101,6 +110,11 @@ export class DashboardComponent implements OnInit {
                     name: filesInfo[i].name,
                     cityId: filesInfo[i].id
                   });
+                } else if(res.value[j].name.toLowerCase().indexOf('plu_live') > -1) {
+                  pluLiveFiles.push({
+                    id: res.value[j].id,
+                    cityId: filesInfo[i].id
+                  });
                 }
 	  					}
 	  				}
@@ -110,6 +124,7 @@ export class DashboardComponent implements OnInit {
 	  				if(count == 0 && breakout == 0) {
 	  					this.getDayTotalFilesInfo(dayTotalFiles);
               this.getDDeptFilesInfo(dDeptFiles, wDeptFiles);
+              this.getPluLiveFiles(pluLiveFiles);
 	  				} 
 	  			},
 	  			(msg) => {
@@ -147,6 +162,27 @@ export class DashboardComponent implements OnInit {
   				})
   		})(i);
   	}
+  }
+
+  getPluLiveFiles(files) {
+    let count = files.length;
+    for(let i=0; i< files.length; i++) {
+      ((i) => {
+        this.oneDriveService.getWorkbook(files[i].id, 'plu_live')
+        .subscribe(
+         (res) => {
+           this.oneDriveService.worksheets[files[i].id] = res;
+           this.oneDriveService.barCodes[files[i].cityId] = res;
+           count--;
+           if(count === 0) {
+             this.oneDriveService.showScanner = true;
+           }
+         },
+         (msg) => {
+           this.utilityService.showToast(msg);
+         })
+      })(i);
+    }
   }
 
   setTotal(totalObj, formula, thisYr, prevYr, yrMinTwo) {

@@ -10,10 +10,10 @@ import { UtilityService } from '../../shared/services/utility.service';
 })
 export class OrderStatsComponent implements OnInit {
   
-  public orders = [];
+  public orders:any = [];
   public perPageCount = 20;
   public currentPage = 0;
-  public scrollItems = [];
+  public scrollItems:any = [];
   public query: string = '';
   public isSearchShow: boolean = false;
 
@@ -42,6 +42,15 @@ export class OrderStatsComponent implements OnInit {
 
     this.oneDriveService.reauthsuccess.subscribe(() => {
       this.getFolderContents();
+    })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.orders = [];
+      this.perPageCount = 20;
+      this.currentPage = 0;
+      this.scrollItems = [];
+      this.query = '';
+      this.isSearchShow = false;
     })
   }
 

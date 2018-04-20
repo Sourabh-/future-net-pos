@@ -4,12 +4,12 @@
     <th *ngIf="options.isEditable"> </th>
   </thead>
   <tbody *ngIf="!isHideFooter">
-    <tr *ngFor="let row of rows | search: searchFilter | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }" [style.background]="reverseBg ? '#eee' : '#FFFFFF'">
-      <td *ngFor="let data of row" [style.width]="data.width || 'auto'">
+    <tr *ngFor="let row of rows | search: searchFilter | paginate: { itemsPerPage: perPageCount, currentPage: currentPage }" [style.background]="reverseBg ? '#eee' : '#FFFFFF'" (click)="clicked(row)">
+      <td *ngFor="let data of row" [style.width]="data.width || '30px'">
         <span [ngClass]="data.class || ''">{{data[value]}}</span>
       </td>
       <td *ngIf="options.isEditable">
-        <ion-icon name="create" color="primary"></ion-icon>
+        <ion-icon name="create" color="primary" class="pointer"></ion-icon>
       </td>
     </tr>
   </tbody>
@@ -19,7 +19,7 @@
         <span [ngClass]="data.class || ''">{{data[value]}}</span>
       </td>
       <td *ngIf="options.isEditable">
-        <ion-icon name="create" color="primary"></ion-icon>
+        <ion-icon name="create" color="primary" class="pointer"></ion-icon>
       </td>
     </tr>
   </tbody>

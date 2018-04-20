@@ -9,7 +9,7 @@
         <profile></profile>
       </div>
       <div class="desktop-body mar-bot-83">
-        <app-table [searchFilter]="query" isFullWidth="true" [header]="header" [rows]="rows" [options]="options" value="value"></app-table>
+        <app-table [searchFilter]="query" isFullWidth="true" [header]="header" [rows]="rows" [options]="options" value="value" (onClick)="openEdit($event)"></app-table>
       </div>
     </div>
   </div>
@@ -51,38 +51,38 @@
         <ion-grid class="no-padding-det">
           <ion-row>
             <ion-col class="store-details-col store-col-one">
-              <span class="dark-grey">Curr Sell:</span>
-              <br/>
-              <span>{{row[3].value}}</span>
-            </ion-col>
-            <ion-col class="store-details-col">
-              <span class="dark-grey">Curr Cost:</span>
+              <span class="dark-grey">Price 1</span>
               <br/>
               <span>{{row[4].value}}</span>
             </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="store-details-col store-col-one">
-              <span class="dark-grey">Dept Id:</span>
-              <br/>
-              <span>{{row[5].value}}</span>
-            </ion-col>
             <ion-col class="store-details-col">
-              <span class="dark-grey">Subdept Id:</span>
+              <span class="dark-grey">Cost Price</span><ion-icon (click)="openEdit(row)" class="pull-right pointer" color="primary" name="create"></ion-icon>
               <br/>
-              <span>{{row[6].value}}</span>
+              <span>{{row[14].value}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="store-details-col store-col-one">
-              <span class="dark-grey">Group Id:</span>
+              <span class="dark-grey">Dept No</span>
               <br/>
-              <span [ngClass]="row[7].class || ''">{{row[7].value}}</span>
+              <span>{{row[15].value}}</span>
             </ion-col>
             <ion-col class="store-details-col">
-              <span>Replicate:</span>
+              <span class="dark-grey">Subdept No</span>
               <br/>
-              <span [ngClass]="row[8].class || ''">{{row[8].value}}</span>
+              <span>{{row[18].value}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="store-details-col store-col-one">
+              <span class="dark-grey">Group Id</span>
+              <br/>
+              <span [ngClass]="row[30].class || ''">{{row[30].value}}</span>
+            </ion-col>
+            <ion-col class="store-details-col">
+              <span class="dark-grey">Promo Price</span>
+              <br/>
+              <span>{{row[21].value}}</span>
             </ion-col>
           </ion-row>
         </ion-grid>

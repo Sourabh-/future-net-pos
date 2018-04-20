@@ -35,6 +35,7 @@ export class OneDriveService {
 
 	folders: any = {};
 	worksheets: any = {};
+	barCodes: any = {};
 	selectedCity: string = "";
 	selectedCityId: string = "";
 	selectedCityUpdated: EventEmitter<any> = new EventEmitter();
@@ -44,6 +45,8 @@ export class OneDriveService {
 	convId: string = "";
 	totals: any;
 	reauthsuccess: EventEmitter<void> = new EventEmitter();
+	resetApp: EventEmitter<void> = new EventEmitter();
+	showScanner: boolean = false;
 
 	constructor(
 		private http: Http,
@@ -131,12 +134,15 @@ export class OneDriveService {
 	resetAll() {
 		this.folders = {};
 		this.worksheets = {};
+		this.barCodes = {};
 		this.selectedCity = "";
 		this.selectedCityId = "";
 		this.cities = [];
 		this.photo = null;
 		this.convId = "";
 		this.totals = null;
+		this.resetApp.emit();
+		this.showScanner = false;
 	}
 
 	reauthDone() {

@@ -34,6 +34,8 @@ export class OneDriveComponent implements OnInit {
         this.utilityService.showToast(err);
         this.utilityService.hideLoader();
       })
+
+    this.oneDriveService.resetApp.subscribe(() => { this.folders = []; });
   }
 
   ngOnInit() {

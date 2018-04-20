@@ -41,6 +41,16 @@ export class DashboardDetailsComponent {
     this.oneDriveService.reauthsuccess.subscribe(() => {
       this.init();
     })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.combiChart = null;
+      this.dChart = null;
+      this.totals = {};
+      this.period = 'Day';
+      this.selectedRowVal = null;
+      this.selectedRow = null;
+      this.rows = [];
+    })
   }
 
   init() {

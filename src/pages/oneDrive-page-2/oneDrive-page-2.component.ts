@@ -10,9 +10,9 @@ import { UtilityService } from '../../shared/services/utility.service';
 })
 export class OneDrivePage2Component implements OnInit {
   
-  public folders = [];
+  public folders:any = [];
 
-  public parent;
+  public parent:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -39,6 +39,11 @@ export class OneDrivePage2Component implements OnInit {
         this.utilityService.showToast(err);
         this.utilityService.hideLoader();
       })
+
+    this.oneDriveService.resetApp.subscribe(() => {
+      this.folders = [];
+      this.parent = null;
+    })
   }
 
   ngOnInit() {

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit Item
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows,core"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let row of item" [hidden]="!row.isShow">
+      <ion-label fixed>{{row.name}}</ion-label>
+      <ion-input type="text" [value]="row.input" [disabled]="row.isDisabled"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="save()">
+      <img src="assets/imgs/save.svg" class="save-btn" />
+    </button>
+  </ion-fab>
+</ion-content>
