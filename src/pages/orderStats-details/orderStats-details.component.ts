@@ -92,9 +92,9 @@ export class OrderStatsDetailsComponent implements OnInit {
         (res) => {
           this.oneDriveService.worksheets[itemFileInfo.id] = res;
           let _formulas = [];
-          for(let i=0; i<res.formulas.length; i++) {
-            if(typeof res.formulas[i][0] == 'string')
-              _formulas.push(res.formulas[i][0].split("^"));
+          for(let i=0; i<res.values.length; i++) {
+            if(typeof res.values[i][0] == 'string')
+              _formulas.push(res.values[i][0].split("^"));
           }
 
           this.computeTableData(_formulas);

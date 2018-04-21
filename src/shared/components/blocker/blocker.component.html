@@ -1,6 +1,20 @@
-<div class="blocker" [style.display]="blockerService.isShown ? 'block': 'none'" text-center>
-  <button ion-button class="login-btn" (click)="tryLogin()" icon-left outline>
-  	<img class="one-drive-logo" src="assets/imgs/oneDriveLogo.png"/>
-  	Sign In With One Drive
-  </button>
+<div showWhen="android,ios,windows" class="blocker-m" [style.display]="blockerService.isShown ? 'block': 'none'">
+  <div>
+    <img src="assets/imgs/LoginImage.jpg" />
+  </div>
+  <div text-center>
+    <button ion-button class="login-btn" (click)="tryLogin()" icon-left>
+      <img class="one-drive-logo" src="assets/imgs/oneDriveLogo.png" /> Sign In With OneDrive
+    </button>
+  </div>
+</div>
+<div showWhen="core" class="blocker" [style.display]="blockerService.isShown ? 'flex': 'none'">
+  <div>
+    <img src="assets/imgs/LoginImage.jpg" />
+  </div>
+  <div text-center>
+    <button ion-button class="login-btn" (click)="tryLogin()" icon-left>
+      <img class="one-drive-logo" src="assets/imgs/oneDriveLogo.png" /> Sign In With OneDrive
+    </button>
+  </div>
 </div>

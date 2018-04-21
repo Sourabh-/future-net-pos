@@ -37,6 +37,6 @@
     </ion-list>
   </ion-content>
 </ion-menu>
-<ion-nav #content [root]="rootPage"></ion-nav>
+<ion-nav #content [root]="rootPage" [class]="utilityService.theme"></ion-nav>
 <blocker (login)="callOneDrive()"></blocker>
 <bar-code-scanner showWhen="android,ios,windows"></bar-code-scanner>

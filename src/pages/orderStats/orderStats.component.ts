@@ -86,25 +86,25 @@ export class OrderStatsComponent implements OnInit {
         (res) => {
           this.oneDriveService.worksheets[orderFileInfo.id] = res;
           let _formulas = {}, _rows = [];
-          for(let i=1; i<res.formulas.length; i++) {
-          	if(res.formulas[i][0] && res.formulas[i][0].trim() && res.formulas[i][0] != 'HEADER') {
-          		let _dateArr = res.formulas[i][1].split(" ")[0].split("/");
-              let _timeArr = res.formulas[i][1].split(" ")[1].split(":");
+          for(let i=1; i<res.values.length; i++) {
+          	if(res.values[i][0] && res.values[i][0].trim() && res.values[i][0] != 'HEADER') {
+          		let _dateArr = res.values[i][1].split(" ")[0].split("/");
+              let _timeArr = res.values[i][1].split(" ")[1].split(":");
               let time = this.utilityService.tConvert(_timeArr[0] + ":" + _timeArr[1]);
           		let _date = new Date(_dateArr[2], Number(_dateArr[1])-1, _dateArr[0]);
-          		if(!_formulas[res.formulas[i][2]]){
-	          		 _formulas[res.formulas[i][2]] = {
-	          			orderNo: res.formulas[i][2],
+          		if(!_formulas[res.values[i][2]]){
+	          		 _formulas[res.values[i][2]] = {
+	          			orderNo: res.values[i][2],
 	          			createdDate: _date.getDate() + this.utilityService.getDateSub(Number(_date.getDate())) + " " + this.utilityService.getMonth(_date.getMonth() + 1) + ", " + _date.getFullYear(),
 	          			itemQty: 1,
-                  items: [res.formulas[i][4] + ''],
-                  all: res.formulas[i][2] + " " + res.formulas[i][4],
+                  items: [res.values[i][4] + ''],
+                  all: res.values[i][2] + " " + res.values[i][4],
                   createdTime: time
 	          		}
           		} else {
-          			_formulas[res.formulas[i][2]].itemQty += 1;
-                _formulas[res.formulas[i][2]].items.push(res.formulas[i][4] + '');   		
-                _formulas[res.formulas[i][2]]['all'] += ' ' + res.formulas[i][4];
+          			_formulas[res.values[i][2]].itemQty += 1;
+                _formulas[res.values[i][2]].items.push(res.values[i][4] + '');   		
+                _formulas[res.values[i][2]]['all'] += ' ' + res.values[i][4];
               }
           	}
           }

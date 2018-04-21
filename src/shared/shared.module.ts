@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { IonicModule } from 'ionic-angular';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { MenuComponent } from './components/menu/menu.component';

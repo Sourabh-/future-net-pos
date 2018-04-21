@@ -47,6 +47,7 @@ export class OneDriveService {
 	reauthsuccess: EventEmitter<void> = new EventEmitter();
 	resetApp: EventEmitter<void> = new EventEmitter();
 	showScanner: boolean = false;
+	itemsAddressRange: any = {}; 
 
 	constructor(
 		private http: Http,
@@ -127,8 +128,20 @@ export class OneDriveService {
 		      });
 	}
 
-	updateWorkbook() {
-		
+	updateItemWorkbook(id, values, address) {
+		let body = JSON.stringify({ values: [values] });
+		return this.http
+			.patch(
+				`${this.URL}/me/drive/items/${id}/workbook/worksheets('items_live')/range(address='${address}')`,
+				body,
+				this.authService.getAuthRequestOptions()
+			)
+			.map(extractData)
+			.catch((res: Response) => {
+		      	return handleError(res, () => {
+		      		this.reauth.emit();
+		      	});
+		    });
 	}
 
 	resetAll() {
@@ -143,6 +156,7 @@ export class OneDriveService {
 		this.totals = null;
 		this.resetApp.emit();
 		this.showScanner = false;
+		this.itemsAddressRange = {};
 	}
 
 	reauthDone() {

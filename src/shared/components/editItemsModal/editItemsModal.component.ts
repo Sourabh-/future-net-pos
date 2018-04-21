@@ -32,5 +32,6 @@ export class EditItemsModalComponent implements OnInit {
 
 	save() {
 		if(this.func) this.func(this.item);
+		this.dismiss();
 	}
 }

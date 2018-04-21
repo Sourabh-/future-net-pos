@@ -118,7 +118,7 @@ export class DashboardDetailsComponent {
             if(res.value[i].name.toLowerCase().indexOf('ddept') > -1) {
               this.oneDriveService.getWorkbook(res.value[i].id, 'DDept').subscribe(
                 (res1) => {
-                  iDs.day = res1.formulas;
+                  iDs.day = res1.values;
                   count--;
                   if(count == 0 && breakout == 0) {
                     this.computeTable(iDs);
@@ -132,7 +132,7 @@ export class DashboardDetailsComponent {
             } else if(res.value[i].name.toLowerCase().indexOf('wdept') > -1) {
               this.oneDriveService.getWorkbook(res.value[i].id, 'WDept').subscribe(
                 (res1) => {
-                  iDs.week = res1.formulas;
+                  iDs.week = res1.values;
                   count--;
                   if(count == 0 && breakout == 0) {
                     this.computeTable(iDs);
@@ -201,7 +201,7 @@ export class DashboardDetailsComponent {
       (res) => {
         this.oneDriveService.worksheets[id] = res;
         this.utilityService.hideLoader();
-        this.computeMSCombiGraph(res.formulas);
+        this.computeMSCombiGraph(res.values);
       },
       (msg) => {
         this.utilityService.hideLoader();

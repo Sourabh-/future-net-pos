@@ -130,6 +130,7 @@ export class UtilityService {
 	public loader: any;
 	public isMenuEnabled: boolean = false;
 	private loaderShown: boolean = false;
+	public theme: string = localStorage.theme || 'light';
 
 	constructor(
 		private toastCtrl: ToastController,
@@ -237,5 +238,10 @@ export class UtilityService {
 	  }
 
 	  return time.join(''); // return adjusted time or original string
+	}
+
+	changeTheme() {
+		this.theme = this.theme == 'dark-theme' ? 'light-theme' : 'dark-theme';
+		localStorage.theme = this.theme;
 	}
 }
