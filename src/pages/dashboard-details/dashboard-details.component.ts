@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UtilityService } from '../../shared/services/utility.service';
 import { BlockerService } from '../../shared/services/blocker.service';
@@ -8,7 +8,7 @@ import { OneDriveService } from '../../shared/services/oneDrive.service';
   selector: 'dashboard-details',
   templateUrl: 'dashboard-details.component.html'
 })
-export class DashboardDetailsComponent {
+export class DashboardDetailsComponent implements OnDestroy {
 
   combiChart: any;
   dChart: any;
@@ -16,6 +16,7 @@ export class DashboardDetailsComponent {
   period: string = 'Day'; 
   selectedRowVal: any;
   selectedRow: any;
+  subs: any = {};
 
   public header = [
   	'SOURCE', 
@@ -34,11 +35,12 @@ export class DashboardDetailsComponent {
   ) {	
 
     this.init();
-    this.oneDriveService.selectedCityUpdated.subscribe(() => {
+
+    this.subs.selectedCityUpdated = this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.init();
     })
 
-    this.oneDriveService.reauthsuccess.subscribe(() => {
+    this.subs.reauthsuccess = this.oneDriveService.reauthsuccess.subscribe(() => {
       this.init();
     })
 
@@ -50,7 +52,18 @@ export class DashboardDetailsComponent {
       this.selectedRowVal = null;
       this.selectedRow = null;
       this.rows = [];
+      for(let key in this.subs) {
+        this.subs[key].unsubscribe();
+      }
+
+      this.subs = {};
     })
+  }
+
+  ngOnDestroy() {
+    for(let key in this.subs) {
+      this.subs[key].unsubscribe();
+    }
   }
 
   init() {
@@ -174,7 +187,6 @@ export class DashboardDetailsComponent {
   }
 
   showDetailBarChart(parent, fname) {
-    this.utilityService.showLoader();
     this.oneDriveService.getFolders(parent.cityId).subscribe(
       (res) => {
         if(res.value) {
@@ -185,12 +197,9 @@ export class DashboardDetailsComponent {
               break;
             }
           }
-        } else {
-          this.utilityService.hideLoader();
         }
       },
       (msg) => {
-        this.utilityService.hideLoader();
         this.utilityService.showToast(msg);
       }
     )
@@ -200,11 +209,9 @@ export class DashboardDetailsComponent {
     this.oneDriveService.getWorkbook(id, fname).subscribe(
       (res) => {
         this.oneDriveService.worksheets[id] = res;
-        this.utilityService.hideLoader();
         this.computeMSCombiGraph(res.values);
       },
       (msg) => {
-        this.utilityService.hideLoader();
         this.utilityService.showToast(msg);
       }
     )

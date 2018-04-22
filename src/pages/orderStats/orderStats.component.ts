@@ -55,29 +55,30 @@ export class OrderStatsComponent implements OnInit {
   }
 
   getFolderContents() {
-    this.utilityService.showLoader();
+    let currComp = this.navCtrl.getActive().name;
+    if(currComp == 'OrderStatsComponent') this.utilityService.showLoader();
     this.oneDriveService.getFolders(this.oneDriveService.selectedCityId).subscribe(
       (folders) => {
         if(folders.value) {
           this.oneDriveService.folders[this.oneDriveService.selectedCityId] = folders.value;
           for(let i=0; i < folders.value.length; i++) {
             if(folders.value[i].name.toLowerCase().indexOf("orders") > -1){
-              return this.getOrdersContent(folders.value[i]);
+              return this.getOrdersContent(folders.value[i], currComp);
             }
           }
-          this.utilityService.hideLoader();
+          this.hideLoader(currComp);
         } else {
           this.oneDriveService.folders[this.oneDriveService.selectedCityId] = [];
-          this.utilityService.hideLoader();
+          this.hideLoader(currComp);
         }
       },
       (err) => {
         this.utilityService.showToast(err);
-        this.utilityService.hideLoader();
+        this.hideLoader(currComp);
       })
   }
 
-  getOrdersContent(orderFileInfo) {
+  getOrdersContent(orderFileInfo, currComp) {
     this.orders = [];
     this.scrollItems = [];
     let _rows = [];
@@ -117,11 +118,11 @@ export class OrderStatsComponent implements OnInit {
 
           this.orders = _rows;
           for(let i=0; i < 20; i++) { if(this.orders[i]) this.scrollItems.push(this.orders[i])}
-          this.utilityService.hideLoader();
+          this.hideLoader(currComp);
         },
         (err) => {
           this.utilityService.showToast(err);
-          this.utilityService.hideLoader();
+          this.hideLoader(currComp);
         }
       )
   }
@@ -137,5 +138,10 @@ export class OrderStatsComponent implements OnInit {
       }
       infiniteScroll.complete();
     }, 50);
+  }
+
+  hideLoader(currComp) {
+    if(currComp == 'OrderStatsComponent')
+      this.utilityService.hideLoader();
   }
 }

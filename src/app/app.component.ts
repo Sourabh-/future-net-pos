@@ -176,6 +176,7 @@ export class RootComponent implements OnInit {
           this.oneDriveService.setCity(folders.value[0].name, folders.value[0].id);
           this.oneDriveService.cities = folders.value;
           this.authService.tokenReceived.emit(fo.id);
+          return this.getAllContent(folders.value);
         } else {
           this.oneDriveService.folders[fo.id] = [];
         }
@@ -185,6 +186,94 @@ export class RootComponent implements OnInit {
         this.utilityService.showToast(err);
         this.utilityService.hideLoader();
       })
+  }
+
+  getAllContent(filesInfo) {
+    let count = filesInfo.length;
+    let breakout = 0;
+    let pluLiveFiles = [];
+    let itemsLiveFiles = [];
+    for(let i=0; i<filesInfo.length; i++) {
+      ((i) => {
+        this.oneDriveService.getFolders(filesInfo[i].id)
+        .subscribe(
+          (res) => {
+            if(res.value) {
+              for(let j=0; j < res.value.length; j++) {
+                if(res.value[j].name.toLowerCase().indexOf('plu_live') > -1) {
+                  pluLiveFiles.push({
+                    id: res.value[j].id,
+                    cityId: filesInfo[i].id
+                  });
+                } else if(res.value[j].name.toLowerCase().indexOf('items_live') > -1) {
+                  itemsLiveFiles.push({
+                    id: res.value[j].id,
+                    cityId: filesInfo[i].id
+                  });
+                } else if(res.value[j].name.toLowerCase().indexOf('changelog') > -1) {
+                  this.oneDriveService.logFileIds[filesInfo[i].id] = res.value[j].id;
+                }
+              }
+            }
+
+            this.oneDriveService.folders[filesInfo[i].id] = res.value || [];
+            count--;
+            if(count == 0 && breakout == 0) {
+              this.getPluLiveFiles(pluLiveFiles);
+              this.getItemFilesContent(itemsLiveFiles);
+            } 
+          },
+          (msg) => {
+            breakout = 1;
+            this.utilityService.showToast(msg);
+          }
+        )
+      })(i);
+    }
+  }
+
+  getPluLiveFiles(files) {
+    let count = files.length;
+    for(let i=0; i< files.length; i++) {
+      ((i) => {
+        this.oneDriveService.getWorkbook(files[i].id, 'plu_live')
+        .subscribe(
+         (res) => {
+           this.oneDriveService.worksheets[files[i].id] = res;
+           this.oneDriveService.barCodes[files[i].cityId] = res;
+           count--;
+           if(count === 0) {
+             this.oneDriveService.showScanner = true;
+           }
+         },
+         (msg) => {
+           this.utilityService.showToast(msg);
+         })
+      })(i);
+    }
+  }
+
+  getItemFilesContent(files) {
+    let count = files.length;
+    if(!files.length) this.utilityService.hideLoader();
+
+    for(let i=0; i< files.length; i++) {
+      ((i) => {
+        this.oneDriveService.getWorkbook(files[i].id, 'items_live')
+        .subscribe(
+         (res) => {
+           this.oneDriveService.worksheets[files[i].id] = res;
+           this.oneDriveService.itemsAddressRange[files[i].cityId] = res.address;
+           count--;
+           if(count == 0)
+             this.utilityService.hideLoader();
+         },
+         (msg) => {
+           this.utilityService.showToast(msg);
+           this.utilityService.hideLoader();
+         })
+      })(i);
+    }
   }
 
   navigate(where) {

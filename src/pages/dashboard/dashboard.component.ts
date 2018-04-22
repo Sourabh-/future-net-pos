@@ -75,7 +75,8 @@ export class DashboardComponent implements OnInit {
 
   navigateToDetails(chart) {
   	this.navCtrl.push(DashboardDetailsComponent, { chart });
-    this.oneDriveService.setCity(chart.all, chart.cityId);
+    if(this.oneDriveService.selectedCityId != chart.cityId)
+      this.oneDriveService.setCity(chart.all, chart.cityId);
   }
 
   getDayTotalNDeptFiles(filesInfo) {
@@ -84,8 +85,6 @@ export class DashboardComponent implements OnInit {
   	let dayTotalFiles = [];
     let dDeptFiles = [];
     let wDeptFiles = [];
-    let pluLiveFiles = [];
-    let itemsLiveFiles = [];
   	for(let i=0; i<filesInfo.length; i++) {
   		((i) => {
   			this.oneDriveService.getFolders(filesInfo[i].id)
@@ -111,16 +110,6 @@ export class DashboardComponent implements OnInit {
                     name: filesInfo[i].name,
                     cityId: filesInfo[i].id
                   });
-                } else if(res.value[j].name.toLowerCase().indexOf('plu_live') > -1) {
-                  pluLiveFiles.push({
-                    id: res.value[j].id,
-                    cityId: filesInfo[i].id
-                  });
-                } else if(res.value[j].name.toLowerCase().indexOf('items_live') > -1) {
-                  itemsLiveFiles.push({
-                    id: res.value[j].id,
-                    cityId: filesInfo[i].id
-                  });
                 } else if(res.value[j].name.toLowerCase().indexOf('changelog') > -1) {
                   this.oneDriveService.logFileIds[filesInfo[i].id] = res.value[j].id;
                 }
@@ -132,8 +121,6 @@ export class DashboardComponent implements OnInit {
 	  				if(count == 0 && breakout == 0) {
 	  					this.getDayTotalFilesInfo(dayTotalFiles);
               this.getDDeptFilesInfo(dDeptFiles, wDeptFiles);
-              this.getPluLiveFiles(pluLiveFiles);
-              this.getItemFilesContent(itemsLiveFiles);
 	  				} 
 	  			},
 	  			(msg) => {
@@ -171,43 +158,6 @@ export class DashboardComponent implements OnInit {
   				})
   		})(i);
   	}
-  }
-
-  getPluLiveFiles(files) {
-    let count = files.length;
-    for(let i=0; i< files.length; i++) {
-      ((i) => {
-        this.oneDriveService.getWorkbook(files[i].id, 'plu_live')
-        .subscribe(
-         (res) => {
-           this.oneDriveService.worksheets[files[i].id] = res;
-           this.oneDriveService.barCodes[files[i].cityId] = res;
-           count--;
-           if(count === 0) {
-             this.oneDriveService.showScanner = true;
-           }
-         },
-         (msg) => {
-           this.utilityService.showToast(msg);
-         })
-      })(i);
-    }
-  }
-
-  getItemFilesContent(files) {
-    for(let i=0; i< files.length; i++) {
-      ((i) => {
-        this.oneDriveService.getWorkbook(files[i].id, 'items_live')
-        .subscribe(
-         (res) => {
-           this.oneDriveService.worksheets[files[i].id] = res;
-           this.oneDriveService.itemsAddressRange[files[i].cityId] = res.address;
-         },
-         (msg) => {
-           this.utilityService.showToast(msg);
-         })
-      })(i);
-    }
   }
 
   setTotal(totalObj, formula, thisYr, prevYr, yrMinTwo) {
