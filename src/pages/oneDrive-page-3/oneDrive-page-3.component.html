@@ -3,8 +3,11 @@
     <menu class="menu"></menu>
     <div class="content-container">
       <div class="desktop-header">
+        <button color="dark" clear ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back" class="pointer" [style.fontSize]="'22px'"></ion-icon>
+        </button>&nbsp;
         <ion-label>
-          <h6>
+          <h6 [style.marginTop]="'1rem'">
             <span class="previous-header">One Drive Data&nbsp;</span> 
             &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
             <span class="previous-header">{{superParent?.name}}&nbsp;</span>

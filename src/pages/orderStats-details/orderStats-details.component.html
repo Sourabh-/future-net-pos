@@ -3,8 +3,11 @@
     <menu class="menu"></menu>
     <div class="content-container">
       <div class="desktop-header order-page-header">
+        <button class="order-details-back" color="dark" clear ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back" class="pointer" [style.fontSize]="'22px'"></ion-icon>
+        </button>&nbsp;
         <ion-label class="header-title">
-          <h6>
+          <h6 [style.marginTop]="'1rem'">
             <span class="previous-header">Auto Order Statistics&nbsp;</span>
             &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
             Order No: {{parent?.orderNo}}

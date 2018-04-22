@@ -6,7 +6,13 @@
         <ion-grid>
           <ion-row>
             <ion-col col-3>
-              <ion-select placeholder="Burliegh" [style.visibility]="'hidden'"></ion-select>
+              <button color="dark" clear ion-button icon-only (click)="goBack()">
+                <ion-icon 
+                  name="arrow-back" 
+                  class="pointer" 
+                  [style.fontSize]="'22px'" 
+                ></ion-icon> 
+              </button>
             </ion-col>
           </ion-row>
         </ion-grid>

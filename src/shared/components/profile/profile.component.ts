@@ -40,12 +40,6 @@ export class ProfileComponent implements OnInit {
    let actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Switch Theme',
-          handler: () => {
-            this.utilityService.changeTheme();
-          }
-        },
-        {
           text: 'Sign Out',
           handler: () => {
             this.utilityService.isMenuEnabled = false;

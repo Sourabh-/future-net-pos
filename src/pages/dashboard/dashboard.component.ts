@@ -121,6 +121,8 @@ export class DashboardComponent implements OnInit {
                     id: res.value[j].id,
                     cityId: filesInfo[i].id
                   });
+                } else if(res.value[j].name.toLowerCase().indexOf('changelog') > -1) {
+                  this.oneDriveService.logFileIds[filesInfo[i].id] = res.value[j].id;
                 }
 	  					}
 	  				}

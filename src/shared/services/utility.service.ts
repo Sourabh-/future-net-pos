@@ -130,7 +130,7 @@ export class UtilityService {
 	public loader: any;
 	public isMenuEnabled: boolean = false;
 	private loaderShown: boolean = false;
-	public theme: string = localStorage.theme || 'light';
+	public theme: string = localStorage.theme || 'light-theme';
 
 	constructor(
 		private toastCtrl: ToastController,

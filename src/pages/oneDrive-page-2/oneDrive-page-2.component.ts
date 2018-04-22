@@ -54,4 +54,8 @@ export class OneDrivePage2Component implements OnInit {
   handleClick(folder) {
   	this.navCtrl.push(OneDrivePage3Component, { folder: folder, parent: this.parent });
   }
+
+  goBack() {
+    this.navCtrl.pop({ 'animate': false });
+  }
 }

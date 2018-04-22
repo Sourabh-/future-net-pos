@@ -2,7 +2,7 @@ order-stats-details {
 
   .header-title {
   	overflow: visible;
-  	margin-right: 110px;
+  	margin-right: 70px;
   }
 
   .previous-header {
@@ -34,5 +34,10 @@ order-stats-details {
 
   .order-page-header {
     padding: 5.5px 5px 4.5px 15px;
+  }
+
+  .order-details-back {
+    margin-right: 12px;
+    min-width: 33px !important;
   }
 }

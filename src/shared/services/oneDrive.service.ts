@@ -3,6 +3,7 @@ import * as hello from 'hellojs/dist/hello.all.js';
 import { Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
+import { ProfileService } from './profile.service';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -48,10 +49,12 @@ export class OneDriveService {
 	resetApp: EventEmitter<void> = new EventEmitter();
 	showScanner: boolean = false;
 	itemsAddressRange: any = {}; 
+	logFileIds: any = {};
 
 	constructor(
 		private http: Http,
-		private authService: AuthService
+		private authService: AuthService,
+		private profileService: ProfileService
 	) {
 
 	}
@@ -144,6 +147,28 @@ export class OneDriveService {
 		    });
 	}
 
+	writeChangeLog(itemNo) {
+		let items = [[itemNo, this.profileService.getProfile().userPrincipalName, new Date().toLocaleString()]];
+		const item = {
+	      values: items
+	    };
+
+    	const body = JSON.stringify(item);
+
+	    return this.http
+	      .post(
+	        `${this.URL}/me/drive/items/${this.logFileIds[this.selectedCityId]}/workbook/tables/LogTable/rows/add`,
+	        body,
+	        this.authService.getAuthRequestOptions()
+	      )
+	      .map(extractData)
+	      .catch((res: Response) => {
+		    return handleError(res, () => {
+		      	this.reauth.emit();
+		    });
+		  });
+	}
+
 	resetAll() {
 		this.folders = {};
 		this.worksheets = {};
@@ -157,6 +182,7 @@ export class OneDriveService {
 		this.resetApp.emit();
 		this.showScanner = false;
 		this.itemsAddressRange = {};
+		this.logFileIds = {};
 	}
 
 	reauthDone() {

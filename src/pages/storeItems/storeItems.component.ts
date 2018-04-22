@@ -236,6 +236,7 @@ export class StoreItemsComponent implements OnInit {
         this.setProperValues(item);
         this.rows[editedItem[0].value-1] = item;
         if(this.scrollItems[editedItem[0].value-1]) this.scrollItems[editedItem[0].value-1] = item;
+        this.oneDriveService.writeChangeLog(editedItem[1].value).subscribe(() => {}, () => {});
       },
       (msg) => {
         this.utilityService.hideLoader();

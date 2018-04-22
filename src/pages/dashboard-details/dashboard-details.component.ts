@@ -267,4 +267,8 @@ export class DashboardDetailsComponent {
       }
     }
   }
+
+  goBack() {
+    this.navCtrl.pop({ 'animate': false });
+  }
 }

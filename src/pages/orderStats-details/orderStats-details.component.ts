@@ -142,7 +142,7 @@ export class OrderStatsDetailsComponent implements OnInit {
     this.utilityService.hideLoader();
   }
 
-   addMore(infiniteScroll) {
+  addMore(infiniteScroll) {
     setTimeout(() => {
       let count = this.scrollItems.length;
       if(this.rows.length > this.scrollItems.length) {
@@ -153,5 +153,9 @@ export class OrderStatsDetailsComponent implements OnInit {
       }
       infiniteScroll.complete();
     }, 50);
+  }
+
+  goBack() {
+    this.navCtrl.pop({ 'animate': false });
   }
 }

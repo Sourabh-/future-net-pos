@@ -58,4 +58,8 @@ export class OneDrivePage3Component implements OnInit {
   handleClick(ev) {
   	
   }
+
+  goBack() {
+    this.navCtrl.pop({ 'animate': false });
+  }
 }
