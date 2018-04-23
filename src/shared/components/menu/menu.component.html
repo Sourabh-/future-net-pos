@@ -5,7 +5,7 @@
   <div class="content">
     <ion-list no-lines>
       <ion-item>
-        <ion-select class="custom-select" [(ngModel)]="selectedCity" (ngModelChange)="changeCity()">
+        <ion-select interface="popover" [disabled]="utilityService.selectDisabled" class="custom-select" [(ngModel)]="selectedCity" (ngModelChange)="changeCity()">
           <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
         </ion-select>
       </ion-item>

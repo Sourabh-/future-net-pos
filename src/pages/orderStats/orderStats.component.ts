@@ -50,7 +50,7 @@ export class OrderStatsComponent implements OnInit {
       this.currentPage = 0;
       this.scrollItems = [];
       this.query = '';
-      this.isSearchShow = false;
+      this.isSearchShow = false; 
     })
   }
 
@@ -98,13 +98,14 @@ export class OrderStatsComponent implements OnInit {
 	          			orderNo: res.values[i][2],
 	          			createdDate: _date.getDate() + this.utilityService.getDateSub(Number(_date.getDate())) + " " + this.utilityService.getMonth(_date.getMonth() + 1) + ", " + _date.getFullYear(),
 	          			itemQty: 1,
-                  items: [res.values[i][4] + ''],
+                  items: [res.values[i]],
                   all: res.values[i][2] + " " + res.values[i][4],
                   createdTime: time
 	          		}
+
           		} else {
           			_formulas[res.values[i][2]].itemQty += 1;
-                _formulas[res.values[i][2]].items.push(res.values[i][4] + '');   		
+                _formulas[res.values[i][2]].items.push(res.values[i]);   		
                 _formulas[res.values[i][2]]['all'] += ' ' + res.values[i][4];
               }
           	}

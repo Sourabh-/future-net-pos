@@ -1,11 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, NavController } from 'ionic-angular';
+import { NavController, PopoverController, ViewController } from 'ionic-angular';
 import { ProfileService } from '../../services/profile.service';
 import { BlockerService } from '../../services/blocker.service';
 import { AuthService } from '../../services/auth.service';
 import { OneDriveService } from '../../services/oneDrive.service';
 import { UtilityService } from '../../services/utility.service';
 import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
+
+
+@Component({
+  template: `
+    <ion-list style="margin: 0;">
+      <ion-item class="pointer" (click)="signOut()">
+        Sign Out
+      </ion-item>
+    </ion-list>
+  `
+})
+export class PopoverPage {
+  constructor(
+    public viewCtrl: ViewController,
+    public blockerService: BlockerService,
+    public authService: AuthService,
+    public oneDriveService: OneDriveService,
+    public utilityService: UtilityService
+  ) {}
+
+  signOut() {
+    this.viewCtrl.dismiss();
+    this.utilityService.isMenuEnabled = false;
+    this.oneDriveService.resetAll();
+    this.authService.logout();
+    window.localStorage.clear();
+    this.blockerService.show(); 
+  }
+}
 
 @Component({
   selector: 'profile',
@@ -19,12 +48,12 @@ export class ProfileComponent implements OnInit {
   };
   constructor(
     public profileService: ProfileService,
-    public actionSheetCtrl: ActionSheetController,
     public blockerService: BlockerService,
     public authService: AuthService,
     public oneDriveService: OneDriveService,
     public utilityService: UtilityService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public popoverCtrl: PopoverController
   ) {}
 
   ngOnInit() {
@@ -36,21 +65,8 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  showDropdown() {
-   let actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Sign Out',
-          handler: () => {
-            this.utilityService.isMenuEnabled = false;
-            this.oneDriveService.resetAll();
-            this.authService.logout();
-            window.localStorage.clear();
-            this.blockerService.show(); 
-          }
-        }
-      ]
-   });
-   actionSheet.present();
+  showDropdown(ev) {
+   let popover = this.popoverCtrl.create(PopoverPage);
+   popover.present({ ev: ev });
   }
 }

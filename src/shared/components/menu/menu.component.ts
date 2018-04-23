@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, App } from 'ionic-angular';
 import { DashboardComponent } from '../../../pages/dashboard/dashboard.component';
 import { OneDriveComponent } from '../../../pages/oneDrive/oneDrive.component';
 import { OrderStatsComponent } from '../../../pages/orderStats/orderStats.component';
@@ -18,11 +18,12 @@ export class MenuComponent {
   constructor(
     public navCtrl: NavController, 
     public utilityService: UtilityService,
-    public oneDriveService: OneDriveService
+    public oneDriveService: OneDriveService,
+    private app: App
   ) {
   	this.oneDriveService.selectedCityUpdated.subscribe(() => {
       this.selectedCity = this.oneDriveService.selectedCity;
-    })
+    });
   }
 
   navigate(where) {

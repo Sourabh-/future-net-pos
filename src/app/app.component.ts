@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { Platform, ToastController, Nav } from 'ionic-angular';
+import { Platform, ToastController, Nav, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -37,7 +37,8 @@ export class RootComponent implements OnInit {
     public toastCtrl: ToastController,
     private oneDriveService: OneDriveService,
     private profileService: ProfileService,
-    private blockerService: BlockerService
+    private blockerService: BlockerService,
+    private app: App
   ) {
 
     if(window.location.hash || window.location.search) {
@@ -60,6 +61,15 @@ export class RootComponent implements OnInit {
 
       this.oneDriveService.selectedCityUpdated.subscribe(() => {
         this.selectedCity = this.oneDriveService.selectedCity;
+      })
+
+      this.app.viewDidEnter.subscribe(viewCtrl => {
+        setTimeout( () => {
+          if(this.nav.getActive().name == 'OrderStatsDetailsComponent') {
+            this.utilityService.selectDisabled = true;
+          } else 
+            this.utilityService.selectDisabled = false;
+        }, 500);
       })
     });
   }

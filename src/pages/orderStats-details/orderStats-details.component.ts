@@ -46,17 +46,7 @@ export class OrderStatsDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.oneDriveService.selectedCity) {
-      this.getFolderContents();
-    } 
-
-    this.oneDriveService.selectedCityUpdated.subscribe(() => {
-      this.getFolderContents();
-    })
-
-    this.oneDriveService.reauthsuccess.subscribe(() => {
-      this.getFolderContents();
-    })
+    this.computeTableData();
 
     this.oneDriveService.resetApp.subscribe(() => {
       this.rows = [];
@@ -68,81 +58,32 @@ export class OrderStatsDetailsComponent implements OnInit {
     })
   }
 
-  getFolderContents() {
-    this.utilityService.showLoader();
-    this.oneDriveService.getFolders(this.oneDriveService.selectedCityId).subscribe(
-      (folders) => {
-        if(folders.value) {
-          this.oneDriveService.folders[this.oneDriveService.selectedCityId] = folders.value;
-          for(let i=0; i < folders.value.length; i++) {
-            if(folders.value[i].name.toLowerCase().indexOf("items_live") > -1){
-              return this.getItem_liveContent(folders.value[i]);
-            }
-          }
-          this.utilityService.hideLoader();
-        } else {
-          this.oneDriveService.folders[this.oneDriveService.selectedCityId] = [];
-          this.utilityService.hideLoader();
-        }
-      },
-      (err) => {
-        this.utilityService.showToast(err);
-        this.utilityService.hideLoader();
-      })
-  }
-
-  getItem_liveContent(itemFileInfo) {
-    this.oneDriveService.getWorkbook(itemFileInfo.id, 'items_live').subscribe(
-        (res) => {
-          this.oneDriveService.worksheets[itemFileInfo.id] = res;
-          let _formulas = [];
-          for(let i=0; i<res.values.length; i++) {
-            if(typeof res.values[i][0] == 'string')
-              _formulas.push(res.values[i][0].split("^"));
-          }
-
-          this.computeTableData(_formulas);
-        },
-        (err) => {
-          this.utilityService.showToast(err);
-          this.utilityService.hideLoader();
-        }
-      )
-  }
-
-  computeTableData(sheetDataArr) {
+  computeTableData() {
     this.rows = [];
     let _rows = [];
     let count = 0;
 
-    for(let i=0; i<sheetDataArr.length; i++) {
-      if(this.parent.items.indexOf(sheetDataArr[i][0].split("=")[1]) > -1) {
-        _rows.push([
+    for(let i=0; i<this.parent.items.length; i++) {
+      _rows.push([
           { 
             value: ++count, 
-            all: sheetDataArr[i][0].split("=")[1],
-            promoCtnCost: sheetDataArr[i][47].replace(/^0+/, ''),
-            promoSave: sheetDataArr[i][62].replace(/^0+/, ''),
-            promoSavePercent: '0.00',
-            ctnCost: sheetDataArr[i][13].replace(/^0+/, ''),
-            ctnQty: '0'
+            all: this.parent.items[i][4]
           },
           { value: this.parent.createdDate, width: '130px' },
           { value: this.parent.createdTime, width: '90px' },
           { value:  this.parent.orderNo },
-          { value: sheetDataArr[i][0].split("=")[1] },
-          { value: sheetDataArr[i][1].replace(/\"/g, '') },
-          { value: sheetDataArr[i][14] },
-          { value: sheetDataArr[i][22] },
-          { value: sheetDataArr[i][16], class: (sheetDataArr[i][16] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: sheetDataArr[i][23], class: (sheetDataArr[i][23] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: sheetDataArr[i][24], class: (sheetDataArr[i][24] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: sheetDataArr[i][47].replace(/^0+/, '') },
-          { value: sheetDataArr[i][62].replace(/^0+/, '') },
-          { value: '0.00' },
-          { value: sheetDataArr[i][13].replace(/^0+/, '') }
+          { value: this.parent.items[i][4] },
+          { value: this.parent.items[i][5] },
+          { value: this.parent.items[i][30] },
+          { value: this.parent.items[i][29] },
+          { value: this.parent.items[i][42], class: (this.parent.items[i][42] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: this.parent.items[i][37].trim(), class: (this.parent.items[i][37].trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: this.parent.items[i][38].trim(), class: (this.parent.items[i][38].trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: Number(this.parent.items[i][32] || '0').toFixed(2) },
+          { value: Number(this.parent.items[i][33] || '0').toFixed(2) },
+          { value: this.parent.items[i][34] ? Number(this.parent.items[i][34]).toFixed(2) : '0' },
+          { value: this.parent.items[i][31] ? Number(this.parent.items[i][31]).toFixed(2) : '0' }
         ]);
-      }
     }
 
     this.rows = _rows;

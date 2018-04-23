@@ -131,6 +131,7 @@ export class UtilityService {
 	public isMenuEnabled: boolean = false;
 	private loaderShown: boolean = false;
 	public theme: string = localStorage.theme || 'light-theme';
+	public selectDisabled: boolean = false;
 
 	constructor(
 		private toastCtrl: ToastController,

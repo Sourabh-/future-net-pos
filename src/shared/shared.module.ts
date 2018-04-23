@@ -9,7 +9,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { FoldersComponent } from './components/folders/folders.component';
 import { CsvCardsComponent } from './components/csvCards/csvCards.component';
 import { AppTableComponent } from './components/appTable/appTable.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent, PopoverPage } from './components/profile/profile.component';
 import { BlockerComponent } from './components/blocker/blocker.component';
 import { BarCodeScannerComponent } from './components/barCodeScanner/barCodeScanner.component';
 import { EditItemsModalComponent } from './components/editItemsModal/editItemsModal.component';
@@ -33,7 +33,8 @@ import { SearchPipe } from './pipes/search.pipe';
     BlockerComponent,
     SearchPipe,
     BarCodeScannerComponent,
-    EditItemsModalComponent
+    EditItemsModalComponent,
+    PopoverPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +50,8 @@ import { SearchPipe } from './pipes/search.pipe';
     ProfileComponent,
     BlockerComponent,
     BarCodeScannerComponent,
-    EditItemsModalComponent
+    EditItemsModalComponent,
+    PopoverPage
   ],
   exports: [
     MenuComponent,

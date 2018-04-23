@@ -3,7 +3,7 @@
   <div class="profile-logo-container">
   	<img [src]="oneDriveService.photo || defaultProfileIcon" class="profile-logo" />
   </div>
-  <div class="profile-caret pointer" (click)="showDropdown()">
+  <div class="profile-caret pointer" (click)="showDropdown($event)">
   	<ion-icon name="md-arrow-dropdown" class="dark-grey"></ion-icon>
   </div>
 </div>
