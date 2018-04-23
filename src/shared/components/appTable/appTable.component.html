@@ -26,5 +26,5 @@
 </table>
 
 <div text-center *ngIf="!isHideFooter">
-  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="currentPage = $event"></pagination-controls>
 </div>

@@ -302,6 +302,7 @@ export class DashboardComponent implements OnInit {
     */
     let ch = [];
     for(let key in graphData) {
+      let c1 = 8, c2 = 8;
       let obj:any = {
         name: graphData[key].name.toUpperCase(),
         chartD: this.utilityService.getBarChart(),
@@ -323,20 +324,26 @@ export class DashboardComponent implements OnInit {
         };
 
       for(let j=1; j < graphData[key].dformulas.length; j++) {
-        obj.chartD.data.push({
-          label: graphData[key].dformulas[j][1],
-          value: Number(graphData[key].dformulas[j][2])
-        });
+        if(c1 > 0)
+          obj.chartD.data.push({
+            label: graphData[key].dformulas[j][1],
+            value: Number(graphData[key].dformulas[j][2])
+          });
+
+        c1--;
 
         this.totals[obj.cityId].dayTotal += Number(graphData[key].dformulas[j][2]);
         this.totals[obj.cityId].dayTotalCost += Number(graphData[key].dformulas[j][3]);
       }
 
       for(let j=1; j < graphData[key].wformulas.length; j++) {
-        obj.chartW.data.push({
-          label: graphData[key].wformulas[j][1],
-          value: Number(graphData[key].wformulas[j][2])
-        });
+        if(c2 > 0)
+          obj.chartW.data.push({
+            label: graphData[key].wformulas[j][1],
+            value: Number(graphData[key].wformulas[j][2])
+          });
+
+        c2--;
 
         this.totals[obj.cityId].weekTotal += Number(graphData[key].wformulas[j][2]);
         this.totals[obj.cityId].weekTotalCost += Number(graphData[key].wformulas[j][3]);

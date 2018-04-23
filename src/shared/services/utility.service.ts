@@ -61,7 +61,7 @@ export const barChartObj = {
 	        "divLineAlpha": "10",
 	        "alignCaptionWithCanvas": "0",
 	        "showValues": 0,
-	        "plotSpacePercent": "30",
+	        "plotSpacePercent": "40",
 	        "showXAxisLine": "0",
 	        "showYAxisLine": "0",
 	        "paletteColors": "#259D9E,#FF6060,#FFBE3C,#375BAF"

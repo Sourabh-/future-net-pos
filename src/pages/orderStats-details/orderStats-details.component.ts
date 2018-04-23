@@ -22,7 +22,11 @@ export class OrderStatsDetailsComponent implements OnInit {
   	'UNITS ORD', 
   	'CORG RNG?', 
   	'SLOW', 
-  	'VARIETY'
+  	'VARIETY',
+    'PROMO CTN COST',
+    'PROMO SAVE $',
+    'PROMO SAVE %',
+    'CTN COST'
   ];
 
   public rows:any = [];
@@ -132,7 +136,11 @@ export class OrderStatsDetailsComponent implements OnInit {
           { value: sheetDataArr[i][22] },
           { value: sheetDataArr[i][16], class: (sheetDataArr[i][16] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
           { value: sheetDataArr[i][23], class: (sheetDataArr[i][23] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: sheetDataArr[i][24], class: (sheetDataArr[i][24] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' }
+          { value: sheetDataArr[i][24], class: (sheetDataArr[i][24] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: sheetDataArr[i][47].replace(/^0+/, '') },
+          { value: sheetDataArr[i][62].replace(/^0+/, '') },
+          { value: '0.00' },
+          { value: sheetDataArr[i][13].replace(/^0+/, '') }
         ]);
       }
     }
