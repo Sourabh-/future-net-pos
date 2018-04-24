@@ -22,7 +22,7 @@ export class AuthService {
           form: false
         }
       }, {
-        redirect_uri : 'http://localhost:8100/',//https://future-net.firebaseapp.com/
+        redirect_uri : 'https://future-net.firebaseapp.com/',
         oauth_proxy: 'https://auth-server.herokuapp.com/proxy'
       }
     );

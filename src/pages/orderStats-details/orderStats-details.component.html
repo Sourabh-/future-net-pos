@@ -84,19 +84,19 @@
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">Core RNG?</span>
               <br/>
-              <span class="text-red">{{row[8].value}}</span>
+              <span [ngClass]="row[8].class || ''">{{row[8].value}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Slow?</span>
               <br/>
-              <span class="text-red">{{row[9].value}}</span>
+              <span [ngClass]="row[9].class || ''">{{row[9].value}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col class="order-details-col order-details-col-one">
               <span class="dark-grey">Variety?</span>
               <br/>
-              <span class="text-green">{{row[10].value}}</span>
+              <span [ngClass]="row[10].class || ''">{{row[10].value}}</span>
             </ion-col>
             <ion-col class="order-details-col">
               <span class="dark-grey">Promo CTN Cost:</span>
