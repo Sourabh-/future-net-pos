@@ -33,7 +33,8 @@ export class OrderStatsComponent implements OnInit {
 
   ngOnInit() {
   	if(this.oneDriveService.selectedCity) {
-      this.getFolderContents();
+      if(this.navCtrl.getActive().name == 'OrderStatsComponent') this.utilityService.showLoader();
+      setTimeout(() => this.getFolderContents(true), 500);
     } 
 
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
@@ -54,9 +55,9 @@ export class OrderStatsComponent implements OnInit {
     })
   }
 
-  getFolderContents() {
+  getFolderContents(noLoader?) {
     let currComp = this.navCtrl.getActive().name;
-    if(currComp == 'OrderStatsComponent') this.utilityService.showLoader();
+    if(currComp == 'OrderStatsComponent' && !noLoader) this.utilityService.showLoader();
     this.oneDriveService.getFolders(this.oneDriveService.selectedCityId).subscribe(
       (folders) => {
         if(folders.value) {
@@ -83,23 +84,23 @@ export class OrderStatsComponent implements OnInit {
     this.scrollItems = [];
     let _rows = [];
 
-  	this.oneDriveService.getWorkbook(orderFileInfo.id, 'Orders').subscribe(
+  	this.oneDriveService.getWorkbook(orderFileInfo.id).subscribe(
         (res) => {
           this.oneDriveService.worksheets[orderFileInfo.id] = res;
           let _formulas = {}, _rows = [];
           for(let i=1; i<res.values.length; i++) {
-          	if(res.values[i][0] && res.values[i][0].trim() && res.values[i][0] != 'HEADER') {
-          		let _dateArr = res.values[i][1].split(" ")[0].split("/");
-              let _timeArr = res.values[i][1].split(" ")[1].split(":");
+          	if(res.values[i][0] && res.values[i][0].trim() && res.values[i][0].indexOf('HEADER') == -1) {
+          		let _dateArr = res.values[i][1].replace(/\"/g, "").split(" ")[0].split("/");
+              let _timeArr = res.values[i][1].replace(/\"/g, "").split(" ")[1].split(":");
               let time = this.utilityService.tConvert(_timeArr[0] + ":" + _timeArr[1]);
           		let _date = new Date(_dateArr[2], Number(_dateArr[1])-1, _dateArr[0]);
           		if(!_formulas[res.values[i][2]]){
 	          		 _formulas[res.values[i][2]] = {
-	          			orderNo: res.values[i][2],
+	          			orderNo: res.values[i][2].replace(/\"/g, ""),
 	          			createdDate: _date.getDate() + this.utilityService.getDateSub(Number(_date.getDate())) + " " + this.utilityService.getMonth(_date.getMonth() + 1) + ", " + _date.getFullYear(),
 	          			itemQty: 1,
                   items: [res.values[i]],
-                  all: res.values[i][2] + " " + res.values[i][4],
+                  all: (res.values[i][2] + " " + res.values[i][4]).replace(/\"/g, ''),
                   createdTime: time
 	          		}
 

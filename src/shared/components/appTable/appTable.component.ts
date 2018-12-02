@@ -31,4 +31,12 @@ export class AppTableComponent implements OnInit {
   clicked(item) {
     this.onClick.emit(item);
   }
+
+  scrollToTop() {
+    setTimeout(() => {
+      let c = document.getElementsByClassName('content-container'); 
+      for(let i=0;i<c.length;i++) 
+        c[i].scrollTop = 0;
+    }, 300);
+  }
 }

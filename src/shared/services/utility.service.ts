@@ -95,8 +95,13 @@ export const msCombiObj = {
         "toolTipBgAlpha": "80",
         "toolTipBorderRadius": "2",
         "toolTipPadding": "10",
-        "showLegend": "0",
-        "sNumberSuffix": "%"
+        "showLegend": "1",
+        "sNumberSuffix": "%",
+        "legendBgColor": "#ffffff",
+        "legendBorderAlpha": "0",
+        "legendShadow": "0",
+        "legendItemFontSize": "12",
+        "legendItemFontColor": "#666666"
     },
     "categories": [
         {
@@ -132,6 +137,7 @@ export class UtilityService {
 	private loaderShown: boolean = false;
 	public theme: string = localStorage.theme || 'light-theme';
 	public selectDisabled: boolean = false;
+	public selectedCity: string = '';
 
 	constructor(
 		private toastCtrl: ToastController,

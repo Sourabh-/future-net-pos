@@ -3,6 +3,7 @@
     <menu class="menu"></menu>
     <div class="content-container">
       <div class="desktop-header desktop-header-pad">
+        <ion-icon name="ios-search-outline" class="search-icon"></ion-icon>
         <ion-searchbar class="custom-searchbar" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
         <profile></profile>
       </div>
@@ -16,7 +17,7 @@
             </div>
           </div>
           <div class="doughnut-body" id="doughnut-body">
-            <div class="doughnut-card" *ngFor="let chart of dCharts | search: query" (click)="navigateToDetails(chart)">
+            <div class="doughnut-card" *ngFor="let chart of dCharts | search: query: 'true'" (click)="navigateToDetails(chart)">
               <div class="doughnut-card-header">
                 <span>{{chart.name}}</span>
                 <span>
@@ -30,7 +31,7 @@
                   <span class="pull-right">$ {{chart.previous}} M</span>
                 </div>
                 <div class="doughnut-card-chart">
-                  <fusioncharts width="239" height="180" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
+                  <fusioncharts width="223" height="172" type="doughnut2d" dataFormat="json" [dataSource]="chart.chart"></fusioncharts>
                 </div>
                 <div class="doughnut-card-body-footer">
                   <span class="pull-left">TODAY</span>
@@ -44,31 +45,35 @@
           </div>
         </div>
         <div class="bar-container">
-          <div class="bar-card" *ngFor="let chart of barCharts | search: query">
+          <div class="bar-card" *ngFor="let chart of barCharts | search: query: 'true'">
             <div class="bar-card-header">
               <span class="bar-card-header-label pull-left">{{chart.name}}</span>
               <span class="bar-card-header-right pull-right cursor" (click)="changePeriod(chart)">
-                <div>{{chart.period}}</div>&nbsp;&nbsp;
-                <ion-icon class="bar-card-arrow" name="ios-arrow-down"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="offtouch">{{chart.period}}</div>&nbsp;&nbsp;
+                <ion-icon class="bar-card-arrow offtouch" name="ios-arrow-down"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="bard-card-details pointer" (click)="navigateToDetails(chart)">View Detail</span>
               </span>
             </div>
+            <div class="popup-period offtouch" *ngIf="chart.open">
+              <div class="popup-period-day pointer offtouch" (click)="selectPeriod(chart, 'Day')">Day</div>
+              <div class="pointer offtouch" (click)="selectPeriod(chart, 'Week')">Week</div>
+            </div>
             <div class="bar-card-body">
-              <fusioncharts width="100%" height="240" type="bar2d" dataFormat="json" [dataSource]="chart.period == 'Week' ? chart.chartW : chart.chartD"></fusioncharts>
+              <fusioncharts width="100%" height="240" type="column2d" dataFormat="json" [dataSource]="chart.period == 'Week' ? chart.chartW : chart.chartD"></fusioncharts>
             </div>
             <div class="bar-card-footer">
               <div class="info-div card-info-border" text-center>
-                <span>Day Sales</span>
+                <span class="info-div-span">Day Sales</span>
                 <br/>
                 <span> <div class="dot l-blue-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'day')}} M</span>
               </div>
               <div class="info-div card-info-border" text-center>
-                <span>Weekly Sales</span>
+                <span class="info-div-span">Weekly Sales</span>
                 <br/>
                 <span> <div class="dot purple-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'week')}} M</span>
               </div>
               <div class="info-div" text-center>
-                <span>Yearly Sales</span>
+                <span class="info-div-span">Yearly Sales</span>
                 <br/>
                 <span> <div class="dot red-bg"></div>&nbsp;$ {{getTotal(chart.cityId, 'year')}} M</span>
               </div>
@@ -99,7 +104,7 @@
   <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
   <ion-grid>
     <ion-row>
-      <ion-col col-6 *ngFor="let chart of dCharts | search: query" (click)="navigateToDetails(chart)">
+      <ion-col col-6 *ngFor="let chart of dCharts | search: query: 'true'" (click)="navigateToDetails(chart)">
         <div class="doughnut-card-mob">
           <div class="doughnut-card-header-mob">
             <span>{{chart.name}}</span>

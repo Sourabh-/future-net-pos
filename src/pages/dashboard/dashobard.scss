@@ -25,7 +25,7 @@ dashboard {
 
   .doughnut-label {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     width: 100%;
   }
 
@@ -44,6 +44,7 @@ dashboard {
     margin-top: 20px;
     display: flex;
     overflow-x: auto;
+    height: 300px;
   }
 
   .scroll-cover {
@@ -55,8 +56,8 @@ dashboard {
   }
 
   .doughnut-card {
-    width: 240px;
-    height: 270px;
+    width: 224px;
+    height: 266px;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
@@ -66,10 +67,12 @@ dashboard {
 
   .doughnut-card-header {
     border-bottom: 1px solid #eee;
-    font-weight: bold;
+    font-weight: normal;
+    font-size: 14px;
     padding: 7px;
     display: flex;
     justify-content: space-between;
+    color: #232425 !important;
   }
 
   .doughnut-card-body {
@@ -78,12 +81,16 @@ dashboard {
 
   .doughnut-card-body-header {
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
+    color: #cccccc;
+    padding-left: 8px;
   }
 
   .doughnut-card-body-footer {
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
+    color: #333333;
+    padding-left: 8px;
   }
 
   .bar-container {
@@ -100,6 +107,7 @@ dashboard {
     margin-right: 20px;
     margin-bottom: 20px;
     display: inline-block;
+    position: relative;
   }
 
   .bar-card-header {
@@ -114,7 +122,8 @@ dashboard {
 
   .bar-card-header-label {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 500;
+    color: #333333;
   }
 
   .bar-card-header-right {
@@ -128,7 +137,8 @@ dashboard {
   }
 
   .bard-card-details {
-    font-weight: bold;
+    font-weight: normal;
+    font-size: 14px;
   }
 
   .bar-card-footer {
@@ -141,6 +151,10 @@ dashboard {
   .info-div {
     padding: 5px;
     width: 100%;
+  }
+
+  .info-div-span {
+    color: #999;
   }
 
   .card-info-border {
@@ -159,11 +173,12 @@ dashboard {
 
   .doughnut-card-header-mob {
     border-bottom: 1px solid #eee;
-    font-weight: bold;
+    font-weight: normal;
     color: #534f4f;
     padding: 7px;
     display: flex;
     justify-content: space-between;
+    color: #232425;
   }
 
   .doughnut-card-body-mob {
@@ -172,14 +187,48 @@ dashboard {
 
   .doughnut-card-body-header-mob {
     padding: 10px;
-    font-size: 12px;
-    color: #999;
+    font-size: 14px;
+    color: #cccccc;
+    padding-left: 8px;
   }
 
   .doughnut-card-body-footer-mob {
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
     color: #1d1d1d;
     padding-bottom: 20px;
+    color: #333333;
+    padding-left: 8px;
+  }
+
+  .popup-period {
+    width: 80px;
+    height: 54px;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    position: absolute;
+    left: 59%;
+    background: #FFFFFF;
+    z-index: 1;
+    right: 110px;
+    top: 45px;
+  }
+
+  .popup-period div {
+    padding: 5px;
+  }
+
+  .popup-period-day {
+    border-bottom: 1px solid #eee;
+  }
+
+  .desktop-header .searchbar-search-icon {
+    display: none;
+  }
+
+  .search-icon {
+    position: absolute;
+    font-size: 24px;
+    z-index: 1;
+    left: 41px;
   }
 }

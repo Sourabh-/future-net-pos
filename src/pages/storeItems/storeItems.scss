@@ -2,7 +2,7 @@ store-items {
 
   .header-title {
     overflow: visible;
-    margin-right: 110px;
+    margin-right: 10px;
   }
 
   .desktop-body {
@@ -26,5 +26,9 @@ store-items {
 
   .store-details-col {
     padding: 13px;
+  }
+
+  .desktop-header>button {
+    padding: 4px !important;
   }
 }

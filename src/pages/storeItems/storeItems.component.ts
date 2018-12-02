@@ -58,6 +58,7 @@ export class StoreItemsComponent implements OnInit {
   public isSearchShow: boolean = false;
   public barCodeItem: string = '';
   public currentItemFileId: string = '';
+  public path: string = '';
 
   constructor(
     public navCtrl: NavController,
@@ -73,7 +74,8 @@ export class StoreItemsComponent implements OnInit {
 
   ngOnInit() {
     if(this.oneDriveService.selectedCity) {
-      this.getFolderContents();
+      this.utilityService.showLoader();
+      setTimeout(() => this.getFolderContents(true), 500);
     } 
 
     this.oneDriveService.selectedCityUpdated.subscribe(() => {
@@ -93,8 +95,8 @@ export class StoreItemsComponent implements OnInit {
     })
   }
 
-  getFolderContents() {
-    this.utilityService.showLoader();
+  getFolderContents(noLoader?) {
+    if(!noLoader) this.utilityService.showLoader();
     this.oneDriveService.getFolders(this.oneDriveService.selectedCityId).subscribe(
       (folders) => {
         if(folders.value) {
@@ -102,6 +104,7 @@ export class StoreItemsComponent implements OnInit {
           for(let i=0; i < folders.value.length; i++) {
             if(folders.value[i].name.toLowerCase().indexOf("items_live") > -1){
               this.currentItemFileId = folders.value[i].id;
+              this.path = folders.value[i].parentReference.path + '/items_live.csv';
               return this.getItem_liveContent(folders.value[i]);
             }
           }
@@ -118,15 +121,14 @@ export class StoreItemsComponent implements OnInit {
   }
 
   getItem_liveContent(itemFileInfo) {
-    this.oneDriveService.getWorkbook(itemFileInfo.id, 'items_live').subscribe(
+    this.oneDriveService.getWorkbook(itemFileInfo.id).subscribe(
         (res) => {
           this.oneDriveService.worksheets[itemFileInfo.id] = res;
           let _formulas = [];
           for(let i=0; i<res.values.length; i++) {
-            if(typeof res.values[i][0] == 'string')
+            if(res.values[i][0] && typeof res.values[i][0] == 'string')
               _formulas.push(res.values[i][0].split("^"));
           }
-
           this.computeTableData(_formulas);
         },
         (err) => {
@@ -162,7 +164,7 @@ export class StoreItemsComponent implements OnInit {
         { value: sheetDataArr[i][15], class: (sheetDataArr[i][15] == 'GST' ? "text-green" : "text-red") +  " text-bold", name: 'Gst YN', isShow: true, isDisabled: true, input: sheetDataArr[i][15] },
         { value: sheetDataArr[i][16], class: (sheetDataArr[i][16] !== 'N' ? "text-green" : "text-red") +  " text-bold", name: 'Scale YN', isShow: true, isDisabled: true, input: sheetDataArr[i][16] },
         { value: sheetDataArr[i][19], name: 'Sub Dept No.', isShow: true, isDisabled: false, input: sheetDataArr[i][19] },
-        { value: sheetDataArr[i][23], class: (sheetDataArr[i][19] !== 'N' ? "text-green" : "text-red") +  " text-bold", name: 'Non Disc YN', isShow: true, isDisabled: true, input: sheetDataArr[i][23] },
+        { value: sheetDataArr[i][23], class: (sheetDataArr[i][23] !== 'N' ? "text-green" : "text-red") +  " text-bold", name: 'Non Disc YN', isShow: true, isDisabled: true, input: sheetDataArr[i][23] },
         { value: sheetDataArr[i][25], name: 'Tare', isShow: true, isDisabled: true, input: sheetDataArr[i][25] },
         { value: sheetDataArr[i][47].replace(/^0+/, ''), name: 'Promo Price', isShow: true, isDisabled: true, input: sheetDataArr[i][47] },
         { value: sheetDataArr[i][48].replace(/^ /, '') || 'NIL', class: (!sheetDataArr[i][48].replace(/^ /, '') ? "text-red text-bold" : ""), name: 'Promo ID', isShow: true, isDisabled: true, input: sheetDataArr[i][48] },
@@ -176,7 +178,7 @@ export class StoreItemsComponent implements OnInit {
         { value: sheetDataArr[i][80] || "NIL", class: (!sheetDataArr[i][80] ? 'text-red text-bold' : ''), name: 'Group No', isShow: true, isDisabled: true, input: sheetDataArr[i][80] },
         { value: sheetDataArr[i][81] || "NIL", class: (!sheetDataArr[i][81] ? 'text-red text-bold' : ''), name: 'Supplier ID', isShow: true, isDisabled: true, input: sheetDataArr[i][81] },
         { value: sheetDataArr[i][82], class: (sheetDataArr[i][82] == 'N' ? 'text-red' : 'text-green') + " text-bold", name: 'Inst YN', isShow: true, isDisabled: true, input: sheetDataArr[i][82] },
-        { value: sheetDataArr[i][83], class: (sheetDataArr[i][83] == 'N' ? 'text-red' : 'text-green') + " text-bold", name: 'Zero Price YN', isShow: true, isDisabled: true, input: sheetDataArr[i][83] }
+        { value: sheetDataArr[i][83].replace(/\r/g, ''), class: (sheetDataArr[i][83].indexOf('N') > -1 ? 'text-red' : 'text-green') + " text-bold", name: 'Zero Price YN', isShow: true, isDisabled: true, input: sheetDataArr[i][83] }
       ]);
 
       if(this.barCodeItem && this.barCodeItem === _rows[i][1].value) {
@@ -186,16 +188,20 @@ export class StoreItemsComponent implements OnInit {
     };
 
     this.rows = _rows;
-    for(let i=0; i < 20; i++) { if(this.rows[i]) this.scrollItems.push(this.rows[i])}
+    for(let i=0; i < 10; i++) { if(this.rows[i]) this.scrollItems.push(this.rows[i])}
 
     this.utilityService.hideLoader();
+  }
+
+  trackByFn(index, item) {
+    return index; // or item.id
   }
 
   addMore(infiniteScroll) {
     setTimeout(() => {
       let count = this.scrollItems.length;
       if(this.rows.length > this.scrollItems.length) {
-        let len = (this.scrollItems.length + 20) > this.rows.length ? this.rows.length : (this.scrollItems.length + 20);
+        let len = (this.scrollItems.length + 10) > this.rows.length ? this.rows.length : (this.scrollItems.length + 10);
         for(let i=0; i<len; i++) {
           this.scrollItems.push(this.rows[i]);
         }
@@ -228,7 +234,13 @@ export class StoreItemsComponent implements OnInit {
     values[12] = editedItem[13].input;
     values[19] = editedItem[18].input;
 
-    this.oneDriveService.updateItemWorkbook(this.currentItemFileId, [values.join("^")], `A${editedItem[0].value}:A${editedItem[0].value}`)
+    let content = this.rows.map((val) => {
+      return val[0].all.split(",").join("^");
+    });
+
+    content[editedItem[0].value-1] = values.join("^");
+    content = content.join("\n");
+    this.oneDriveService.updateItemWorkbook(this.currentItemFileId, content, this.path)
     .subscribe(
       (res) => {
         this.utilityService.hideLoader();

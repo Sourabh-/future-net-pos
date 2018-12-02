@@ -24,6 +24,13 @@ folders {
 
   .folder-content {}
 
+  .folder-right-icon {
+    flex: 1 1 auto;
+    text-align: right;
+    color: #999;
+    padding-right: 5px;
+  }
+
   .folder-name {
     font-size: 16px;
     font-weight: 500;

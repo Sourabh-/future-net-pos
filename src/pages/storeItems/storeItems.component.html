@@ -5,6 +5,13 @@
       <div class="desktop-header">
         <ion-label class="header-title">
           <h6>Store Items</h6></ion-label>
+        <ion-list no-lines>
+          <ion-item class="select-item">
+            <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+              <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
         <ion-searchbar placeholder="Search keyword OR by APN number..." [(ngModel)]="query"></ion-searchbar>
         <profile></profile>
       </div>
@@ -32,7 +39,14 @@
 </ion-header>
 <ion-content showWhen="android,ios,windows">
   <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
-  <div *ngFor="let row of scrollItems | search: query">
+  <ion-list no-lines>
+    <ion-item class="select-item sel-item-m">
+      <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+        <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div *ngFor="let row of scrollItems;trackBy: trackByFn | search: query">
     <ion-card>
       <ion-card-content>
         <button ion-item class="no-padding-left">
@@ -42,7 +56,7 @@
           <span class="store-card-subtext">
           ITEM ID: {{row[1].value}}
         </span>
-          <ion-icon [name]="rows[0].open ? 'ios-arrow-up' : 'ios-arrow-down'" item-end (click)="row[0].open = !row[0].open"></ion-icon>
+          <ion-icon [name]="row[0].open ? 'ios-arrow-up' : 'ios-arrow-down'" item-end (click)="row[0].open = !row[0].open"></ion-icon>
         </button>
       </ion-card-content>
     </ion-card>

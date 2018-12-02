@@ -2,11 +2,12 @@ import { Injectable, EventEmitter } from '@angular/core';
 import * as hello from 'hellojs/dist/hello.all.js';
 import { Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { ProfileService } from './profile.service';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 
@@ -26,7 +27,7 @@ function handleError(res: Response, cb) {
   const errorMessage = error.message ? error.message :
     res.status ? `${res.status} - ${res.statusText}` : 'Server error';
 
-  return Observable.throw(res.status == 401 ? '' : errorMessage);
+  return Observable.throw(res.status == 401 ? '' : res.status == 504 ? '' : errorMessage);
 }
 
 @Injectable()
@@ -50,6 +51,7 @@ export class OneDriveService {
 	showScanner: boolean = false;
 	itemsAddressRange: any = {}; 
 	logFileIds: any = {};
+	driveId: string = '';
 
 	constructor(
 		private http: Http,
@@ -63,6 +65,14 @@ export class OneDriveService {
 		this.selectedCity = city;
 		this.selectedCityId = id;
 		this.selectedCityUpdated.emit();
+	}
+
+	changeCity(city) {
+	    for(let i=0; i<this.cities.length; i++) {
+	      if(city.toLowerCase() === this.cities[i].name.toLowerCase()) {
+	        this.setCity(this.cities[i].name, this.cities[i].id);
+	      }
+	    }
 	}
 
 	getProfile() {
@@ -117,30 +127,69 @@ export class OneDriveService {
 		}
 	}
 
-	getWorkbook(id, sheet): Observable<any> {
+	getWorkbook(id): Observable<any> {
 		if(this.worksheets[id]) {
 			return Observable.of(this.worksheets[id]).map(ws => (ws));
-		} else 
+		} else {
 			return this.http
-		      .get(`${this.URL}/me/drive/items/${id}/workbook/worksheets('${sheet}')/usedRange`, this.authService.getAuthRequestOptions())
-		      .map(extractData)
+		      .get(`${this.URL}/me/drives/${this.driveId}/items/${id}/content`, this.authService.getAuthRequestOptions())
+		      .map((res) => {
+		      	if(res['_body']) {
+		      		let body = res['_body'];
+		      		let values = body.split('\n').map((val) => { return val.split(",")});
+		      		return { values };
+		      	} else {
+		      		return {};
+		      	}
+		      })
 		      .catch((res: Response) => {
 		      	return handleError(res, () => {
 		      		this.reauth.emit();
 		      	});
 		      });
+		}
 	}
 
-	updateItemWorkbook(id, values, address) {
-		let body = JSON.stringify({ values: [values] });
+	updateItemWorkbook(id, content, path) {
+		let body = JSON.stringify({
+			item: {
+			  "@microsoft.graph.conflictBehavior": "replace",
+			  "description": "",
+			  "fileSystemInfo": { "@odata.type": "microsoft.graph.fileSystemInfo" },
+			  "name": "items_live.csv"
+			}
+		});
+
 		return this.http
-			.patch(
-				`${this.URL}/me/drive/items/${id}/workbook/worksheets('items_live')/range(address='${address}')`,
+			.post(
+				`${this.URL}/me` + path + ':/createUploadSession',
 				body,
 				this.authService.getAuthRequestOptions()
 			)
-			.map(extractData)
-			.catch((res: Response) => {
+			.mergeMap((res) => {
+				let file = new File([content], 'items_live.csv');
+				const authHeaders = new Headers({ 
+					'Content-Range': 'bytes 0-' + (file.size - 1) + '/' + file.size, 
+					'Content-Type': 'multipart/form-data', 
+					'Authorization': 'Bearer ' + this.authService.getMsft().access_token
+				});
+				const headers = { headers: authHeaders };
+				return this.http
+					.put(
+						res.json().uploadUrl,
+						file,
+						headers
+					)
+					.map((res) => {
+						return res;
+					})
+					.catch((res) => {
+						return handleError(res, () => {
+				      		this.reauth.emit();
+				      	});	
+					})
+			})
+			.catch((res) => {
 		      	return handleError(res, () => {
 		      		this.reauth.emit();
 		      	});

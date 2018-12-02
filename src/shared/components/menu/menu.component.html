@@ -4,11 +4,6 @@
   </div>
   <div class="content">
     <ion-list no-lines>
-      <ion-item>
-        <ion-select interface="popover" [disabled]="utilityService.selectDisabled" class="custom-select" [(ngModel)]="selectedCity" (ngModelChange)="changeCity()">
-          <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
-        </ion-select>
-      </ion-item>
       <button ion-item icon-start class="menu-item" [ngClass]="{'active': utilityService.activeView === 'dashboard'}" (click)="navigate('dashboard')">
       	<img class="menu-icon" src="assets/imgs/Dashboard.svg" *ngIf="utilityService.activeView !== 'dashboard'"/>
         <img class="menu-icon"  src="assets/imgs/DashboardActive.svg" *ngIf="utilityService.activeView === 'dashboard'"/>

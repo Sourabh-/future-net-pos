@@ -1,8 +1,7 @@
 {
   "name": "future-net-pos",
-  "app_id": "",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular"
 }

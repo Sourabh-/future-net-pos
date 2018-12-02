@@ -11,6 +11,7 @@ import { CsvCardsComponent } from './components/csvCards/csvCards.component';
 import { AppTableComponent } from './components/appTable/appTable.component';
 import { ProfileComponent, PopoverPage } from './components/profile/profile.component';
 import { BlockerComponent } from './components/blocker/blocker.component';
+import { NoInternetComponent } from './components/noInternet/noInternet.component';
 import { BarCodeScannerComponent } from './components/barCodeScanner/barCodeScanner.component';
 import { EditItemsModalComponent } from './components/editItemsModal/editItemsModal.component';
 
@@ -19,6 +20,7 @@ import { AuthService } from './services/auth.service';
 import { OneDriveService } from './services/oneDrive.service';
 import { ProfileService } from './services/profile.service';
 import { BlockerService } from './services/blocker.service';
+import { NoInternetService } from './services/noInternet.service';
 import { BarCodeScannerService } from './services/barCodeScanner.service';
 
 import { SearchPipe } from './pipes/search.pipe';
@@ -34,6 +36,7 @@ import { SearchPipe } from './pipes/search.pipe';
     SearchPipe,
     BarCodeScannerComponent,
     EditItemsModalComponent,
+    NoInternetComponent,
     PopoverPage
   ],
   imports: [
@@ -51,7 +54,8 @@ import { SearchPipe } from './pipes/search.pipe';
     BlockerComponent,
     BarCodeScannerComponent,
     EditItemsModalComponent,
-    PopoverPage
+    PopoverPage,
+    NoInternetComponent
   ],
   exports: [
     MenuComponent,
@@ -62,7 +66,8 @@ import { SearchPipe } from './pipes/search.pipe';
     BlockerComponent,
     SearchPipe,
     BarCodeScannerComponent,
-    EditItemsModalComponent
+    EditItemsModalComponent,
+    NoInternetComponent
   ],
   providers: [
     BarcodeScanner,
@@ -71,7 +76,8 @@ import { SearchPipe } from './pipes/search.pipe';
     OneDriveService,
     ProfileService,
     BlockerService,
-    BarCodeScannerService
+    BarCodeScannerService,
+    NoInternetService
   ]
 })
 export class SharedModule {

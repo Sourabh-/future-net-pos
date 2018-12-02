@@ -1,4 +1,4 @@
-<table class="table" [style.width]="isFullWidth ? '100%' : 'auto'">
+<table id="appTable" class="table" [style.width]="isFullWidth ? '100%' : 'auto'">
   <thead>
     <th *ngFor= "let head of header">{{head}}</th>
     <th *ngIf="options.isEditable"> </th>
@@ -26,5 +26,5 @@
 </table>
 
 <div text-center *ngIf="!isHideFooter">
-  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="currentPage = $event"></pagination-controls>
+  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="currentPage = $event; scrollToTop()"></pagination-controls>
 </div>

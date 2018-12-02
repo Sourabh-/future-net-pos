@@ -129,7 +129,7 @@ export class DashboardDetailsComponent implements OnDestroy {
           let iDs:any = {};
           for(let i=0; i < res.value.length; i++) {
             if(res.value[i].name.toLowerCase().indexOf('ddept') > -1) {
-              this.oneDriveService.getWorkbook(res.value[i].id, 'DDept').subscribe(
+              this.oneDriveService.getWorkbook(res.value[i].id).subscribe(
                 (res1) => {
                   iDs.day = res1.values;
                   count--;
@@ -143,7 +143,7 @@ export class DashboardDetailsComponent implements OnDestroy {
                 }
               )
             } else if(res.value[i].name.toLowerCase().indexOf('wdept') > -1) {
-              this.oneDriveService.getWorkbook(res.value[i].id, 'WDept').subscribe(
+              this.oneDriveService.getWorkbook(res.value[i].id).subscribe(
                 (res1) => {
                   iDs.week = res1.values;
                   count--;
@@ -206,7 +206,7 @@ export class DashboardDetailsComponent implements OnDestroy {
   }
 
   getDDeptFile(id, fname) {
-    this.oneDriveService.getWorkbook(id, fname).subscribe(
+    this.oneDriveService.getWorkbook(id).subscribe(
       (res) => {
         this.oneDriveService.worksheets[id] = res;
         this.computeMSCombiGraph(res.values);

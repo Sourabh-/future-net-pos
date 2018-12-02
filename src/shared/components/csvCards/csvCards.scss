@@ -16,12 +16,12 @@ csv-cards {
   .csv-icon-right {
     color: #2bd7af;
     font-size: 30px;
-    padding-left: 15px;
     border-left: 1px solid #eee;
     height: 100%;
     padding-top: 23px;
     cursor: pointer;
-    padding-right: 15px;
+    width: 70px;
+    text-align: center;
   }
 
   .csv-card {
@@ -34,6 +34,7 @@ csv-cards {
 
   .csv-content {
     margin-right: 28px;
+    flex: 1 1 auto;
     padding: 7px 0px 7px 0px;
   }
 

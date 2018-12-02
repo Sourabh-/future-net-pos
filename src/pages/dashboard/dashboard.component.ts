@@ -26,7 +26,17 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     public actionSheetCtrl: ActionSheetController,
     private platform: Platform
-  ) {}
+  ) {
+    document.addEventListener('click', this.offClickHandler.bind(this));
+  }
+
+  offClickHandler(ev: any) {
+    if(!ev.target.matches('.offtouch')) {
+      for(let i=0; i< this.barCharts.length; i++) {
+        this.barCharts[i].open = false;
+      }
+    }
+  }
 
   ngOnInit() {
     if(this.oneDriveService.convId) {
@@ -138,7 +148,7 @@ export class DashboardComponent implements OnInit {
   	let files = [];
   	for(let i=0; i<dIds.length; i++) {
   		((i) => {
-  			this.oneDriveService.getWorkbook(dIds[i].id, 'DayTotalsFile')
+  			this.oneDriveService.getWorkbook(dIds[i].id)
   			.subscribe(
   				(res) => {
   					this.oneDriveService.worksheets[dIds[i].id] = res;
@@ -248,6 +258,9 @@ export class DashboardComponent implements OnInit {
     }
 
     this.dCharts = ch;
+    this.dCharts.sort((b1, b2) => {
+      return (b1.name > b2.name) ? 1 : (b2.name > b1.name) ? -1 : 0;
+    })
     this.oneDriveService.totals = this.totals;
   }
 
@@ -263,7 +276,7 @@ export class DashboardComponent implements OnInit {
           cityId: ddepts[i].cityId
         };
 
-        this.oneDriveService.getWorkbook(ddepts[i].id, 'DDept')
+        this.oneDriveService.getWorkbook(ddepts[i].id)
         .subscribe(
           (res) => {
             this.oneDriveService.worksheets[ddepts[i].id] = res;
@@ -278,7 +291,7 @@ export class DashboardComponent implements OnInit {
             this.utilityService.showToast(msg);
           })
 
-        this.oneDriveService.getWorkbook(wdepts[i].id, 'WDept')
+        this.oneDriveService.getWorkbook(wdepts[i].id)
         .subscribe(
           (res) => {
             this.oneDriveService.worksheets[wdepts[i].id] = res;
@@ -324,6 +337,7 @@ export class DashboardComponent implements OnInit {
         };
 
       for(let j=1; j < graphData[key].dformulas.length; j++) {
+        if(!graphData[key].dformulas[j][0]) continue;
         if(c1 > 0)
           obj.chartD.data.push({
             label: graphData[key].dformulas[j][1],
@@ -337,6 +351,7 @@ export class DashboardComponent implements OnInit {
       }
 
       for(let j=1; j < graphData[key].wformulas.length; j++) {
+        if(!graphData[key].wformulas[j][0]) continue;
         if(c2 > 0)
           obj.chartW.data.push({
             label: graphData[key].wformulas[j][1],
@@ -354,26 +369,18 @@ export class DashboardComponent implements OnInit {
 
     this.oneDriveService.totals = this.totals;
     this.barCharts = ch;
+    this.barCharts.sort((b1, b2) => {
+      return (b1.name > b2.name) ? 1 : (b2.name > b1.name) ? -1 : 0;
+    })
   }
 
   changePeriod(chart) {
-    let period = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'Week',
-          handler: () => {
-            chart.period = 'Week';
+    chart.open = !chart.open;
+  }
 
-          }
-        },{
-          text: 'Day',
-          handler: () => {
-            chart.period = 'Day';
-          }
-        }
-      ]
-    });
-    period.present();
+  selectPeriod(chart, type) {
+    chart.period = type;
+    chart.open = false;
   }
 
   getTotal(cityId, type) {

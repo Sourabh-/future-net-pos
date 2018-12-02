@@ -3,19 +3,23 @@
     <menu class="menu"></menu>
     <div class="content-container">
       <div class="desktop-header desktop-header-pad">
-        <ion-grid>
-          <ion-row>
-            <ion-col col-3>
-              <button color="dark" clear ion-button icon-only (click)="goBack()">
-                <ion-icon 
-                  name="arrow-back" 
-                  class="pointer" 
-                  [style.fontSize]="'22px'" 
-                ></ion-icon> 
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <button color="dark" clear ion-button icon-only (click)="goBack()">
+          <ion-icon name="arrow-back" class="pointer" [style.fontSize]="'22px'"></ion-icon>
+        </button>
+        <ion-label>
+          <h6 [style.marginTop]="'1rem'">
+            <span class="previous-header">Stores&nbsp;</span> 
+            &nbsp;<ion-icon name="ios-arrow-forward" class="dark-grey"></ion-icon>&nbsp;
+            {{oneDriveService.selectedCity}}
+          </h6>
+        </ion-label>
+        <ion-list no-lines>
+          <ion-item class="select-item">
+            <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+              <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
         <profile></profile>
       </div>
       <div class="desktop-body mar-bot-83">
@@ -201,6 +205,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content showWhen="android,ios,windows">
+  <ion-list no-lines>
+    <ion-item class="select-item sel-item-m">
+      <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+        <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
   <ion-grid>
     <ion-row>
       <ion-col col-12>

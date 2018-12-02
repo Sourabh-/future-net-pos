@@ -72,17 +72,17 @@ export class OrderStatsDetailsComponent implements OnInit {
           { value: this.parent.createdDate, width: '130px' },
           { value: this.parent.createdTime, width: '90px' },
           { value:  this.parent.orderNo },
-          { value: this.parent.items[i][4] },
-          { value: this.parent.items[i][5] },
-          { value: this.parent.items[i][30] },
-          { value: this.parent.items[i][29] },
-          { value: this.parent.items[i][42], class: (this.parent.items[i][42] == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: this.parent.items[i][37].trim(), class: (this.parent.items[i][37].trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: this.parent.items[i][38].trim(), class: (this.parent.items[i][38].trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
-          { value: Number(this.parent.items[i][32] || '0').toFixed(2) },
-          { value: Number(this.parent.items[i][33] || '0').toFixed(2) },
-          { value: this.parent.items[i][34] ? Number(this.parent.items[i][34]).toFixed(2) : '0' },
-          { value: this.parent.items[i][31] ? Number(this.parent.items[i][31]).toFixed(2) : '0' }
+          { value: this.parent.items[i][4].replace(/\"/g, "") },
+          { value: this.parent.items[i][5].replace(/\"/g, "") },
+          { value: this.parent.items[i][30].replace(/\"/g, "") },
+          { value: this.parent.items[i][29].replace(/\"/g, "") },
+          { value: this.parent.items[i][42].replace(/\"/g, ""), class: (this.parent.items[i][42].replace(/\"/g, "") == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: this.parent.items[i][37].replace(/\"/g, "").trim(), class: (this.parent.items[i][37].replace(/\"/g, "").trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: this.parent.items[i][38].replace(/\"/g, "").trim(), class: (this.parent.items[i][38].replace(/\"/g, "").trim() == 'Y' ? 'text-green' : 'text-red') + ' text-bold' },
+          { value: Number(this.parent.items[i][32].replace(/\"/g, "") || '0').toFixed(2) },
+          { value: Number(this.parent.items[i][33].replace(/\"/g, "") || '0').toFixed(2) },
+          { value: this.parent.items[i][34].replace(/\"/g, "") ? Number(this.parent.items[i][34].replace(/\"/g, "")).toFixed(2) : '0' },
+          { value: this.parent.items[i][31].replace(/\"/g, "") ? Number(this.parent.items[i][31].replace(/\"/g, "")).toFixed(2) : '0' }
         ]);
     }
 

@@ -12,8 +12,6 @@ import { OneDriveService } from '../../services/oneDrive.service';
   templateUrl: 'menu.component.html'
 })
 export class MenuComponent {
-   
-  public selectedCity: string  = this.oneDriveService.selectedCity;
 
   constructor(
     public navCtrl: NavController, 
@@ -21,9 +19,7 @@ export class MenuComponent {
     public oneDriveService: OneDriveService,
     private app: App
   ) {
-  	this.oneDriveService.selectedCityUpdated.subscribe(() => {
-      this.selectedCity = this.oneDriveService.selectedCity;
-    });
+  	
   }
 
   navigate(where) {
@@ -46,14 +42,6 @@ export class MenuComponent {
   			this.navCtrl.push(StoreItemsComponent, {}, { 'animate': false });
   			break;
   	}
-  }
-
-  changeCity() {
-    for(let i=0; i<this.oneDriveService.cities.length; i++) {
-      if(this.selectedCity === this.oneDriveService.cities[i].name) {
-        this.oneDriveService.setCity(this.oneDriveService.cities[i].name, this.oneDriveService.cities[i].id);
-      }
-    }
   }
 
   takeMeHome() {

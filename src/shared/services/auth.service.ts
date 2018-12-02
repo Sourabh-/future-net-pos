@@ -22,7 +22,7 @@ export class AuthService {
           form: false
         }
       }, {
-        redirect_uri : 'https://future-net.firebaseapp.com/',
+        redirect_uri: 'https://future-net.firebaseapp.com/',
         oauth_proxy: 'https://auth-server.herokuapp.com/proxy'
       }
     );
@@ -47,6 +47,10 @@ export class AuthService {
     const msft = hello('msft').getAuthResponse();
     const authHeaders = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + msft.access_token });
     return { headers: authHeaders };
+  }
+
+  getMsft() {
+    return hello('msft').getAuthResponse();
   }
 
   emitToken() {

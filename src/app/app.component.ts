@@ -14,6 +14,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { OneDriveService } from '../shared/services/oneDrive.service';
 import { ProfileService } from '../shared/services/profile.service';
 import { BlockerService } from '../shared/services/blocker.service';
+import { NoInternetService } from '../shared/services/noInternet.service';
 
 @Component({
   templateUrl: 'app.component.html'
@@ -29,7 +30,7 @@ export class RootComponent implements OnInit {
   public whicCm:string; //Determine if oauth success page
 
   constructor(
-    platform: Platform, 
+    public platform: Platform, 
     statusBar: StatusBar, 
     splashScreen: SplashScreen,
     public utilityService: UtilityService,
@@ -38,6 +39,7 @@ export class RootComponent implements OnInit {
     private oneDriveService: OneDriveService,
     private profileService: ProfileService,
     private blockerService: BlockerService,
+    private noInternetService: NoInternetService,
     private app: App
   ) {
 
@@ -71,18 +73,24 @@ export class RootComponent implements OnInit {
             this.utilityService.selectDisabled = false;
         }, 500);
       })
+
+      this.oneDriveService.selectedCityUpdated.subscribe(() => {
+        this.utilityService.selectedCity = this.oneDriveService.selectedCity;
+      });
     });
   }
 
   ngOnInit() {
     this.oneDriveService.reauth.subscribe(() => {
-      this.callOneDrive(true);
+      if(navigator.onLine) 
+        this.callOneDrive(true);
+      else 
+        this.noInternetService.show();
     })
   }
 
   callOneDrive(force?) {
-    if(!this.isBusy) {
-      this.utilityService.showLoader();
+    if(!this.isBusy || !this.platform.is('core')) {
       this.isBusy = true;
       this.authService.initAuth();
       //LOGIN
@@ -103,17 +111,19 @@ export class RootComponent implements OnInit {
           this.getOneDriveFolders();
         })
         .catch((e) => {
+          let hello;
+          try { if(localStorage.hello) hello = JSON.parse(localStorage.hello); } catch(e) { hello = undefined; }
           //Needed for electron to work!
-          if(!force && localStorage.hello) {
+          if(!force && hello && !hello.msft.error) {
             this.nav.popToRoot();
             this.utilityService.activeView = 'dashboard';
             this.getMyProfile();
             this.getOneDriveFolders();
           } else {
+            localStorage.removeItem('hello');
             console.error(e.error.message);
             this.isBusy = false;
             this.utilityService.showToast(e.error.message);
-            this.utilityService.hideLoader();
             this.utilityService.isMenuEnabled = false;
           }
         })
@@ -155,12 +165,14 @@ export class RootComponent implements OnInit {
   }
 
   getOneDriveFolders() {
+    this.utilityService.showLoader();
     this.oneDriveService.getFolders().subscribe(
       (folders) => {
         if(folders.value) {
           this.oneDriveService.folders['all'] = folders.value;
           for(let i=0; i<folders.value.length; i++) {
             if(folders.value[i].name.toLowerCase().indexOf('convany') > -1) {
+              this.oneDriveService.driveId = folders.value[i].parentReference.driveId; 
               this.oneDriveService.convId = folders.value[i].id;
               this.getSecondFolders(folders.value[i]);
               return;
@@ -183,6 +195,7 @@ export class RootComponent implements OnInit {
       (folders) => {
         if(folders.value) {
           this.oneDriveService.folders[fo.id] = folders.value;
+          this.utilityService.selectedCity = folders.value[0].name;
           this.oneDriveService.setCity(folders.value[0].name, folders.value[0].id);
           this.oneDriveService.cities = folders.value;
           this.authService.tokenReceived.emit(fo.id);
@@ -229,6 +242,7 @@ export class RootComponent implements OnInit {
             this.oneDriveService.folders[filesInfo[i].id] = res.value || [];
             count--;
             if(count == 0 && breakout == 0) {
+              this.utilityService.hideLoader();
               this.getPluLiveFiles(pluLiveFiles);
               this.getItemFilesContent(itemsLiveFiles);
             } 
@@ -236,6 +250,7 @@ export class RootComponent implements OnInit {
           (msg) => {
             breakout = 1;
             this.utilityService.showToast(msg);
+            this.utilityService.hideLoader();
           }
         )
       })(i);
@@ -245,8 +260,8 @@ export class RootComponent implements OnInit {
   getPluLiveFiles(files) {
     let count = files.length;
     for(let i=0; i< files.length; i++) {
-      ((i) => {
-        this.oneDriveService.getWorkbook(files[i].id, 'plu_live')
+      setTimeout((i) => {
+        this.oneDriveService.getWorkbook(files[i].id)
         .subscribe(
          (res) => {
            this.oneDriveService.worksheets[files[i].id] = res;
@@ -259,30 +274,24 @@ export class RootComponent implements OnInit {
          (msg) => {
            this.utilityService.showToast(msg);
          })
-      })(i);
+      }, 300, i);
     }
   }
 
   getItemFilesContent(files) {
-    let count = files.length;
-    if(!files.length) this.utilityService.hideLoader();
-
     for(let i=0; i< files.length; i++) {
-      ((i) => {
-        this.oneDriveService.getWorkbook(files[i].id, 'items_live')
+      setTimeout((i) => {
+        this.oneDriveService.getWorkbook(files[i].id)
         .subscribe(
          (res) => {
            this.oneDriveService.worksheets[files[i].id] = res;
            this.oneDriveService.itemsAddressRange[files[i].cityId] = res.address;
-           count--;
-           if(count == 0)
-             this.utilityService.hideLoader();
+             
          },
          (msg) => {
            this.utilityService.showToast(msg);
-           this.utilityService.hideLoader();
          })
-      })(i);
+      }, 300, i);
     }
   }
 

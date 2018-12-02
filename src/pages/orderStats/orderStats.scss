@@ -2,7 +2,7 @@ order-stats {
   
   .header-title {
   	overflow: visible;
-  	margin-right: 110px;
+  	margin-right: 10px;
   }
 
   .desktop-body {
@@ -23,7 +23,6 @@ order-stats {
 
   .autoorder-icon {
     color: #999;
-    font-size: 18px;
     margin-left: 28px;
   }
 
@@ -52,6 +51,10 @@ order-stats {
     color: #999;
   }
 
+  .desktop-header>button {
+    padding: 4px !important;
+  }
+  
   @media screen and (max-width: 768px) {
     .autoorder-card {
       width: 100%;

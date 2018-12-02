@@ -99,8 +99,13 @@ dashboard-details {
     margin-bottom: 5px;
   }
 
+  .footer-card-dollar span {
+    color: #232425;
+  }
+
   .footer-card-sub-text {
     font-size: 12px;
+    font-weight: normal;
   }
 
   .footer-card-body-table {
@@ -160,5 +165,9 @@ dashboard-details {
 
   .footer-time-card-value {
     padding: 5px 0 10px 0;
+  }
+
+  .previous-header {
+    color: #858585;
   }
 }

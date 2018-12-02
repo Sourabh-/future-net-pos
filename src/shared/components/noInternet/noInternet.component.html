@@ -1,0 +1,6 @@
+<div class="no-internet" [style.display]="noInternetService.isShown ? 'block': 'none'">
+  <div class="retry-btn-box" text-center>
+  	<b class="retry-text">Oops! Looks like there is no internet connection.</b> <br/>
+  	<button ion-button outline color="primary" (click)="retryConnection()">Retry</button>
+  </div>
+</div>

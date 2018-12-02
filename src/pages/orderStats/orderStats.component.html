@@ -5,6 +5,13 @@
       <div class="desktop-header">
         <ion-label class="header-title">
           <h6>Auto Order Statistics</h6></ion-label>
+        <ion-list no-lines>
+          <ion-item class="select-item">
+            <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+              <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
         <ion-searchbar placeholder="Search by Order No., Item No." [(ngModel)]="query"></ion-searchbar>
         <profile></profile>
       </div>
@@ -45,6 +52,13 @@
 </ion-header>
 <ion-content showWhen="android,ios,windows">
   <ion-searchbar *ngIf="isSearchShow" placeholder="Search Stores" [(ngModel)]="query"></ion-searchbar>
+  <ion-list no-lines>
+    <ion-item class="select-item sel-item-m">
+      <ion-select class="custom-select" interface="popover" [disabled]="utilityService.selectDisabled" [(ngModel)]="utilityService.selectedCity" (ngModelChange)="oneDriveService.changeCity($event)">
+        <ion-option [value]="city.name" *ngFor="let city of this.oneDriveService.cities">{{city.name | uppercase}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
   <ion-card *ngFor="let order of scrollItems | search: query">
     <ion-card-content>
       <button ion-item class="no-padding-left" (click)="navigateToDetails(order)">
@@ -60,6 +74,6 @@
     </ion-card-content>
   </ion-card>
   <ion-infinite-scroll (ionInfinite)="addMore($event)">
-   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

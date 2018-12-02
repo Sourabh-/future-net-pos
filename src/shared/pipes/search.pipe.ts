@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     pure: false
 })
 export class SearchPipe implements PipeTransform {
-    transform(items: any[], filter: string): any {
+    transform(items: any[], filter: string, fromFirst: string): any {
         if (!items || !filter) {
             return items;
         }
@@ -13,9 +13,9 @@ export class SearchPipe implements PipeTransform {
         // kept, false will be filtered out
         return items.filter(item => {
             if(item instanceof Array) {
-                return item[0].all.toLowerCase().indexOf(filter) !== -1;
+                return fromFirst ? item[0].all.toLowerCase().indexOf(filter.toLowerCase()) == 0 : item[0].all.toLowerCase().indexOf(filter.toLowerCase()) !== -1;
             } else 
-                return item.all.toLowerCase().indexOf(filter) !== -1;
+                return fromFirst ? item.all.toLowerCase().indexOf(filter.toLowerCase()) == 0 : item.all.toLowerCase().indexOf(filter.toLowerCase()) !== -1;
         });
     }
 }
